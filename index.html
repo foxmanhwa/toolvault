@@ -1081,7 +1081,7 @@ function setSearch(q) {
 /* ── AGENT STATE ── */
 let agentOpen  = false;
 let chatHistory= [];
-let userApiKey = localStorage.getItem('tv_key') || '';
+let userApiKey = 'oIdYcBjwojufqjFVht01ImuMvgWKadv6';
 
 function saveKey(v) {
   userApiKey = v.trim();
@@ -1242,15 +1242,20 @@ async function sendMsg() {
   chatHistory.push({ role:'user', content: text });
   showTyping();
 
-  const reply = await callFreeAI(text);
-  removeTyping();
-  chatHistory.push({ role:'assistant', content: reply });
+  try {
+    const reply = await callFreeAI(text);
+    removeTyping();
+    chatHistory.push({ role:'assistant', content: reply });
 
-  // Format reply
-  const html = reply
-    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
-    .replace(/\n/g,'<br>');
-  appendMsg('ai', html);
+    // Format reply
+    const html = reply
+      .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+      .replace(/\n/g,'<br>');
+    appendMsg('ai', html);
+  } catch (e) {
+    removeTyping();
+    appendMsg('ai', 'Sorry, there was an error processing your request.');
+  }
   document.getElementById('sendBtn').disabled=false;
   document.getElementById('agentInput').focus();
 }
