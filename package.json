@@ -1,0 +1,25 @@
+{
+  "name": "toolvault",
+  "version": "1.0.0",
+  "description": "AI Tools Discovery Platform",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "dev": "npx http-server -p 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foxmanhwa/toolvault.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/foxmanhwa/toolvault/issues"
+  },
+  "homepage": "https://github.com/foxmanhwa/toolvault#readme",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}
