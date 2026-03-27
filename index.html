@@ -906,16 +906,8 @@ nav {
       ⚡ Using <strong>Mistral AI</strong> (free). For best results, get a free key at <a href="https://console.mistral.ai" target="_blank">console.mistral.ai</a> and add it below.
     </div>
 
-    <!-- API Key input -->
-    <div style="padding:0 14px 8px; display:flex; gap:8px; align-items:center;">
-      <input id="apiKeyInput" type="password"
-        placeholder="Paste Mistral API key (optional)…"
-        style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:11px;outline:none;"
-        oninput="saveKey(this.value)" />
-      <span style="font-size:10px;color:var(--text-muted);">🔒 local only</span>
-    </div>
-
     <div class="agent-input-row">
+      <input id="apiKeyInput" type="password" placeholder="🔑 Paste Mistral API key here to activate agent…" style="width:100%;background:#141422;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 14px;color:#f0f0f8;font-family:monospace;font-size:12px;outline:none;margin-bottom:8px;" oninput="userApiKey=this.value;localStorage.setItem('tv_key',this.value)" />
       <textarea class="agent-textarea" id="agentInput"
         placeholder="Ask about any AI tool or workflow…"
         onkeydown="handleEnter(event)" oninput="autoH(this)" rows="1"></textarea>
@@ -1089,11 +1081,11 @@ function setSearch(q) {
 /* ── AGENT STATE ── */
 let agentOpen  = false;
 let chatHistory= [];
-let userApiKey = localStorage.getItem('tv_mistral_key') || '';
+let userApiKey = localStorage.getItem('tv_key') || '';
 
 function saveKey(v) {
   userApiKey = v.trim();
-  if (userApiKey) localStorage.setItem('tv_mistral_key', userApiKey);
+  if (userApiKey) localStorage.setItem('tv_key', userApiKey);
 }
 // pre-fill key input if stored
 window.addEventListener('DOMContentLoaded', () => {
@@ -1190,6 +1182,8 @@ RULES:
       if (d.choices?.[0]?.message?.content) return d.choices[0].message.content;
     } catch(e) { /* fall through */ }
   }
+
+  if (!userApiKey) return smartFallback(userMsg);
 
   // HuggingFace Inference API — free, no key needed
   try {
