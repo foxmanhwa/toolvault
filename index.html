@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOOLVAULT — AI Tools Universe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════ */
+:root {
+  --bg: #05050a;
+  --bg2: #09090f;
+  --surface: #0e0e18;
+  --surface2: #141422;
+  --surface3: #1a1a2e;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+
+  --lime: #c8ff00;
+  --lime2: #a8e000;
+  --orange: #ff6b35;
+  --pink: #ff3d9a;
+  --blue: #3d9aff;
+  --purple: #9b5de5;
+  --cyan: #00f5d4;
+
+  --text: #f0f0f8;
+  --text-muted: #6b6b8a;
+  --text-dim: #9999b8;
+
+  --r: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+#cursor {
+  width: 12px; height: 12px;
+  background: var(--lime);
+  border-radius: 50%;
+  position: fixed; pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: difference;
+}
+#cursor.big { width: 40px; height: 40px; }
+
+/* ── ANIMATED BG ── */
+.bg-orbs {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  overflow: hidden;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  animation: float 20s infinite ease-in-out;
+}
+.orb-1 { width:600px;height:600px;background:var(--purple);top:-200px;left:-100px;animation-delay:0s; }
+.orb-2 { width:500px;height:500px;background:var(--lime);bottom:-200px;right:-100px;animation-delay:-7s; }
+.orb-3 { width:400px;height:400px;background:var(--pink);top:40%;left:60%;animation-delay:-14s; }
+
+@keyframes float {
+  0%,100% { transform:translate(0,0) scale(1); }
+  33% { transform:translate(40px,-40px) scale(1.05); }
+  66% { transform:translate(-30px,30px) scale(0.95); }
+}
+
+/* ── GRAIN OVERLAY ── */
+body::after {
+  content:'';
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.4;
+}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+nav {
+  position:sticky; top:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 48px; height:68px;
+  background:rgba(5,5,10,0.7);
+  backdrop-filter:blur(30px) saturate(180%);
+  border-bottom:1px solid var(--border);
+}
+
+.logo {
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:800; font-size:22px;
+  letter-spacing:-1px;
+  display:flex; align-items:center; gap:10px;
+}
+.logo-text { color:var(--text); }
+.logo-accent { color:var(--lime); }
+.logo-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:var(--lime);
+  animation:pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,100%{box-shadow:0 0 0 0 rgba(200,255,0,0.5);}
+  50%{box-shadow:0 0 0 8px rgba(200,255,0,0);}
+}
+
+.nav-pills {
+  display:flex; gap:4px; list-style:none;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:99px; padding:4px;
+}
+.nav-pills a {
+  padding:6px 18px; border-radius:99px;
+  font-size:12px; letter-spacing:0.5px;
+  color:var(--text-muted); text-decoration:none;
+  transition:all 0.2s;
+}
+.nav-pills a:hover, .nav-pills a.active {
+  background:var(--surface3); color:var(--text);
+}
+
+.nav-cta {
+  display:flex; align-items:center; gap:12px;
+}
+.btn-agent {
+  display:flex; align-items:center; gap:8px;
+  background:var(--lime); color:#05050a;
+  border:none; padding:10px 22px; border-radius:99px;
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:700; font-size:13px; cursor:pointer;
+  transition:all 0.2s; white-space:nowrap;
+}
+.btn-agent:hover { background:var(--lime2); transform:translateY(-1px); box-shadow:0 8px 24px rgba(200,255,0,0.3); }
+.btn-agent .btn-icon { font-size:16px; }
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero {
+  position:relative; z-index:2;
+  padding:110px 48px 70px;
+  max-width:1280px; margin:0 auto;
+}
+
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:11px; letter-spacing:2px; color:var(--lime);
+  text-transform:uppercase;
+  background:rgba(200,255,0,0.08); border:1px solid rgba(200,255,0,0.2);
+  padding:6px 14px; border-radius:99px;
+  margin-bottom:32px;
+  animation:fadeInUp 0.6s ease both;
+}
+.eyebrow-dot { width:6px;height:6px;border-radius:50%;background:var(--lime);animation:pulse-dot 2s infinite; }
+
+.hero-headline {
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:800;
+  font-size:clamp(52px,8vw,100px);
+  line-height:0.92;
+  letter-spacing:-4px;
+  margin-bottom:28px;
+  animation:fadeInUp 0.6s ease 0.1s both;
+}
+.hl-1 { display:block; color:var(--text); }
+.hl-2 {
+  display:block;
+  background:linear-gradient(135deg, var(--lime) 0%, var(--cyan) 60%, var(--blue) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hl-3 { display:block; color:var(--text-dim); }
+
+.hero-sub {
+  font-family:'Lora',serif; font-style:italic;
+  font-size:18px; color:var(--text-dim); line-height:1.7;
+  max-width:520px; margin-bottom:48px;
+  animation:fadeInUp 0.6s ease 0.2s both;
+}
+
+/* ── HERO SEARCH ── */
+.hero-search-wrap {
+  max-width:720px;
+  animation:fadeInUp 0.6s ease 0.3s both;
+  margin-bottom:20px;
+}
+.search-shell {
+  display:flex; align-items:center; gap:0;
+  background:var(--surface); border:1.5px solid var(--border2);
+  border-radius:16px; overflow:hidden;
+  transition:border-color 0.25s, box-shadow 0.25s;
+}
+.search-shell:focus-within {
+  border-color:var(--lime);
+  box-shadow:0 0 0 4px rgba(200,255,0,0.1), 0 20px 60px rgba(0,0,0,0.5);
+}
+.search-icon-left {
+  padding:0 18px; color:var(--text-muted); font-size:18px; flex-shrink:0;
+}
+.search-input {
+  flex:1; background:none; border:none;
+  padding:18px 0; color:var(--text);
+  font-family:'JetBrains Mono',monospace; font-size:14px;
+  outline:none;
+}
+.search-input::placeholder { color:var(--text-muted); }
+.search-ask {
+  margin:10px; padding:10px 20px;
+  background:var(--surface3); border:1px solid var(--border2);
+  border-radius:10px; color:var(--text-dim);
+  font-family:'JetBrains Mono',monospace; font-size:12px;
+  cursor:pointer; transition:all 0.2s; white-space:nowrap;
+}
+.search-ask:hover { background:rgba(200,255,0,0.1); color:var(--lime); border-color:rgba(200,255,0,0.3); }
+
+.search-hints {
+  display:flex; gap:8px; flex-wrap:wrap;
+  animation:fadeInUp 0.6s ease 0.4s both;
+}
+.hint {
+  font-size:11px; color:var(--text-muted);
+  padding:5px 12px; border-radius:99px;
+  background:var(--surface); border:1px solid var(--border);
+  cursor:pointer; transition:all 0.2s;
+}
+.hint:hover { color:var(--lime); border-color:rgba(200,255,0,0.3); }
+
+/* ── STATS TICKER ── */
+.stats-row {
+  display:flex; gap:0;
+  margin:52px 0 0;
+  border:1px solid var(--border); border-radius:var(--r-lg);
+  background:var(--surface); overflow:hidden;
+  animation:fadeInUp 0.6s ease 0.5s both;
+  max-width:720px;
+}
+.stat-item {
+  flex:1; padding:20px 28px;
+  border-right:1px solid var(--border);
+  position:relative; overflow:hidden;
+}
+.stat-item:last-child { border-right:none; }
+.stat-item::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, transparent, rgba(200,255,0,0.03));
+  opacity:0; transition:opacity 0.3s;
+}
+.stat-item:hover::before { opacity:1; }
+.stat-num {
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:800; font-size:32px; letter-spacing:-1px;
+  color:var(--lime); line-height:1;
+  margin-bottom:4px;
+}
+.stat-label { font-size:11px; color:var(--text-muted); letter-spacing:0.5px; }
+
+@keyframes fadeInUp {
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* ═══════════════════════════════════════
+   MAIN CONTENT
+═══════════════════════════════════════ */
+.content {
+  position:relative; z-index:2;
+  max-width:1280px; margin:0 auto;
+  padding:0 48px 120px;
+}
+
+/* ── FEATURED BANNER ── */
+.featured-banner {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-xl);
+  padding:36px 40px;
+  margin-bottom:56px;
+  display:grid; grid-template-columns:1fr auto;
+  gap:24px; align-items:center;
+  position:relative; overflow:hidden;
+}
+.featured-banner::before {
+  content:'';
+  position:absolute; left:0; top:0; bottom:0; width:4px;
+  background:linear-gradient(180deg,var(--lime),var(--cyan));
+}
+.featured-banner::after {
+  content:'';
+  position:absolute; right:-80px; top:-80px;
+  width:300px;height:300px; border-radius:50%;
+  background:radial-gradient(circle,rgba(200,255,0,0.07),transparent 70%);
+}
+.featured-tag {
+  font-size:10px; letter-spacing:2px; color:var(--lime);
+  text-transform:uppercase; margin-bottom:10px;
+  display:flex; align-items:center; gap:8px;
+}
+.featured-tag::before { content:'✦'; }
+.featured-h {
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:800; font-size:24px; letter-spacing:-0.5px;
+  margin-bottom:8px;
+}
+.featured-p { font-size:13px; color:var(--text-dim); line-height:1.6; }
+.featured-tools {
+  display:flex; gap:10px;
+}
+.featured-chip {
+  display:flex; align-items:center; gap:8px;
+  padding:10px 16px; border-radius:var(--r);
+  background:var(--surface2); border:1px solid var(--border);
+  font-size:12px; cursor:pointer; transition:all 0.25s;
+  white-space:nowrap;
+}
+.featured-chip:hover {
+  border-color:rgba(200,255,0,0.4);
+  background:rgba(200,255,0,0.06);
+  transform:translateY(-2px);
+}
+.featured-chip .chip-icon { font-size:18px; }
+.featured-chip .chip-name { font-family:'Bricolage Grotesque',sans-serif; font-weight:600; }
+.featured-chip .chip-cat { font-size:10px; color:var(--text-muted); }
+
+/* ── CATEGORY SCROLL ── */
+.cat-section { margin-bottom:40px; }
+.section-label {
+  font-size:11px; letter-spacing:2px; color:var(--text-muted);
+  text-transform:uppercase; margin-bottom:16px;
+}
+.cat-scroll {
+  display:flex; gap:10px; overflow-x:auto; padding-bottom:4px;
+  scrollbar-width:none;
+}
+.cat-scroll::-webkit-scrollbar { display:none; }
+
+.cat-btn {
+  flex-shrink:0;
+  display:flex; align-items:center; gap:8px;
+  padding:10px 20px; border-radius:var(--r);
+  background:var(--surface); border:1.5px solid var(--border);
+  color:var(--text-muted); font-family:'JetBrains Mono',monospace;
+  font-size:12px; cursor:pointer; transition:all 0.22s;
+  user-select:none;
+}
+.cat-btn .cat-icon { font-size:18px; }
+.cat-btn .cat-count {
+  margin-left:4px; font-size:10px;
+  background:var(--surface2); padding:2px 7px; border-radius:99px;
+}
+.cat-btn:hover {
+  border-color:var(--border2); color:var(--text);
+  transform:translateY(-2px);
+}
+.cat-btn.active {
+  background:rgba(200,255,0,0.1); border-color:var(--lime);
+  color:var(--lime);
+  box-shadow:0 0 20px rgba(200,255,0,0.15);
+}
+.cat-btn.active .cat-count { background:rgba(200,255,0,0.15); }
+
+/* ── SECTION HEADER ── */
+.grid-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:24px;
+}
+.grid-title {
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:700; font-size:20px; letter-spacing:-0.5px;
+}
+.grid-count {
+  font-size:12px; color:var(--text-muted);
+  background:var(--surface); border:1px solid var(--border);
+  padding:4px 12px; border-radius:99px;
+}
+
+/* ═══════════════════════════════════════
+   TOOL CARDS
+═══════════════════════════════════════ */
+.tools-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+  gap:16px;
+}
+
+.tool-card {
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:22px;
+  cursor:pointer; position:relative; overflow:hidden;
+  transition:transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  animation:cardIn 0.4s ease both;
+}
+@keyframes cardIn {
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.tool-card::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.02),transparent);
+  opacity:0; transition:opacity 0.25s;
+}
+.tool-card:hover {
+  transform:translateY(-4px);
+  border-color:var(--border2);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--border2);
+}
+.tool-card:hover::before { opacity:1; }
+
+/* accent top bar */
+.card-accent-bar {
+  position:absolute; top:0; left:0; right:0; height:3px;
+  border-radius:var(--r-lg) var(--r-lg) 0 0;
+  opacity:0; transition:opacity 0.3s;
+}
+.tool-card:hover .card-accent-bar { opacity:1; }
+
+.card-header {
+  display:flex; align-items:flex-start; gap:14px; margin-bottom:14px;
+}
+.tool-icon-wrap {
+  width:52px; height:52px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:26px; flex-shrink:0; position:relative;
+  border:1px solid var(--border);
+}
+.tool-icon-wrap::after {
+  content:''; position:absolute; inset:-1px; border-radius:14px;
+  background:inherit; filter:blur(20px); opacity:0.4; z-index:-1;
+}
+.card-header-right { flex:1; min-width:0; }
+.tool-name {
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:700; font-size:17px; letter-spacing:-0.3px;
+  margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.tool-category { font-size:11px; color:var(--text-muted); letter-spacing:0.3px; }
+
+.card-badges { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
+.badge {
+  font-size:10px; font-weight:500; padding:3px 9px;
+  border-radius:6px; letter-spacing:0.3px;
+  font-family:'JetBrains Mono',monospace;
+}
+.b-free    { background:rgba(0,245,212,0.12); color:var(--cyan); border:1px solid rgba(0,245,212,0.2); }
+.b-freemium{ background:rgba(155,93,229,0.12); color:#bf9eff; border:1px solid rgba(155,93,229,0.25); }
+.b-paid    { background:rgba(255,107,53,0.1); color:#ff9a78; border:1px solid rgba(255,107,53,0.2); }
+.b-hot     { background:rgba(200,255,0,0.1); color:var(--lime); border:1px solid rgba(200,255,0,0.25); animation:glow-badge 2s ease-in-out infinite; }
+@keyframes glow-badge {
+  0%,100%{box-shadow:0 0 6px rgba(200,255,0,0.2);}
+  50%{box-shadow:0 0 12px rgba(200,255,0,0.4);}
+}
+
+.tool-tagline {
+  font-size:12.5px; color:var(--text-dim); line-height:1.55;
+  margin-bottom:14px;
+}
+
+.tool-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+.tag {
+  font-size:10px; padding:3px 9px; border-radius:6px;
+  background:var(--surface2); color:var(--text-muted);
+  border:1px solid var(--border);
+}
+
+.card-footer {
+  display:flex; align-items:center; justify-content:space-between;
+  padding-top:14px; border-top:1px solid var(--border);
+}
+.rating { display:flex; align-items:center; gap:6px; }
+.stars { font-size:11px; letter-spacing:-1px; color:var(--lime); }
+.rating-val { font-size:12px; color:var(--text-muted); }
+.visit-link {
+  display:flex; align-items:center; gap:6px;
+  font-size:11px; color:var(--text-muted);
+  background:var(--surface2); border:1px solid var(--border);
+  padding:6px 14px; border-radius:8px;
+  cursor:pointer; text-decoration:none; transition:all 0.2s;
+}
+.visit-link:hover {
+  background:rgba(200,255,0,0.1); color:var(--lime);
+  border-color:rgba(200,255,0,0.35);
+}
+
+/* ═══════════════════════════════════════
+   AGENT PANEL
+═══════════════════════════════════════ */
+.agent-wrap {
+  position:fixed; bottom:28px; right:28px; z-index:500;
+}
+
+.agent-fab {
+  width:64px; height:64px; border-radius:50%;
+  background:linear-gradient(135deg,var(--lime),var(--cyan));
+  border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px; box-shadow:0 8px 32px rgba(200,255,0,0.4);
+  transition:all 0.3s; position:relative;
+  animation:fab-bounce 3s ease-in-out infinite;
+}
+@keyframes fab-bounce {
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+}
+.agent-fab:hover { animation:none; transform:scale(1.1); box-shadow:0 16px 48px rgba(200,255,0,0.6); }
+.fab-ring {
+  position:absolute; inset:-6px; border-radius:50%;
+  border:2px solid rgba(200,255,0,0.3);
+  animation:ring-pulse 2.5s ease-in-out infinite;
+}
+@keyframes ring-pulse {
+  0%,100%{transform:scale(1);opacity:0.6;}
+  50%{transform:scale(1.12);opacity:0.2;}
+}
+.fab-notif {
+  position:absolute; top:0; right:0;
+  width:16px;height:16px; border-radius:50%;
+  background:var(--orange); border:2px solid var(--bg);
+  font-size:9px; color:white; display:flex; align-items:center; justify-content:center;
+  font-weight:bold;
+}
+
+.agent-panel {
+  position:absolute; bottom:76px; right:0;
+  width:440px; border-radius:var(--r-xl);
+  background:var(--surface); border:1px solid var(--border2);
+  box-shadow:0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+  display:none; flex-direction:column; overflow:hidden;
+  max-height:620px;
+}
+.agent-panel.open { display:flex; animation:panelUp 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes panelUp {
+  from{opacity:0;transform:translateY(30px) scale(0.92);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.agent-head {
+  padding:18px 20px;
+  display:flex; align-items:center; gap:12px;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(200,255,0,0.04),rgba(0,245,212,0.04));
+}
+.agent-avi {
+  width:40px; height:40px; border-radius:50%;
+  background:linear-gradient(135deg,var(--purple),var(--lime));
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; flex-shrink:0; position:relative;
+}
+.agent-avi::after {
+  content:''; position:absolute; bottom:0; right:0;
+  width:12px; height:12px; border-radius:50%;
+  background:#00e676; border:2px solid var(--surface);
+  animation:pulse-dot 2s infinite;
+}
+.agent-info { flex:1; }
+.agent-name {
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:700; font-size:15px;
+}
+.agent-status { font-size:11px; color:var(--text-muted); margin-top:2px; }
+.agent-status span { color:#00e676; }
+.close-btn {
+  background:var(--surface2); border:1px solid var(--border);
+  width:30px; height:30px; border-radius:8px;
+  cursor:pointer; color:var(--text-muted); font-size:14px;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s;
+}
+.close-btn:hover { color:var(--text); background:var(--surface3); }
+
+.agent-model-badge {
+  font-size:10px; background:rgba(200,255,0,0.08);
+  border:1px solid rgba(200,255,0,0.2); color:var(--lime);
+  padding:3px 8px; border-radius:6px; letter-spacing:0.3px;
+}
+
+.messages {
+  flex:1; overflow-y:auto; padding:16px;
+  display:flex; flex-direction:column; gap:14px;
+  max-height:400px;
+  scrollbar-width:thin; scrollbar-color:var(--border) transparent;
+}
+
+.msg { display:flex; gap:10px; align-items:flex-start; animation:msgIn 0.3s ease; }
+.msg.user { flex-direction:row-reverse; }
+@keyframes msgIn {
+  from{opacity:0;transform:translateY(8px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.msg-avi {
+  width:30px; height:30px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:14px;
+}
+.msg.ai .msg-avi { background:linear-gradient(135deg,var(--purple),var(--lime)); }
+.msg.user .msg-avi { background:var(--surface3); border:1px solid var(--border); }
+
+.bubble {
+  max-width:82%; padding:11px 15px; border-radius:14px;
+  font-size:13px; line-height:1.6;
+}
+.msg.ai .bubble {
+  background:var(--surface2); border:1px solid var(--border);
+  border-top-left-radius:4px;
+}
+.msg.user .bubble {
+  background:rgba(200,255,0,0.1); border:1px solid rgba(200,255,0,0.2);
+  border-top-right-radius:4px;
+}
+.bubble strong { color:var(--lime); }
+.bubble a { color:var(--cyan); text-decoration:none; }
+.bubble a:hover { text-decoration:underline; }
+.bubble .tool-link {
+  display:inline-flex; align-items:center; gap:5px;
+  background:rgba(200,255,0,0.08); border:1px solid rgba(200,255,0,0.2);
+  padding:3px 10px; border-radius:6px; color:var(--lime);
+  font-size:11px; margin:2px; cursor:pointer; transition:all 0.2s;
+}
+.bubble .tool-link:hover { background:rgba(200,255,0,0.16); }
+
+.quick-chips {
+  display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;
+}
+.qchip {
+  font-size:11px; padding:5px 12px; border-radius:99px;
+  border:1px solid rgba(200,255,0,0.2); color:var(--lime);
+  background:rgba(200,255,0,0.06); cursor:pointer; transition:all 0.2s;
+  font-family:'JetBrains Mono',monospace;
+}
+.qchip:hover { background:rgba(200,255,0,0.14); border-color:rgba(200,255,0,0.4); }
+
+.typing-bubble .bubble {
+  display:flex; align-items:center; gap:5px; padding:14px 16px;
+}
+.tdot {
+  width:7px; height:7px; border-radius:50%; background:var(--text-muted);
+  animation:tdot 1.2s infinite;
+}
+.tdot:nth-child(2){animation-delay:0.2s;}
+.tdot:nth-child(3){animation-delay:0.4s;}
+@keyframes tdot {
+  0%,60%,100%{transform:translateY(0);opacity:0.5;}
+  30%{transform:translateY(-7px);opacity:1;}
+}
+
+.agent-input-row {
+  padding:12px 14px; border-top:1px solid var(--border);
+  display:flex; gap:10px; align-items:flex-end;
+  background:rgba(255,255,255,0.01);
+}
+.agent-textarea {
+  flex:1; background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:12px; padding:11px 14px;
+  color:var(--text); font-family:'JetBrains Mono',monospace;
+  font-size:13px; outline:none; resize:none; transition:border-color 0.2s;
+  min-height:44px; max-height:120px; line-height:1.4;
+}
+.agent-textarea:focus { border-color:var(--lime); }
+.agent-textarea::placeholder { color:var(--text-muted); }
+.send-btn {
+  width:44px; height:44px; border-radius:12px;
+  background:var(--lime); border:none; cursor:pointer;
+  font-size:20px; display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s; flex-shrink:0; color:#05050a;
+}
+.send-btn:hover { background:var(--lime2); transform:scale(1.05); }
+.send-btn:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+
+/* ── API NOTICE ── */
+.api-notice {
+  margin:8px 14px; padding:10px 14px;
+  background:rgba(255,107,53,0.08); border:1px solid rgba(255,107,53,0.2);
+  border-radius:10px; font-size:11px; color:#ff9a78; line-height:1.5;
+}
+.api-notice a { color:var(--lime); text-decoration:none; }
+.api-notice a:hover { text-decoration:underline; }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  display:none; text-align:center; padding:80px 20px;
+}
+.empty-state h3 {
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:22px; margin-bottom:10px;
+}
+.empty-state p { color:var(--text-muted); font-size:13px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding:0 20px; }
+  .nav-pills { display:none; }
+  .hero, .content { padding-left:20px; padding-right:20px; }
+  .hero-headline { font-size:44px; letter-spacing:-2px; }
+  .hero { padding-top:80px; }
+  .stats-row { max-width:100%; }
+  .stat-item { padding:16px 18px; }
+  .stat-num { font-size:26px; }
+  .tools-grid { grid-template-columns:1fr; }
+  .featured-banner { grid-template-columns:1fr; }
+  .featured-tools { flex-wrap:wrap; }
+  .agent-panel { width:calc(100vw - 40px); right:0; }
+  #cursor { display:none; }
+  body { cursor:auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+
+<!-- ANIMATED BACKGROUND -->
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    <span class="logo-text">TOOL</span><span class="logo-accent">VAULT</span>
+  </div>
+  <ul class="nav-pills">
+    <li><a href="#" class="active">Discover</a></li>
+    <li><a href="#">Categories</a></li>
+    <li><a href="#">Compare</a></li>
+    <li><a href="#">New</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button class="btn-agent" onclick="openAgent()">
+      <span class="btn-icon">🤖</span> Ask AI Agent
+    </button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-eyebrow">
+    <div class="eyebrow-dot"></div>
+    The AI Tools Intelligence Platform · 32 tools & growing
+  </div>
+
+  <h1 class="hero-headline">
+    <span class="hl-1">Discover</span>
+    <span class="hl-2">AI tools</span>
+    <span class="hl-3">that work.</span>
+  </h1>
+
+  <p class="hero-sub">Stop searching Reddit threads and YouTube reviews. Our AI agent finds the perfect tool combo for exactly what you're building.</p>
+
+  <div class="hero-search-wrap">
+    <div class="search-shell">
+      <div class="search-icon-left">⌕</div>
+      <input class="search-input" id="searchInput" type="text"
+        placeholder="Try 'free voice cloning' or 'anime video AI'…"
+        oninput="filterTools()" autocomplete="off" />
+      <button class="search-ask" onclick="openAgent(document.getElementById('searchInput').value)">Ask Agent →</button>
+    </div>
+  </div>
+
+  <div class="search-hints">
+    <span class="hint" onclick="setSearch('free image generator')">free image generator</span>
+    <span class="hint" onclick="setSearch('voice cloning')">voice cloning</span>
+    <span class="hint" onclick="setSearch('AI video')">AI video</span>
+    <span class="hint" onclick="setSearch('YouTube')">YouTube tools</span>
+    <span class="hint" onclick="setSearch('coding')">AI coding</span>
+    <span class="hint" onclick="setSearch('music')">music AI</span>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-num" id="statCount">32</div>
+      <div class="stat-label">Tools Curated</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Categories</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4.7★</div>
+      <div class="stat-label">Avg Rating</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Free</div>
+      <div class="stat-label">AI Agent</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MAIN ══ -->
+<main class="content">
+
+  <!-- Featured -->
+  <div class="featured-banner">
+    <div>
+      <div class="featured-tag">This Week's Power Workflow</div>
+      <div class="featured-h">Clone voice + make AI videos in under 30 min 🚀</div>
+      <div class="featured-p">ElevenLabs → HeyGen → Runway. Clone your voice, generate an avatar video, then polish with AI editing. Full pipeline.</div>
+    </div>
+    <div class="featured-tools">
+      <div class="featured-chip" onclick="openAgent('Walk me through using ElevenLabs, HeyGen and Runway together to create YouTube content')">
+        <span class="chip-icon">🎙️</span>
+        <div><div class="chip-name">ElevenLabs</div><div class="chip-cat">Voice</div></div>
+      </div>
+      <div class="featured-chip" onclick="openAgent('How do I use HeyGen AI avatars?')">
+        <span class="chip-icon">👤</span>
+        <div><div class="chip-name">HeyGen</div><div class="chip-cat">Avatars</div></div>
+      </div>
+      <div class="featured-chip" onclick="openAgent('Best way to use Runway Gen-3 for video editing?')">
+        <span class="chip-icon">🎬</span>
+        <div><div class="chip-name">Runway</div><div class="chip-cat">Video</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <div class="cat-section">
+    <div class="section-label">Browse Categories</div>
+    <div class="cat-scroll" id="catScroll">
+      <div class="cat-btn active" data-cat="all" onclick="setCategory(this,'all')">
+        <span class="cat-icon">⚡</span> All Tools <span class="cat-count">32</span>
+      </div>
+      <div class="cat-btn" data-cat="voice" onclick="setCategory(this,'voice')">
+        <span class="cat-icon">🎙️</span> Voice <span class="cat-count">6</span>
+      </div>
+      <div class="cat-btn" data-cat="video" onclick="setCategory(this,'video')">
+        <span class="cat-icon">🎬</span> Video <span class="cat-count">7</span>
+      </div>
+      <div class="cat-btn" data-cat="image" onclick="setCategory(this,'image')">
+        <span class="cat-icon">🖼️</span> Image <span class="cat-count">7</span>
+      </div>
+      <div class="cat-btn" data-cat="writing" onclick="setCategory(this,'writing')">
+        <span class="cat-icon">✍️</span> Writing <span class="cat-count">5</span>
+      </div>
+      <div class="cat-btn" data-cat="coding" onclick="setCategory(this,'coding')">
+        <span class="cat-icon">💻</span> Coding <span class="cat-count">4</span>
+      </div>
+      <div class="cat-btn" data-cat="music" onclick="setCategory(this,'music')">
+        <span class="cat-icon">🎵</span> Music <span class="cat-count">3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid-header">
+    <div class="grid-title" id="gridTitle">All AI Tools</div>
+    <div class="grid-count" id="gridCount">32 tools</div>
+  </div>
+  <div class="tools-grid" id="toolsGrid"></div>
+  <div class="empty-state" id="emptyState">
+    <h3>No tools found</h3>
+    <p>Try a different keyword or ask the AI Agent for recommendations.</p>
+  </div>
+</main>
+
+<!-- ══ AI AGENT ══ -->
+<div class="agent-wrap">
+  <div class="agent-panel" id="agentPanel">
+    <div class="agent-head">
+      <div class="agent-avi">🤖</div>
+      <div class="agent-info">
+        <div class="agent-name">ToolVault AI Agent</div>
+        <div class="agent-status"><span>●</span> Online · Free · No signup needed</div>
+      </div>
+      <div class="agent-model-badge">Mistral AI</div>
+      <button class="close-btn" onclick="closeAgent()">✕</button>
+    </div>
+
+    <div class="messages" id="messages">
+      <div class="msg ai">
+        <div class="msg-avi">🤖</div>
+        <div>
+          <div class="bubble">
+            Hey! 👋 I'm your free AI tools guide. Tell me what you want to create and I'll recommend the <strong>best tools + workflow</strong> for your exact goal!
+          </div>
+          <div class="quick-chips">
+            <div class="qchip" onclick="sendQ('I want to start a YouTube channel with AI tools')">🎥 YouTube channel</div>
+            <div class="qchip" onclick="sendQ('Best free image generators right now')">🖼️ Free image gen</div>
+            <div class="qchip" onclick="sendQ('Clone my voice for free')">🎙️ Voice cloning</div>
+            <div class="qchip" onclick="sendQ('AI tools for coding faster')">💻 AI coding</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="api-notice" id="apiNotice">
+      ⚡ Using <strong>Mistral AI</strong> (free). For best results, get a free key at <a href="https://console.mistral.ai" target="_blank">console.mistral.ai</a> and add it below.
+    </div>
+
+    <!-- API Key input -->
+    <div style="padding:0 14px 8px; display:flex; gap:8px; align-items:center;">
+      <input id="apiKeyInput" type="password"
+        placeholder="Paste Mistral API key (optional)…"
+        style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:11px;outline:none;"
+        oninput="saveKey(this.value)" />
+      <span style="font-size:10px;color:var(--text-muted);">🔒 local only</span>
+    </div>
+
+    <div class="agent-input-row">
+      <textarea class="agent-textarea" id="agentInput"
+        placeholder="Ask about any AI tool or workflow…"
+        onkeydown="handleEnter(event)" oninput="autoH(this)" rows="1"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMsg()">↑</button>
+    </div>
+  </div>
+
+  <button class="agent-fab" onclick="toggleAgent()" title="Open AI Agent">
+    🤖
+    <div class="fab-ring"></div>
+    <div class="fab-notif">1</div>
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+/* ── CURSOR ── */
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('a,button,.cat-btn,.tool-card,.qchip,.hint,.featured-chip').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('big'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+});
+
+/* ── TOOL DATA ── */
+const CAT_COLORS = {
+  voice:  { bar:'linear-gradient(90deg,#c8ff00,#00f5d4)', bg:'rgba(200,255,0,0.08)' },
+  video:  { bar:'linear-gradient(90deg,#ff6b35,#ff3d9a)', bg:'rgba(255,107,53,0.08)' },
+  image:  { bar:'linear-gradient(90deg,#9b5de5,#3d9aff)', bg:'rgba(155,93,229,0.08)' },
+  writing:{ bar:'linear-gradient(90deg,#3d9aff,#00f5d4)', bg:'rgba(61,154,255,0.08)' },
+  coding: { bar:'linear-gradient(90deg,#c8ff00,#9b5de5)', bg:'rgba(200,255,0,0.07)' },
+  music:  { bar:'linear-gradient(90deg,#ff3d9a,#9b5de5)', bg:'rgba(255,61,154,0.08)' },
+};
+
+const TOOLS = [
+  // VOICE
+  {name:"ElevenLabs",icon:"🎙️",cat:"voice",tagline:"Industry-leading voice cloning and AI text-to-speech in 29 languages",tags:["voice clone","TTS","multilingual","API"],pricing:"freemium",rating:4.9,hot:true,url:"https://elevenlabs.io"},
+  {name:"Murf AI",icon:"🎤",cat:"voice",tagline:"Studio-quality voiceovers for videos and podcasts — 120+ voices",tags:["voiceover","podcast","video"],pricing:"freemium",rating:4.7,url:"https://murf.ai"},
+  {name:"Resemble AI",icon:"🔊",cat:"voice",tagline:"Real-time voice cloning with emotion control and instant synthesis",tags:["real-time","emotion","API"],pricing:"paid",rating:4.6,url:"https://resemble.ai"},
+  {name:"Play.ht",icon:"▶️",cat:"voice",tagline:"2500+ voices in 142 languages with ultra-low latency API",tags:["multilingual","API","streaming"],pricing:"freemium",rating:4.5,url:"https://play.ht"},
+  {name:"Replica Studios",icon:"🎭",cat:"voice",tagline:"AI voice actors built for games and entertainment",tags:["gaming","entertainment","actors"],pricing:"paid",rating:4.4,url:"https://replicastudios.com"},
+  {name:"Speechify",icon:"📢",cat:"voice",tagline:"Turn any text into natural spoken audio in seconds",tags:["accessibility","reading","TTS"],pricing:"freemium",rating:4.6,url:"https://speechify.com"},
+  // VIDEO
+  {name:"Runway",icon:"🎬",cat:"video",tagline:"Gen-3 Alpha: text and image to cinematic video — Hollywood quality",tags:["text-to-video","editing","gen-3"],pricing:"freemium",rating:4.8,hot:true,url:"https://runwayml.com"},
+  {name:"Pika Labs",icon:"⚡",cat:"video",tagline:"Create and edit videos with simple text prompts — great for Shorts",tags:["text-to-video","shorts","TikTok"],pricing:"freemium",rating:4.6,hot:true,url:"https://pika.art"},
+  {name:"HeyGen",icon:"👤",cat:"video",tagline:"AI avatar videos — your face, any language, instant translation",tags:["avatars","translation","business"],pricing:"freemium",rating:4.7,url:"https://heygen.com"},
+  {name:"Synthesia",icon:"🤵",cat:"video",tagline:"Professional AI presenter videos at scale for training and comms",tags:["presenters","training","corporate"],pricing:"paid",rating:4.6,url:"https://synthesia.io"},
+  {name:"Kling AI",icon:"🎞️",cat:"video",tagline:"Next-gen video generation with realistic physics simulation",tags:["physics","cinematic","4K"],pricing:"freemium",rating:4.7,hot:true,url:"https://klingai.com"},
+  {name:"Luma Dream",icon:"✨",cat:"video",tagline:"Photorealistic Dream Machine video from text and images",tags:["photorealistic","Dream Machine"],pricing:"freemium",rating:4.5,url:"https://lumalabs.ai"},
+  {name:"Sora",icon:"🌊",cat:"video",tagline:"OpenAI's revolutionary long-form text-to-video AI model",tags:["OpenAI","text-to-video","HD"],pricing:"paid",rating:4.8,hot:true,url:"https://openai.com/sora"},
+  // IMAGE
+  {name:"Midjourney",icon:"🎨",cat:"image",tagline:"The gold standard for AI art — stunning aesthetics every time",tags:["art","illustration","aesthetic"],pricing:"paid",rating:4.9,hot:true,url:"https://midjourney.com"},
+  {name:"DALL-E 3",icon:"🖼️",cat:"image",tagline:"OpenAI's flagship image generator, built into ChatGPT Plus",tags:["OpenAI","realistic","ChatGPT"],pricing:"freemium",rating:4.7,url:"https://openai.com/dall-e-3"},
+  {name:"Stable Diffusion",icon:"🌀",cat:"image",tagline:"Open-source powerhouse — run locally, unlimited and free forever",tags:["open-source","free","local","unlimited"],pricing:"free",rating:4.6,url:"https://stability.ai"},
+  {name:"Adobe Firefly",icon:"🔥",cat:"image",tagline:"Commercially safe AI generation inside Photoshop and Illustrator",tags:["commercial","Adobe","safe"],pricing:"freemium",rating:4.5,url:"https://firefly.adobe.com"},
+  {name:"Ideogram",icon:"💡",cat:"image",tagline:"Best AI for text-in-images — logos, posters, and typography",tags:["text-in-image","logos","design"],pricing:"freemium",rating:4.6,hot:true,url:"https://ideogram.ai"},
+  {name:"Leonardo AI",icon:"🦁",cat:"image",tagline:"Game asset and character art generation with fine-tuning",tags:["gaming","characters","assets"],pricing:"freemium",rating:4.5,url:"https://leonardo.ai"},
+  {name:"Flux",icon:"⚡",cat:"image",tagline:"Black Forest Labs ultra-fast photorealistic model via API",tags:["photorealistic","fast","API","open"],pricing:"freemium",rating:4.7,hot:true,url:"https://flux1.ai"},
+  // WRITING
+  {name:"Claude",icon:"🧠",cat:"writing",tagline:"Anthropic's AI — exceptional long-form writing, analysis, and coding",tags:["writing","analysis","coding","long-form"],pricing:"freemium",rating:4.9,hot:true,url:"https://claude.ai"},
+  {name:"ChatGPT",icon:"💬",cat:"writing",tagline:"OpenAI's flagship — most widely used AI assistant on the planet",tags:["writing","coding","research"],pricing:"freemium",rating:4.8,url:"https://chatgpt.com"},
+  {name:"Jasper AI",icon:"✍️",cat:"writing",tagline:"AI marketing copy at enterprise scale with brand voice",tags:["marketing","SEO","copy","brand"],pricing:"paid",rating:4.4,url:"https://jasper.ai"},
+  {name:"Copy.ai",icon:"📝",cat:"writing",tagline:"AI workflows for sales and marketing teams — GTM automation",tags:["sales","marketing","GTM"],pricing:"freemium",rating:4.3,url:"https://copy.ai"},
+  {name:"Perplexity",icon:"🔍",cat:"writing",tagline:"AI-powered search with real-time web citations — research at speed",tags:["search","research","citations","real-time"],pricing:"freemium",rating:4.7,url:"https://perplexity.ai"},
+  // CODING
+  {name:"GitHub Copilot",icon:"🐙",cat:"coding",tagline:"AI pair programmer built directly into VS Code and JetBrains",tags:["autocomplete","IDE","GitHub","pairs"],pricing:"paid",rating:4.7,url:"https://github.com/features/copilot"},
+  {name:"Cursor",icon:"🖱️",cat:"coding",tagline:"AI-first code editor that writes, refactors, and explains code",tags:["editor","autocomplete","refactor"],pricing:"freemium",rating:4.8,hot:true,url:"https://cursor.sh"},
+  {name:"Claude Code",icon:"⌨️",cat:"coding",tagline:"Agentic coding in your terminal — understands entire codebases",tags:["agentic","terminal","codebase","CLI"],pricing:"paid",rating:4.8,hot:true,url:"https://claude.ai/code"},
+  {name:"v0 by Vercel",icon:"▲",cat:"coding",tagline:"Generate full React UI components from plain text descriptions",tags:["React","UI","Vercel","frontend"],pricing:"freemium",rating:4.6,url:"https://v0.dev"},
+  // MUSIC
+  {name:"Suno AI",icon:"🎵",cat:"music",tagline:"Generate full songs with vocals and lyrics from a text prompt",tags:["songs","vocals","lyrics","full song"],pricing:"freemium",rating:4.7,hot:true,url:"https://suno.ai"},
+  {name:"Udio",icon:"🎼",cat:"music",tagline:"Studio-quality AI music in any genre — sounds fully professional",tags:["studio","genres","production","HD"],pricing:"freemium",rating:4.5,url:"https://udio.com"},
+  {name:"Mubert",icon:"🎛️",cat:"music",tagline:"Royalty-free AI music streams for content creators and apps",tags:["royalty-free","content","API","streaming"],pricing:"freemium",rating:4.3,url:"https://mubert.com"},
+];
+
+let activeCat = 'all';
+let searchQ   = '';
+
+/* ── RENDER ── */
+function renderTools() {
+  const q = searchQ.toLowerCase();
+  const filtered = TOOLS.filter(t => {
+    const catOk = activeCat === 'all' || t.cat === activeCat;
+    const qOk   = !q || t.name.toLowerCase().includes(q)
+      || t.tagline.toLowerCase().includes(q)
+      || t.tags.some(x => x.toLowerCase().includes(q));
+    return catOk && qOk;
+  });
+
+  document.getElementById('gridCount').textContent = `${filtered.length} tool${filtered.length!==1?'s':''}`;
+  document.getElementById('statCount').textContent = TOOLS.length;
+
+  const grid = document.getElementById('toolsGrid');
+  const empty = document.getElementById('emptyState');
+
+  if (!filtered.length) {
+    grid.innerHTML=''; empty.style.display='block'; return;
+  }
+  empty.style.display='none';
+
+  grid.innerHTML = filtered.map((t,i) => {
+    const cc = CAT_COLORS[t.cat];
+    const stars = '★'.repeat(Math.round(t.rating)) + '☆'.repeat(5-Math.round(t.rating));
+    const delay = (i % 9) * 0.05;
+    return `
+    <div class="tool-card" style="animation-delay:${delay}s;background:linear-gradient(160deg,var(--surface),${cc.bg})"
+      onclick="window.open('${t.url}','_blank')">
+      <div class="card-accent-bar" style="background:${cc.bar}"></div>
+      <div class="card-header">
+        <div class="tool-icon-wrap" style="background:${cc.bg}">
+          ${t.icon}
+        </div>
+        <div class="card-header-right">
+          <div class="tool-name">${t.name}</div>
+          <div class="tool-category">${t.cat.toUpperCase()}</div>
+          <div class="card-badges">
+            ${t.hot?'<span class="badge b-hot">🔥 HOT</span>':''}
+            <span class="badge b-${t.pricing}">${t.pricing.toUpperCase()}</span>
+          </div>
+        </div>
+      </div>
+      <div class="tool-tagline">${t.tagline}</div>
+      <div class="tool-tags">${t.tags.map(x=>`<span class="tag">${x}</span>`).join('')}</div>
+      <div class="card-footer">
+        <div class="rating">
+          <span class="stars">${stars}</span>
+          <span class="rating-val">${t.rating}</span>
+        </div>
+        <a class="visit-link" href="${t.url}" target="_blank" onclick="event.stopPropagation()">
+          Visit ↗
+        </a>
+      </div>
+    </div>`;
+  }).join('');
+
+  // re-apply cursor listeners
+  document.querySelectorAll('.tool-card,.visit-link').forEach(el => {
+    el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+    el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+  });
+}
+
+function setCategory(el, cat) {
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  activeCat = cat;
+  const TITLES={all:'All AI Tools',voice:'Voice Cloning',video:'Video Generation',image:'Image Generation',writing:'AI Writing',coding:'AI Coding',music:'Music Generation'};
+  document.getElementById('gridTitle').textContent = TITLES[cat]||'AI Tools';
+  renderTools();
+}
+
+function filterTools() {
+  searchQ = document.getElementById('searchInput').value;
+  renderTools();
+}
+
+function setSearch(q) {
+  document.getElementById('searchInput').value = q;
+  searchQ = q;
+  activeCat = 'all';
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-cat="all"]').classList.add('active');
+  renderTools();
+}
+
+/* ── AGENT STATE ── */
+let agentOpen  = false;
+let chatHistory= [];
+let userApiKey = localStorage.getItem('tv_mistral_key') || '';
+
+function saveKey(v) {
+  userApiKey = v.trim();
+  if (userApiKey) localStorage.setItem('tv_mistral_key', userApiKey);
+}
+// pre-fill key input if stored
+window.addEventListener('DOMContentLoaded', () => {
+  if (userApiKey) document.getElementById('apiKeyInput').value = userApiKey;
+  renderTools();
+});
+
+function toggleAgent() { agentOpen ? closeAgent() : openAgent(); }
+
+function openAgent(prefill) {
+  agentOpen = true;
+  document.getElementById('agentPanel').classList.add('open');
+  document.querySelector('.fab-notif').style.display='none';
+  if (prefill) {
+    document.getElementById('agentInput').value = prefill;
+    setTimeout(sendMsg, 150);
+  } else {
+    document.getElementById('agentInput').focus();
+  }
+}
+function closeAgent() {
+  agentOpen = false;
+  document.getElementById('agentPanel').classList.remove('open');
+}
+
+function handleEnter(e) {
+  if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+}
+function autoH(el) {
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,120)+'px';
+}
+
+function appendMsg(role, html) {
+  const box = document.getElementById('messages');
+  const d = document.createElement('div');
+  d.className = `msg ${role}`;
+  d.innerHTML = `
+    <div class="msg-avi">${role==='ai'?'🤖':'👤'}</div>
+    <div class="bubble">${html}</div>`;
+  box.appendChild(d); box.scrollTop=box.scrollHeight;
+}
+function showTyping() {
+  const box=document.getElementById('messages');
+  const d=document.createElement('div');
+  d.className='msg ai typing-bubble'; d.id='typingEl';
+  d.innerHTML=`<div class="msg-avi">🤖</div><div class="bubble"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>`;
+  box.appendChild(d); box.scrollTop=box.scrollHeight;
+}
+function removeTyping() { const e=document.getElementById('typingEl'); if(e)e.remove(); }
+
+/* ── FREE API CALL (Mistral via HuggingFace) ── */
+async function callFreeAI(userMsg) {
+  const toolList = TOOLS.map(t=>
+    `- ${t.name} (${t.cat}, ${t.pricing}): ${t.tagline} | tags: ${t.tags.join(', ')}`
+  ).join('\n');
+
+  const systemPrompt = `You are ToolVault's expert AI agent. You help users discover the best AI tools for their goals.
+
+TOOL DATABASE (32 tools):
+${toolList}
+
+RULES:
+- Be concise, friendly, and enthusiastic
+- Bold tool names with **Name**
+- Recommend 2-4 tools max unless asked more
+- Explain WHY each tool fits
+- Suggest workflows when relevant (Tool A → Tool B → Tool C)
+- Always mention if a tool is free/freemium/paid
+- Keep responses under 180 words unless a workflow is needed
+- If asked about something outside the database, be honest but still helpful`;
+
+  const messages = [
+    ...chatHistory,
+    { role:'user', content: userMsg }
+  ];
+
+  // Try user's key first (Mistral), then fallback to HuggingFace free
+  if (userApiKey) {
+    try {
+      const res = await fetch('https://api.mistral.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userApiKey}`
+        },
+        body: JSON.stringify({
+          model: 'mistral-small-latest',
+          messages: [{ role:'system', content: systemPrompt }, ...messages],
+          max_tokens: 400
+        })
+      });
+      const d = await res.json();
+      if (d.choices?.[0]?.message?.content) return d.choices[0].message.content;
+    } catch(e) { /* fall through */ }
+  }
+
+  // HuggingFace Inference API — free, no key needed
+  try {
+    const fullPrompt = systemPrompt + '\n\n' +
+      messages.map(m=>`${m.role==='user'?'User':'Assistant'}: ${m.content}`).join('\n') +
+      '\nAssistant:';
+
+    const res = await fetch('https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        inputs: fullPrompt,
+        parameters: { max_new_tokens: 350, temperature: 0.7, return_full_text: false }
+      })
+    });
+    const d = await res.json();
+    if (Array.isArray(d) && d[0]?.generated_text) {
+      // Clean up the response
+      return d[0].generated_text.split('User:')[0].trim();
+    }
+    if (d.error?.includes('loading')) return '⏳ The free AI model is warming up (first request takes ~30s). Please try again in a moment!';
+  } catch(e) { /* fall through */ }
+
+  // Final fallback — smart rule-based responses
+  return smartFallback(userMsg);
+}
+
+function smartFallback(msg) {
+  const m = msg.toLowerCase();
+  if (m.includes('voice') || m.includes('clone') || m.includes('speech')) {
+    return `For **voice cloning**, here are the top picks:\n\n🥇 **ElevenLabs** (freemium) — best quality, 29 languages, very easy to use\n🥈 **Murf AI** (freemium) — great for video voiceovers, 120+ voices\n🥉 **Play.ht** (freemium) — best API access, 2500+ voices\n\nStart with ElevenLabs free tier — clone your voice in under 5 min!`;
+  }
+  if (m.includes('video') || m.includes('youtube') || m.includes('short')) {
+    return `Best **AI video tools** for content creation:\n\n🎬 **Runway** (freemium) — cinematic Gen-3, best quality\n⚡ **Pika Labs** (freemium) — great for Shorts/Reels, easy\n👤 **HeyGen** (freemium) — AI avatar with your face\n🎞️ **Kling AI** (freemium) — physics-accurate, rising fast\n\n**Workflow**: HeyGen avatar → Runway polish → Pika for Shorts!`;
+  }
+  if (m.includes('image') || m.includes('art') || m.includes('picture')) {
+    return `Top **image generators**:\n\n🎨 **Midjourney** (paid) — best aesthetics, industry standard\n⚡ **Flux** (freemium) — ultra-fast photorealism, trending\n💡 **Ideogram** (freemium) — best for text in images, logos\n🌀 **Stable Diffusion** (free) — unlimited, run locally\n\nFor free: start with **Ideogram** or **Stable Diffusion**!`;
+  }
+  if (m.includes('music') || m.includes('song') || m.includes('audio')) {
+    return `🎵 **AI music tools**:\n\n**Suno AI** (freemium) — generate full songs with vocals from text. Best-in-class.\n**Udio** (freemium) — studio quality, any genre\n**Mubert** (freemium) — royalty-free background music for content\n\nFor YouTube-safe music: **Mubert** is safest. For original songs: **Suno AI**!`;
+  }
+  if (m.includes('cod') || m.includes('program') || m.includes('develop')) {
+    return `🔥 **Top AI coding tools** right now:\n\n**Cursor** (freemium) — AI-native editor, fastest workflow\n**Claude Code** (paid) — best for understanding full codebases\n**GitHub Copilot** (paid) — best IDE integration\n**v0 by Vercel** (freemium) — generate React UIs from text\n\nStart with **Cursor** — free tier is very generous!`;
+  }
+  return `I can help you find the perfect AI tools! Tell me more about what you're trying to create.\n\nExamples:\n• "I want to make YouTube videos with AI"\n• "Best free image generator"\n• "Clone my voice for podcasts"\n• "AI coding assistant for Python"`;
+}
+
+async function sendMsg() {
+  const inp = document.getElementById('agentInput');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value=''; inp.style.height='auto';
+  document.getElementById('sendBtn').disabled=true;
+
+  appendMsg('user', text);
+  chatHistory.push({ role:'user', content: text });
+  showTyping();
+
+  const reply = await callFreeAI(text);
+  removeTyping();
+  chatHistory.push({ role:'assistant', content: reply });
+
+  // Format reply
+  const html = reply
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+  appendMsg('ai', html);
+  document.getElementById('sendBtn').disabled=false;
+  document.getElementById('agentInput').focus();
+}
+
+function sendQ(q) {
+  document.getElementById('agentInput').value=q;
+  sendMsg();
+}
+</script>
+</body>
+</html>
