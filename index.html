@@ -837,10 +837,10 @@ nav {
     <div class="section-label">Browse Categories</div>
     <div class="cat-scroll" id="catScroll">
       <div class="cat-btn active" data-cat="all" onclick="setCategory(this,'all')">
-        <span class="cat-icon">⚡</span> All Tools <span class="cat-count">32</span>
+        <span class="cat-icon">⚡</span> All Tools <span class="cat-count">34</span>
       </div>
       <div class="cat-btn" data-cat="voice" onclick="setCategory(this,'voice')">
-        <span class="cat-icon">🎙️</span> Voice <span class="cat-count">6</span>
+        <span class="cat-icon">🎙️</span> Voice <span class="cat-count">7</span>
       </div>
       <div class="cat-btn" data-cat="video" onclick="setCategory(this,'video')">
         <span class="cat-icon">🎬</span> Video <span class="cat-count">7</span>
@@ -849,7 +849,7 @@ nav {
         <span class="cat-icon">🖼️</span> Image <span class="cat-count">7</span>
       </div>
       <div class="cat-btn" data-cat="writing" onclick="setCategory(this,'writing')">
-        <span class="cat-icon">✍️</span> Writing <span class="cat-count">5</span>
+        <span class="cat-icon">✍️</span> Writing <span class="cat-count">6</span>
       </div>
       <div class="cat-btn" data-cat="coding" onclick="setCategory(this,'coding')">
         <span class="cat-icon">💻</span> Coding <span class="cat-count">4</span>
@@ -902,12 +902,7 @@ nav {
       </div>
     </div>
 
-    <div class="api-notice" id="apiNotice">
-      ⚡ Using <strong>Mistral AI</strong> (free). For best results, get a free key at <a href="https://console.mistral.ai" target="_blank">console.mistral.ai</a> and add it below.
-    </div>
-
     <div class="agent-input-row">
-      <input id="apiKeyInput" type="password" placeholder="🔑 Paste Mistral API key here to activate agent…" style="width:100%;background:#141422;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 14px;color:#f0f0f8;font-family:monospace;font-size:12px;outline:none;margin-bottom:8px;" oninput="userApiKey=this.value;localStorage.setItem('tv_key',this.value)" />
       <textarea class="agent-textarea" id="agentInput"
         placeholder="Ask about any AI tool or workflow…"
         onkeydown="handleEnter(event)" oninput="autoH(this)" rows="1"></textarea>
@@ -955,6 +950,7 @@ const TOOLS = [
   {name:"Play.ht",icon:"▶️",cat:"voice",tagline:"2500+ voices in 142 languages with ultra-low latency API",tags:["multilingual","API","streaming"],pricing:"freemium",rating:4.5,url:"https://play.ht"},
   {name:"Replica Studios",icon:"🎭",cat:"voice",tagline:"AI voice actors built for games and entertainment",tags:["gaming","entertainment","actors"],pricing:"paid",rating:4.4,url:"https://replicastudios.com"},
   {name:"Speechify",icon:"📢",cat:"voice",tagline:"Turn any text into natural spoken audio in seconds",tags:["accessibility","reading","TTS"],pricing:"freemium",rating:4.6,url:"https://speechify.com"},
+  { name:"Fish Audio", icon:"🐟", cat:"voice", tagline:"Ultra-realistic voice cloning and text-to-speech with emotion control", tags:["voice clone","realistic","emotion","fast"], pricing:"freemium", rating:4.7, hot:true, url:"https://fish.audio" },
   // VIDEO
   {name:"Runway",icon:"🎬",cat:"video",tagline:"Gen-3 Alpha: text and image to cinematic video — Hollywood quality",tags:["text-to-video","editing","gen-3"],pricing:"freemium",rating:4.8,hot:true,url:"https://runwayml.com"},
   {name:"Pika Labs",icon:"⚡",cat:"video",tagline:"Create and edit videos with simple text prompts — great for Shorts",tags:["text-to-video","shorts","TikTok"],pricing:"freemium",rating:4.6,hot:true,url:"https://pika.art"},
@@ -977,6 +973,7 @@ const TOOLS = [
   {name:"Jasper AI",icon:"✍️",cat:"writing",tagline:"AI marketing copy at enterprise scale with brand voice",tags:["marketing","SEO","copy","brand"],pricing:"paid",rating:4.4,url:"https://jasper.ai"},
   {name:"Copy.ai",icon:"📝",cat:"writing",tagline:"AI workflows for sales and marketing teams — GTM automation",tags:["sales","marketing","GTM"],pricing:"freemium",rating:4.3,url:"https://copy.ai"},
   {name:"Perplexity",icon:"🔍",cat:"writing",tagline:"AI-powered search with real-time web citations — research at speed",tags:["search","research","citations","real-time"],pricing:"freemium",rating:4.7,url:"https://perplexity.ai"},
+  { name:"Thank You AI", icon:"🙏", cat:"writing", tagline:"AI-powered thank you notes and appreciation messages generator", tags:["thank you","notes","messages","gratitude"], pricing:"free", rating:4.5, url:"https://thankyou.ai" },
   // CODING
   {name:"GitHub Copilot",icon:"🐙",cat:"coding",tagline:"AI pair programmer built directly into VS Code and JetBrains",tags:["autocomplete","IDE","GitHub","pairs"],pricing:"paid",rating:4.7,url:"https://github.com/features/copilot"},
   {name:"Cursor",icon:"🖱️",cat:"coding",tagline:"AI-first code editor that writes, refactors, and explains code",tags:["editor","autocomplete","refactor"],pricing:"freemium",rating:4.8,hot:true,url:"https://cursor.sh"},
@@ -1089,7 +1086,6 @@ function saveKey(v) {
 }
 // pre-fill key input if stored
 window.addEventListener('DOMContentLoaded', () => {
-  if (userApiKey) document.getElementById('apiKeyInput').value = userApiKey;
   renderTools();
 });
 
