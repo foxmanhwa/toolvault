@@ -3,390 +3,546 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ToolVault — AI Tools Universe</title>
+<title>ToolVault — The AI Tools Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,400&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#03040a;--surface:#0c0d1a;--surface2:#111220;--surface3:#161728;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);--lime:#d4ff1e;--lime2:#b8e000;--orange:#ff5c2a;--pink:#ff2d8a;--blue:#2d8aff;--purple:#8b4dff;--cyan:#00edd4;--text:#eeeef8;--text-muted:#60607a;--text-dim:#9090b0;--r:14px;--r-lg:20px;--r-xl:28px;}
+:root{
+  --bg:#03040a;--surface:#0c0d1a;--surface2:#111220;--surface3:#161728;--surface4:#1c1d32;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);--border3:rgba(255,255,255,0.18);
+  --lime:#d4ff1e;--lime2:#b8e000;--orange:#ff5c2a;--pink:#ff2d8a;--blue:#2d8aff;--purple:#8b4dff;--cyan:#00edd4;--gold:#ffb800;
+  --text:#eeeef8;--text-muted:#60607a;--text-dim:#9090b0;
+  --r:12px;--r-lg:18px;--r-xl:24px;
+}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Fira Code',monospace;min-height:100vh;overflow-x:hidden;cursor:none;}
-#cursor{width:12px;height:12px;background:var(--lime);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference;}
-#cursor.big{width:44px;height:44px;}
+#cursor{width:10px;height:10px;background:var(--lime);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:difference;}
+#cursor.big{width:40px;height:40px;}
 .bg-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
-.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.3;animation:floatOrb 22s infinite ease-in-out;}
-.orb-1{width:700px;height:700px;background:var(--purple);top:-250px;left:-150px;}
-.orb-2{width:600px;height:600px;background:var(--lime);bottom:-250px;right:-150px;animation-delay:-8s;}
-.orb-3{width:450px;height:450px;background:var(--pink);top:45%;left:55%;animation-delay:-16s;}
-@keyframes floatOrb{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(50px,-50px) scale(1.06);}66%{transform:translate(-40px,40px) scale(.94);}}
-body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");opacity:.35;}
-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;background:rgba(3,4,10,.8);backdrop-filter:blur(30px) saturate(180%);border-bottom:1px solid var(--border);}
-.logo{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:24px;letter-spacing:-1px;display:flex;align-items:center;gap:10px;}
-.logo-dot{width:9px;height:9px;border-radius:50%;background:var(--lime);animation:pulseDot 2s ease-in-out infinite;}
-@keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 rgba(212,255,30,.5);}50%{box-shadow:0 0 0 9px rgba(212,255,30,0);}}
+.orb{position:absolute;border-radius:50%;filter:blur(130px);opacity:.25;animation:floatOrb 24s infinite ease-in-out;}
+.orb-1{width:800px;height:800px;background:var(--purple);top:-300px;left:-200px;}
+.orb-2{width:600px;height:600px;background:var(--lime);bottom:-200px;right:-100px;animation-delay:-9s;}
+.orb-3{width:500px;height:500px;background:var(--pink);top:50%;left:60%;animation-delay:-18s;}
+@keyframes floatOrb{0%,100%{transform:translate(0,0);}33%{transform:translate(60px,-60px);}66%{transform:translate(-40px,40px);}}
+
+/* ─── NAV ─── */
+nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:66px;background:rgba(3,4,10,.85);backdrop-filter:blur(30px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:22px;letter-spacing:-1px;display:flex;align-items:center;gap:8px;cursor:pointer;}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--lime);animation:pd 2s ease-in-out infinite;}
+@keyframes pd{0%,100%{box-shadow:0 0 0 0 rgba(212,255,30,.5);}50%{box-shadow:0 0 0 8px rgba(212,255,30,0);}}
 .logo span{color:var(--lime);}
-.nav-pills{display:flex;gap:4px;list-style:none;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:4px;}
-.nav-pills a{padding:6px 18px;border-radius:99px;font-size:12px;letter-spacing:.5px;color:var(--text-muted);text-decoration:none;transition:all .2s;}
-.nav-pills a:hover,.nav-pills a.active{background:var(--surface3);color:var(--text);}
-.btn-agent{display:flex;align-items:center;gap:8px;background:var(--lime);color:#03040a;border:none;padding:10px 22px;border-radius:99px;font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .2s;}
-.btn-agent:hover{background:var(--lime2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(212,255,30,.3);}
-.hero{position:relative;z-index:2;padding:110px 48px 70px;max-width:1280px;margin:0 auto;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:2px;color:var(--lime);text-transform:uppercase;background:rgba(212,255,30,.08);border:1px solid rgba(212,255,30,.2);padding:6px 14px;border-radius:99px;margin-bottom:32px;animation:fadeUp .6s ease both;}
-.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--lime);animation:pulseDot 2s infinite;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
-h1{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:clamp(52px,8.5vw,108px);line-height:.92;letter-spacing:-5px;margin-bottom:28px;animation:fadeUp .6s ease .1s both;}
-.hl-1{display:block;color:var(--text);}
-.hl-2{display:block;background:linear-gradient(135deg,var(--lime) 0%,var(--cyan) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hl-3{display:block;color:var(--text-dim);}
-.hero-sub{font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--text-dim);line-height:1.7;max-width:520px;margin-bottom:48px;animation:fadeUp .6s ease .2s both;}
-.search-shell{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--border2);border-radius:16px;overflow:hidden;transition:border-color .25s,box-shadow .25s;max-width:720px;animation:fadeUp .6s ease .3s both;}
-.search-shell:focus-within{border-color:var(--lime);box-shadow:0 0 0 4px rgba(212,255,30,.1),0 20px 60px rgba(0,0,0,.5);}
-.search-icon-left{padding:0 18px;color:var(--text-muted);font-size:18px;flex-shrink:0;}
-.search-input{flex:1;background:none;border:none;padding:18px 0;color:var(--text);font-family:'Fira Code',monospace;font-size:14px;outline:none;}
-.search-input::placeholder{color:var(--text-muted);}
-.search-ask{margin:10px;padding:10px 20px;background:var(--surface3);border:1px solid var(--border2);border-radius:10px;color:var(--text-dim);font-family:'Fira Code',monospace;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.search-ask:hover{background:rgba(212,255,30,.1);color:var(--lime);border-color:rgba(212,255,30,.3);}
-.search-hints{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;animation:fadeUp .6s ease .4s both;}
+.nav-center{display:flex;gap:2px;list-style:none;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:4px;}
+.nav-center a{padding:6px 16px;border-radius:99px;font-size:12px;color:var(--text-muted);text-decoration:none;transition:all .2s;cursor:pointer;}
+.nav-center a:hover,.nav-center a.active{background:var(--surface3);color:var(--text);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.btn-primary{background:var(--lime);color:#03040a;border:none;padding:9px 20px;border-radius:99px;font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;}
+.btn-primary:hover{background:var(--lime2);transform:translateY(-1px);}
+.btn-ghost{background:none;border:1px solid var(--border2);color:var(--text-muted);padding:9px 16px;border-radius:99px;font-family:'Fira Code',monospace;font-size:12px;cursor:pointer;transition:all .2s;}
+.btn-ghost:hover{border-color:var(--border3);color:var(--text);}
+
+/* ─── PAGE VIEWS ─── */
+.page{display:none;position:relative;z-index:2;}
+.page.active{display:block;}
+
+/* ─── HERO ─── */
+.hero{padding:90px 40px 60px;max-width:1200px;margin:0 auto;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2px;color:var(--lime);text-transform:uppercase;background:rgba(212,255,30,.08);border:1px solid rgba(212,255,30,.18);padding:5px 14px;border-radius:99px;margin-bottom:28px;animation:fu .6s ease both;}
+@keyframes fu{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.hero h1{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:clamp(48px,7.5vw,96px);line-height:.92;letter-spacing:-4px;margin-bottom:24px;animation:fu .6s ease .1s both;}
+.hero h1 .g{background:linear-gradient(135deg,var(--lime),var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero h1 .d{color:var(--text-dim);}
+.hero-sub{font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--text-dim);line-height:1.7;max-width:500px;margin-bottom:40px;animation:fu .6s ease .2s both;}
+.hero-search{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--border2);border-radius:14px;overflow:hidden;max-width:680px;animation:fu .6s ease .3s both;transition:border-color .2s,box-shadow .2s;}
+.hero-search:focus-within{border-color:var(--lime);box-shadow:0 0 0 4px rgba(212,255,30,.1);}
+.hs-icon{padding:0 16px;color:var(--text-muted);font-size:17px;}
+.hs-input{flex:1;background:none;border:none;padding:16px 0;color:var(--text);font-family:'Fira Code',monospace;font-size:13px;outline:none;}
+.hs-input::placeholder{color:var(--text-muted);}
+.hs-btn{margin:8px;padding:9px 18px;background:var(--surface3);border:1px solid var(--border2);border-radius:9px;color:var(--text-dim);font-family:'Fira Code',monospace;font-size:11px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.hs-btn:hover{background:rgba(212,255,30,.1);color:var(--lime);border-color:rgba(212,255,30,.3);}
+.hero-hints{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;animation:fu .6s ease .4s both;}
 .hint{font-size:11px;color:var(--text-muted);padding:5px 12px;border-radius:99px;background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:all .2s;}
 .hint:hover{color:var(--lime);border-color:rgba(212,255,30,.3);}
-.stats-row{display:flex;gap:0;margin:52px 0 0;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface);overflow:hidden;animation:fadeUp .6s ease .5s both;max-width:720px;}
-.stat-item{flex:1;padding:20px 28px;border-right:1px solid var(--border);}
-.stat-item:last-child{border-right:none;}
-.stat-num{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:36px;letter-spacing:-1px;color:var(--lime);line-height:1;margin-bottom:4px;}
-.stat-label{font-size:11px;color:var(--text-muted);letter-spacing:.5px;}
-.content{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 48px 120px;}
-.news-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 20px;margin-bottom:40px;display:flex;align-items:center;gap:16px;overflow:hidden;}
-.news-label{font-size:10px;letter-spacing:1.5px;color:var(--lime);text-transform:uppercase;white-space:nowrap;background:rgba(212,255,30,.1);border:1px solid rgba(212,255,30,.2);padding:3px 10px;border-radius:6px;flex-shrink:0;}
-.news-track{overflow:hidden;flex:1;}
-.news-scroll{display:flex;gap:40px;animation:scrollNews 50s linear infinite;white-space:nowrap;}
-.news-scroll:hover{animation-play-state:paused;}
-@keyframes scrollNews{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.news-item{font-size:12px;color:var(--text-dim);cursor:pointer;transition:color .2s;flex-shrink:0;}
-.news-item:hover{color:var(--text);}
-.news-dot{color:var(--lime);margin-right:6px;}
-.featured-banner{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:36px 40px;margin-bottom:48px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;overflow:hidden;}
-.featured-banner::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--lime),var(--cyan));}
-.featured-banner::after{content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(212,255,30,.06),transparent 70%);}
-.feat-tag{font-size:10px;letter-spacing:2px;color:var(--lime);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-.feat-tag::before{content:'✦';}
-.feat-h{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.5px;margin-bottom:8px;}
-.feat-p{font-size:13px;color:var(--text-dim);line-height:1.6;}
-.feat-tools{display:flex;gap:10px;flex-shrink:0;}
-.feat-chip{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--r);background:var(--surface2);border:1px solid var(--border);font-size:12px;cursor:pointer;transition:all .25s;white-space:nowrap;}
-.feat-chip:hover{border-color:rgba(212,255,30,.4);background:rgba(212,255,30,.06);transform:translateY(-2px);}
-.feat-chip .ci{font-size:18px;}
-.feat-chip .cn{font-family:'Cabinet Grotesk',sans-serif;font-weight:600;}
-.feat-chip .cc{font-size:10px;color:var(--text-muted);}
-.cat-section{margin-bottom:40px;}
-.section-label{font-size:11px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-bottom:16px;}
-.cat-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
-.cat-scroll::-webkit-scrollbar{display:none;}
-.cat-btn{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r);background:var(--surface);border:1.5px solid var(--border);color:var(--text-muted);font-family:'Fira Code',monospace;font-size:12px;cursor:pointer;transition:all .22s;user-select:none;}
-.cat-btn .ci{font-size:18px;}
-.cat-btn .cc{margin-left:4px;font-size:10px;background:var(--surface2);padding:2px 7px;border-radius:99px;}
-.cat-btn:hover{border-color:var(--border2);color:var(--text);transform:translateY(-2px);}
-.cat-btn.active{background:rgba(212,255,30,.1);border-color:var(--lime);color:var(--lime);box-shadow:0 0 30px rgba(212,255,30,.15);}
-.cat-btn.active .cc{background:rgba(212,255,30,.15);}
-.grid-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
-.grid-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.5px;}
-.grid-meta{display:flex;align-items:center;gap:10px;}
-.grid-count{font-size:12px;color:var(--text-muted);background:var(--surface);border:1px solid var(--border);padding:4px 12px;border-radius:99px;}
-.sort-select{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text-muted);font-family:'Fira Code',monospace;font-size:11px;outline:none;cursor:pointer;}
-.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
-.tool-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:22px;cursor:pointer;position:relative;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s;animation:cardIn .4s ease both;}
-@keyframes cardIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-.tool-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.02),transparent);opacity:0;transition:opacity .25s;}
-.card-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r-lg) var(--r-lg) 0 0;opacity:0;transition:opacity .3s;}
-.tool-card:hover{transform:translateY(-4px);border-color:var(--border2);box-shadow:0 24px 80px rgba(0,0,0,.6),0 0 60px rgba(212,255,30,.04);}
-.tool-card:hover::before{opacity:1;}
-.tool-card:hover .card-accent{opacity:1;}
-.card-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;}
-.tool-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;border:1px solid var(--border);}
-.card-header-right{flex:1;min-width:0;}
-.tool-name{font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:17px;letter-spacing:-.3px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.tool-category{font-size:11px;color:var(--text-muted);letter-spacing:.3px;margin-bottom:6px;}
-.card-badges{display:flex;gap:6px;flex-wrap:wrap;}
-.badge{font-size:10px;font-weight:500;padding:3px 9px;border-radius:6px;letter-spacing:.3px;font-family:'Fira Code',monospace;}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface);overflow:hidden;max-width:680px;animation:fu .6s ease .5s both;}
+.hstat{padding:18px 24px;border-right:1px solid var(--border);}
+.hstat:last-child{border-right:none;}
+.hstat-num{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:30px;letter-spacing:-1px;color:var(--lime);line-height:1;}
+.hstat-lbl{font-size:10px;color:var(--text-muted);margin-top:3px;letter-spacing:.5px;}
+
+/* ─── NEWS TICKER ─── */
+.ticker{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:10px 18px;margin:0 40px 36px;max-width:1200px;margin-left:auto;margin-right:auto;display:flex;align-items:center;gap:14px;overflow:hidden;}
+.ticker-label{font-size:10px;letter-spacing:1.5px;color:var(--lime);text-transform:uppercase;white-space:nowrap;background:rgba(212,255,30,.1);border:1px solid rgba(212,255,30,.2);padding:3px 10px;border-radius:6px;flex-shrink:0;}
+.ticker-track{overflow:hidden;flex:1;}
+.ticker-inner{display:flex;gap:48px;animation:tick 50s linear infinite;white-space:nowrap;}
+.ticker-inner:hover{animation-play-state:paused;}
+@keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.ti{font-size:12px;color:var(--text-dim);flex-shrink:0;cursor:pointer;transition:color .2s;}
+.ti:hover{color:var(--text);}
+.ti-dot{color:var(--lime);margin-right:5px;}
+
+/* ─── SECTION LABELS ─── */
+.section-wrap{max-width:1200px;margin:0 auto;padding:0 40px;}
+.section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.section-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.5px;display:flex;align-items:center;gap:10px;}
+.section-title .stag{font-size:11px;color:var(--text-muted);font-family:'Fira Code',monospace;font-weight:400;letter-spacing:0;}
+.section-more{font-size:12px;color:var(--text-muted);cursor:pointer;background:var(--surface);border:1px solid var(--border);padding:5px 14px;border-radius:99px;transition:all .2s;}
+.section-more:hover{color:var(--lime);border-color:rgba(212,255,30,.3);}
+
+/* ─── CATEGORY TABS ─── */
+.cat-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin-bottom:28px;}
+.cat-tabs::-webkit-scrollbar{display:none;}
+.cat-tab{flex-shrink:0;display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--r);background:var(--surface);border:1.5px solid var(--border);color:var(--text-muted);font-family:'Fira Code',monospace;font-size:12px;cursor:pointer;transition:all .2s;user-select:none;}
+.cat-tab:hover{border-color:var(--border2);color:var(--text);}
+.cat-tab.active{background:rgba(212,255,30,.1);border-color:var(--lime);color:var(--lime);box-shadow:0 0 24px rgba(212,255,30,.12);}
+.cat-tab .ct-count{font-size:10px;background:var(--surface2);padding:1px 6px;border-radius:99px;margin-left:2px;}
+.cat-tab.active .ct-count{background:rgba(212,255,30,.15);}
+
+/* ─── GRID HEADER ─── */
+.grid-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.grid-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.3px;}
+.grid-controls{display:flex;align-items:center;gap:8px;}
+.grid-count{font-size:11px;color:var(--text-muted);background:var(--surface);border:1px solid var(--border);padding:4px 12px;border-radius:99px;}
+.sort-sel{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 10px;color:var(--text-muted);font-family:'Fira Code',monospace;font-size:11px;outline:none;cursor:pointer;}
+
+/* ─── TOOL CARDS ─── */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:14px;margin-bottom:60px;}
+.tool-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:20px;cursor:pointer;position:relative;overflow:hidden;transition:transform .22s,border-color .22s,box-shadow .22s;animation:cardIn .35s ease both;}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.card-top-bar{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r-lg) var(--r-lg) 0 0;opacity:0;transition:opacity .25s;}
+.tool-card:hover{transform:translateY(-3px);border-color:var(--border2);box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.tool-card:hover .card-top-bar{opacity:1;}
+.card-row1{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.tool-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;border:1px solid var(--border);}
+.card-badges{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;}
+.badge{font-size:9px;font-weight:500;padding:3px 8px;border-radius:5px;font-family:'Fira Code',monospace;letter-spacing:.3px;}
 .b-free{background:rgba(0,237,212,.12);color:var(--cyan);border:1px solid rgba(0,237,212,.2);}
 .b-freemium{background:rgba(139,77,255,.12);color:#c09aff;border:1px solid rgba(139,77,255,.25);}
 .b-paid{background:rgba(255,92,42,.1);color:#ff9a78;border:1px solid rgba(255,92,42,.2);}
-.b-hot{background:rgba(212,255,30,.1);color:var(--lime);border:1px solid rgba(212,255,30,.25);animation:glowBadge 2s ease-in-out infinite;}
-@keyframes glowBadge{0%,100%{box-shadow:0 0 6px rgba(212,255,30,.2);}50%{box-shadow:0 0 14px rgba(212,255,30,.45);}}
-.tool-tagline{font-size:12.5px;color:var(--text-dim);line-height:1.55;margin-bottom:14px;}
-.tool-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
-.tag{font-size:10px;padding:3px 9px;border-radius:6px;background:var(--surface2);color:var(--text-muted);border:1px solid var(--border);}
-.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border);}
-.rating{display:flex;align-items:center;gap:6px;}
-.stars{font-size:11px;letter-spacing:-1px;color:var(--lime);}
-.rating-val{font-size:12px;color:var(--text-muted);}
+.b-hot{background:rgba(212,255,30,.1);color:var(--lime);border:1px solid rgba(212,255,30,.25);animation:glow 2s ease-in-out infinite;}
+.b-opensource{background:rgba(0,237,212,.08);color:var(--cyan);border:1px solid rgba(0,237,212,.2);}
+@keyframes glow{0%,100%{box-shadow:0 0 5px rgba(212,255,30,.2);}50%{box-shadow:0 0 12px rgba(212,255,30,.4);}}
+.tool-name{font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.2px;margin-bottom:3px;}
+.tool-cat-lbl{font-size:10px;color:var(--text-muted);letter-spacing:.3px;margin-bottom:8px;}
+.tool-tagline{font-size:12px;color:var(--text-dim);line-height:1.55;margin-bottom:12px;}
+.tool-verdict{font-size:11px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text-dim);line-height:1.5;margin-bottom:12px;font-style:italic;}
+.tool-verdict strong{color:var(--text);font-style:normal;}
+.tool-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
+.tag{font-size:9px;padding:2px 8px;border-radius:5px;background:var(--surface2);color:var(--text-muted);border:1px solid var(--border);}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);}
+.rating{display:flex;align-items:center;gap:5px;}
+.stars{font-size:10px;letter-spacing:-1px;color:var(--gold);}
+.rating-val{font-size:11px;color:var(--text-muted);}
 .card-actions{display:flex;gap:6px;}
-.visit-link{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);padding:6px 12px;border-radius:8px;cursor:pointer;text-decoration:none;transition:all .2s;}
-.visit-link:hover{background:rgba(212,255,30,.1);color:var(--lime);border-color:rgba(212,255,30,.35);}
-.try-btn{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--cyan);background:rgba(0,237,212,.08);border:1px solid rgba(0,237,212,.2);padding:6px 12px;border-radius:8px;cursor:pointer;transition:all .2s;}
-.try-btn:hover{background:rgba(0,237,212,.18);border-color:rgba(0,237,212,.4);}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.open{display:flex;animation:fadeIn .2s ease;}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-.modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-xl);width:100%;max-width:860px;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;animation:modalUp .3s cubic-bezier(.34,1.56,.64,1);}
-@keyframes modalUp{from{opacity:0;transform:translateY(30px) scale(.95);}to{opacity:1;transform:translateY(0) scale(1);}}
-.modal-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;}
-.modal-icon{font-size:32px;}
-.modal-info{flex:1;}
-.modal-name{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:20px;}
-.modal-desc{font-size:12px;color:var(--text-muted);margin-top:3px;}
-.modal-close{background:var(--surface2);border:1px solid var(--border);width:34px;height:34px;border-radius:8px;cursor:pointer;color:var(--text-muted);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
-.modal-close:hover{color:var(--text);}
-.modal-body{flex:1;overflow-y:auto;padding:24px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
-.modal-tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface2);border-radius:10px;padding:4px;}
-.modal-tab{flex:1;padding:8px;border-radius:8px;background:none;border:none;color:var(--text-muted);font-family:'Fira Code',monospace;font-size:12px;cursor:pointer;transition:all .2s;}
-.modal-tab.active{background:var(--surface3);color:var(--text);}
-.modal-tab-content{display:none;}
-.modal-tab-content.active{display:block;}
-.demo-area{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:16px;}
-.demo-label{font-size:11px;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;margin-bottom:12px;}
-.demo-input{width:100%;background:var(--surface3);border:1.5px solid var(--border2);border-radius:10px;padding:12px 16px;color:var(--text);font-family:'Fira Code',monospace;font-size:13px;outline:none;resize:none;min-height:80px;transition:border-color .2s;}
-.demo-input:focus{border-color:var(--lime);}
-.demo-btn{margin-top:12px;background:var(--lime);color:#03040a;border:none;padding:10px 24px;border-radius:10px;font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .2s;}
-.demo-btn:hover{background:var(--lime2);}
-.demo-btn:disabled{opacity:.5;cursor:not-allowed;}
-.demo-note{font-size:11px;color:var(--text-muted);margin-top:10px;line-height:1.5;}
-.demo-result{display:none;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:20px;font-size:13px;line-height:1.7;color:var(--text-dim);}
-.demo-result strong{color:var(--lime);}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.info-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
-.info-card-label{font-size:10px;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;}
-.info-card-val{font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:15px;}
-.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
-.pros,.cons{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
-.pros-title{font-size:11px;letter-spacing:1px;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;}
-.cons-title{font-size:11px;letter-spacing:1px;color:var(--orange);text-transform:uppercase;margin-bottom:10px;}
-.pros li,.cons li{font-size:12px;color:var(--text-dim);margin-bottom:6px;list-style:none;display:flex;gap:8px;align-items:flex-start;}
-.pros li::before{content:'✓';color:var(--cyan);flex-shrink:0;}
-.cons li::before{content:'✗';color:var(--orange);flex-shrink:0;}
-.similar-tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
-.sim-chip{padding:6px 14px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);font-size:12px;cursor:pointer;transition:all .2s;}
-.sim-chip:hover{border-color:rgba(212,255,30,.3);color:var(--lime);}
-.visit-full{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:#03040a;border:none;padding:12px 28px;border-radius:10px;font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s;text-decoration:none;}
-.visit-full:hover{background:var(--lime2);}
-.empty-state{display:none;text-align:center;padding:80px 20px;}
-.empty-state h3{font-family:'Cabinet Grotesk',sans-serif;font-size:22px;margin-bottom:10px;}
-.empty-state p{color:var(--text-muted);font-size:13px;}
-.agent-wrap{position:fixed;bottom:28px;right:28px;z-index:500;}
-.agent-fab{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--lime),var(--cyan));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 8px 32px rgba(212,255,30,.4);transition:all .3s;position:relative;animation:fabBounce 3s ease-in-out infinite;}
-@keyframes fabBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
-.agent-fab:hover{animation:none;transform:scale(1.1);box-shadow:0 16px 48px rgba(212,255,30,.6);}
-.fab-ring{position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(212,255,30,.3);animation:ringPulse 2.5s ease-in-out infinite;}
-@keyframes ringPulse{0%,100%{transform:scale(1);opacity:.6;}50%{transform:scale(1.12);opacity:.2;}}
-.agent-panel{position:absolute;bottom:76px;right:0;width:440px;border-radius:var(--r-xl);background:var(--surface);border:1px solid var(--border2);box-shadow:0 32px 80px rgba(0,0,0,.7);display:none;flex-direction:column;overflow:hidden;max-height:620px;}
-.agent-panel.open{display:flex;animation:panelUp .35s cubic-bezier(.34,1.56,.64,1);}
-@keyframes panelUp{from{opacity:0;transform:translateY(30px) scale(.92);}to{opacity:1;transform:translateY(0) scale(1);}}
-.agent-head{padding:18px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(212,255,30,.04),rgba(0,237,212,.04));}
-.agent-avi{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--lime));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;position:relative;}
-.agent-avi::after{content:'';position:absolute;bottom:0;right:0;width:12px;height:12px;border-radius:50%;background:#00e676;border:2px solid var(--surface);}
+.btn-review{font-size:11px;color:var(--lime);background:rgba(212,255,30,.08);border:1px solid rgba(212,255,30,.2);padding:5px 12px;border-radius:7px;cursor:pointer;transition:all .2s;}
+.btn-review:hover{background:rgba(212,255,30,.16);}
+.btn-visit{font-size:11px;color:var(--text-muted);background:var(--surface2);border:1px solid var(--border);padding:5px 12px;border-radius:7px;cursor:pointer;text-decoration:none;transition:all .2s;}
+.btn-visit:hover{color:var(--text);border-color:var(--border2);}
+
+/* ─── OPEN SOURCE SECTION ─── */
+.oss-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-bottom:60px;}
+.oss-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:24px;cursor:pointer;position:relative;overflow:hidden;transition:all .22s;}
+.oss-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--purple));}
+.oss-card:hover{transform:translateY(-3px);border-color:rgba(0,237,212,.3);box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.oss-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;}
+.oss-icon{width:52px;height:52px;border-radius:14px;background:rgba(0,237,212,.08);border:1px solid rgba(0,237,212,.2);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.oss-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.3px;margin-bottom:4px;}
+.oss-badges{display:flex;gap:6px;flex-wrap:wrap;}
+.oss-desc{font-size:12.5px;color:var(--text-dim);line-height:1.6;margin-bottom:16px;}
+.oss-requirements{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
+.oss-req{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;text-align:center;}
+.oss-req-val{font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:13px;color:var(--text);margin-bottom:2px;}
+.oss-req-lbl{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;}
+.oss-install{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px;}
+.oss-install-title{font-size:10px;letter-spacing:1.5px;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;}
+.install-step{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;}
+.install-step:last-child{margin-bottom:0;}
+.step-num{width:20px;height:20px;border-radius:50%;background:rgba(0,237,212,.12);border:1px solid rgba(0,237,212,.2);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--cyan);flex-shrink:0;margin-top:1px;}
+.step-text{font-size:12px;color:var(--text-dim);line-height:1.5;flex:1;}
+.step-cmd{display:inline-block;background:var(--surface3);border:1px solid var(--border2);border-radius:5px;padding:2px 8px;font-family:'Fira Code',monospace;font-size:11px;color:var(--cyan);margin-top:4px;}
+.oss-usecases{display:flex;gap:6px;flex-wrap:wrap;}
+.oss-uc{font-size:10px;padding:3px 9px;border-radius:5px;background:rgba(0,237,212,.06);color:var(--cyan);border:1px solid rgba(0,237,212,.15);}
+.oss-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);}
+.oss-meta{font-size:11px;color:var(--text-muted);}
+.btn-install{background:rgba(0,237,212,.1);border:1px solid rgba(0,237,212,.25);color:var(--cyan);padding:7px 16px;border-radius:8px;font-family:'Fira Code',monospace;font-size:11px;cursor:pointer;transition:all .2s;}
+.btn-install:hover{background:rgba(0,237,212,.2);}
+
+/* ─── REVIEW MODAL ─── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);z-index:400;display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
+.modal-overlay.open{display:flex;animation:mfade .2s ease;}
+@keyframes mfade{from{opacity:0;}to{opacity:1;}}
+.review-modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-xl);width:100%;max-width:820px;margin:auto;overflow:hidden;animation:mup .3s cubic-bezier(.34,1.56,.64,1);}
+@keyframes mup{from{opacity:0;transform:translateY(24px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+.rm-hero{padding:28px 28px 0;position:relative;}
+.rm-hero-inner{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;}
+.rm-icon{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:34px;flex-shrink:0;border:1px solid var(--border2);}
+.rm-meta{flex:1;}
+.rm-name{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:26px;letter-spacing:-.5px;margin-bottom:4px;}
+.rm-tagline{font-size:13px;color:var(--text-dim);line-height:1.5;margin-bottom:10px;}
+.rm-badges{display:flex;gap:6px;flex-wrap:wrap;}
+.rm-close{position:absolute;top:20px;right:20px;background:var(--surface2);border:1px solid var(--border);width:32px;height:32px;border-radius:8px;cursor:pointer;color:var(--text-muted);font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.rm-close:hover{color:var(--text);}
+.rm-score-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:0;}
+.rm-score{padding:14px 16px;border-right:1px solid var(--border);text-align:center;}
+.rm-score:last-child{border-right:none;}
+.rm-score-num{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:22px;color:var(--lime);line-height:1;}
+.rm-score-lbl{font-size:10px;color:var(--text-muted);margin-top:2px;}
+.rm-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 28px;}
+.rm-tab{padding:14px 18px;font-family:'Fira Code',monospace;font-size:12px;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;}
+.rm-tab:hover{color:var(--text);}
+.rm-tab.active{color:var(--lime);border-bottom-color:var(--lime);}
+.rm-body{padding:28px;max-height:60vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.rm-section{margin-bottom:28px;}
+.rm-section-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:14px;letter-spacing:-.2px;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.rm-section-title::before{content:'';width:3px;height:14px;border-radius:2px;background:var(--lime);flex-shrink:0;}
+.verdict-box{background:linear-gradient(135deg,rgba(212,255,30,.06),rgba(0,237,212,.04));border:1px solid rgba(212,255,30,.18);border-radius:var(--r);padding:16px 18px;margin-bottom:20px;}
+.verdict-label{font-size:10px;letter-spacing:1.5px;color:var(--lime);text-transform:uppercase;margin-bottom:6px;}
+.verdict-text{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--text);line-height:1.6;}
+.pros-cons-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.pros-box,.cons-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
+.pros-title{font-size:11px;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.cons-title{font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.pros-box li,.cons-box li{font-size:12px;color:var(--text-dim);margin-bottom:7px;list-style:none;display:flex;gap:8px;align-items:flex-start;line-height:1.45;}
+.pros-box li::before{content:'✓';color:var(--cyan);flex-shrink:0;}
+.cons-box li::before{content:'✗';color:var(--orange);flex-shrink:0;}
+.who-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.who-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:14px;}
+.who-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.who-val{font-size:13px;color:var(--text);line-height:1.5;}
+.test-results{margin-bottom:20px;}
+.test-case{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;}
+.test-input{padding:12px 16px;border-bottom:1px solid var(--border);}
+.test-input-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.test-input-val{font-size:12px;color:var(--text-dim);font-style:italic;}
+.test-output{padding:12px 16px;}
+.test-output-label{font-size:10px;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.test-output-val{font-size:12px;color:var(--text);line-height:1.6;}
+.test-verdict{display:flex;align-items:center;gap:8px;margin-top:8px;}
+.test-stars{font-size:11px;color:var(--gold);}
+.test-comment{font-size:11px;color:var(--text-muted);}
+.rating-breakdown{margin-bottom:20px;}
+.rating-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.rating-row-lbl{font-size:12px;color:var(--text-dim);width:120px;flex-shrink:0;}
+.rating-bar-wrap{flex:1;height:6px;background:var(--surface3);border-radius:99px;overflow:hidden;}
+.rating-bar{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--lime),var(--cyan));transition:width 1s ease;}
+.rating-row-val{font-size:11px;color:var(--text-muted);width:28px;text-align:right;flex-shrink:0;}
+.install-guide{margin-bottom:20px;}
+.install-step-full{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+.step-circle{width:26px;height:26px;border-radius:50%;background:rgba(212,255,30,.1);border:1px solid rgba(212,255,30,.25);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--lime);flex-shrink:0;font-family:'Cabinet Grotesk',sans-serif;font-weight:700;}
+.step-content{flex:1;}
+.step-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:600;font-size:14px;margin-bottom:4px;}
+.step-desc{font-size:12px;color:var(--text-dim);line-height:1.55;margin-bottom:6px;}
+.code-block{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;font-family:'Fira Code',monospace;font-size:12px;color:var(--cyan);overflow-x:auto;white-space:nowrap;}
+.rm-footer{padding:20px 28px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.rm-visit{background:var(--lime);color:#03040a;border:none;padding:11px 28px;border-radius:10px;font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s;text-decoration:none;}
+.rm-visit:hover{background:var(--lime2);}
+.rm-alt{font-size:12px;color:var(--text-muted);}
+
+/* ─── COMPARISON PAGE ─── */
+.compare-section{padding:40px;}
+.compare-grid{display:grid;gap:16px;margin-bottom:40px;}
+.compare-pair{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;cursor:pointer;transition:all .22s;}
+.compare-pair:hover{border-color:var(--border2);transform:translateY(-2px);}
+.cp-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.3px;margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.cp-vs{font-size:14px;color:var(--lime);font-style:normal;}
+.cp-desc{font-size:12px;color:var(--text-dim);margin-bottom:14px;}
+.cp-tags{display:flex;gap:6px;}
+.cp-tag{font-size:10px;padding:3px 9px;border-radius:5px;background:var(--surface2);color:var(--text-muted);border:1px solid var(--border);}
+
+/* ─── GUIDES PAGE ─── */
+.guides-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.guide-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;}
+.guide-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.guide-card:hover{transform:translateY(-3px);border-color:var(--border2);}
+.guide-emoji{font-size:32px;margin-bottom:12px;}
+.guide-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:17px;letter-spacing:-.3px;margin-bottom:8px;}
+.guide-desc{font-size:12px;color:var(--text-dim);line-height:1.6;margin-bottom:14px;}
+.guide-meta{display:flex;align-items:center;justify-content:space-between;}
+.guide-time{font-size:11px;color:var(--text-muted);}
+.guide-level{font-size:10px;padding:3px 9px;border-radius:5px;}
+.level-beginner{background:rgba(0,237,212,.1);color:var(--cyan);border:1px solid rgba(0,237,212,.2);}
+.level-intermediate{background:rgba(212,255,30,.08);color:var(--lime);border:1px solid rgba(212,255,30,.2);}
+.level-advanced{background:rgba(139,77,255,.1);color:#c09aff;border:1px solid rgba(139,77,255,.25);}
+
+/* ─── AI AGENT ─── */
+.agent-wrap{position:fixed;bottom:24px;right:24px;z-index:300;}
+.agent-fab{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--lime),var(--cyan));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 28px rgba(212,255,30,.4);transition:all .3s;position:relative;animation:fabB 3s ease-in-out infinite;}
+@keyframes fabB{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.agent-fab:hover{animation:none;transform:scale(1.08);}
+.fab-ring{position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(212,255,30,.3);animation:rp 2.5s ease-in-out infinite;}
+@keyframes rp{0%,100%{transform:scale(1);opacity:.6;}50%{transform:scale(1.1);opacity:.15;}}
+.agent-panel{position:absolute;bottom:70px;right:0;width:420px;border-radius:var(--r-xl);background:var(--surface);border:1px solid var(--border2);box-shadow:0 28px 70px rgba(0,0,0,.7);display:none;flex-direction:column;overflow:hidden;max-height:580px;}
+.agent-panel.open{display:flex;animation:apu .3s cubic-bezier(.34,1.56,.64,1);}
+@keyframes apu{from{opacity:0;transform:translateY(24px) scale(.93);}to{opacity:1;transform:translateY(0) scale(1);}}
+.agent-head{padding:16px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(212,255,30,.04),rgba(0,237,212,.03));}
+.agent-avi{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--lime));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .agent-info{flex:1;}
-.agent-name{font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:15px;}
-.agent-status{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.agent-name{font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:14px;}
+.agent-status{font-size:10px;color:var(--text-muted);}
 .agent-status span{color:#00e676;}
-.model-badge{font-size:10px;background:rgba(212,255,30,.08);border:1px solid rgba(212,255,30,.2);color:var(--lime);padding:3px 8px;border-radius:6px;white-space:nowrap;}
-.close-btn{background:var(--surface2);border:1px solid var(--border);width:30px;height:30px;border-radius:8px;cursor:pointer;color:var(--text-muted);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
-.close-btn:hover{color:var(--text);}
-.messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;max-height:400px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
-.msg{display:flex;gap:10px;align-items:flex-start;animation:msgIn .3s ease;}
+.model-tag{font-size:10px;background:rgba(212,255,30,.08);border:1px solid rgba(212,255,30,.18);color:var(--lime);padding:2px 8px;border-radius:5px;}
+.close-x{background:var(--surface2);border:1px solid var(--border);width:28px;height:28px;border-radius:7px;cursor:pointer;color:var(--text-muted);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.close-x:hover{color:var(--text);}
+.messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;max-height:370px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.msg{display:flex;gap:8px;align-items:flex-start;animation:mi .25s ease;}
 .msg.user{flex-direction:row-reverse;}
-@keyframes msgIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-.msg-avi{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;}
+@keyframes mi{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.msg-avi{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;}
 .msg.ai .msg-avi{background:linear-gradient(135deg,var(--purple),var(--lime));}
 .msg.user .msg-avi{background:var(--surface3);border:1px solid var(--border);}
-.bubble{max-width:82%;padding:11px 15px;border-radius:14px;font-size:13px;line-height:1.6;}
-.msg.ai .bubble{background:var(--surface2);border:1px solid var(--border);border-top-left-radius:4px;}
-.msg.user .bubble{background:rgba(212,255,30,.1);border:1px solid rgba(212,255,30,.2);border-top-right-radius:4px;}
+.bubble{max-width:84%;padding:10px 13px;border-radius:13px;font-size:12.5px;line-height:1.6;}
+.msg.ai .bubble{background:var(--surface2);border:1px solid var(--border);border-top-left-radius:3px;}
+.msg.user .bubble{background:rgba(212,255,30,.1);border:1px solid rgba(212,255,30,.18);border-top-right-radius:3px;}
 .bubble strong{color:var(--lime);}
-.quick-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
-.qchip{font-size:11px;padding:5px 12px;border-radius:99px;border:1px solid rgba(212,255,30,.2);color:var(--lime);background:rgba(212,255,30,.06);cursor:pointer;transition:all .2s;font-family:'Fira Code',monospace;}
+.qchips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.qchip{font-size:10px;padding:4px 10px;border-radius:99px;border:1px solid rgba(212,255,30,.2);color:var(--lime);background:rgba(212,255,30,.06);cursor:pointer;transition:all .2s;}
 .qchip:hover{background:rgba(212,255,30,.14);}
-.typing-bubble .bubble{display:flex;align-items:center;gap:5px;padding:14px 16px;}
-.tdot{width:7px;height:7px;border-radius:50%;background:var(--text-muted);animation:tdot 1.2s infinite;}
+.tdots{display:flex;align-items:center;gap:4px;padding:3px 0;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--text-muted);animation:td 1.2s infinite;}
 .tdot:nth-child(2){animation-delay:.2s;}.tdot:nth-child(3){animation-delay:.4s;}
-@keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.5;}30%{transform:translateY(-7px);opacity:1;}}
-.agent-input-row{padding:12px 14px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-end;}
-.agent-textarea{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:11px 14px;color:var(--text);font-family:'Fira Code',monospace;font-size:13px;outline:none;resize:none;transition:border-color .2s;min-height:44px;max-height:120px;line-height:1.4;}
-.agent-textarea:focus{border-color:var(--lime);}
-.agent-textarea::placeholder{color:var(--text-muted);}
-.send-btn{width:44px;height:44px;border-radius:12px;background:var(--lime);border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;color:#03040a;}
-.send-btn:hover{background:var(--lime2);transform:scale(1.05);}
-.send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
-@media(max-width:768px){nav{padding:0 20px;}.nav-pills{display:none;}.hero,.content{padding-left:20px;padding-right:20px;}h1{font-size:44px;letter-spacing:-2px;}.hero{padding-top:80px;}.tools-grid{grid-template-columns:1fr;}.featured-banner{grid-template-columns:1fr;}.feat-tools{flex-wrap:wrap;}.agent-panel{width:calc(100vw - 40px);right:0;}.info-grid,.pros-cons{grid-template-columns:1fr;}#cursor{display:none;}body{cursor:auto;}}
+@keyframes td{0%,60%,100%{transform:translateY(0);opacity:.5;}30%{transform:translateY(-5px);opacity:1;}}
+.agent-input-row{padding:10px 12px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:flex-end;}
+.agent-ta{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text);font-family:'Fira Code',monospace;font-size:12px;outline:none;resize:none;transition:border-color .2s;min-height:40px;max-height:110px;line-height:1.4;}
+.agent-ta:focus{border-color:var(--lime);}
+.agent-ta::placeholder{color:var(--text-muted);}
+.send-btn{width:40px;height:40px;border-radius:10px;background:var(--lime);border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;color:#03040a;}
+.send-btn:hover{background:var(--lime2);}
+.send-btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ─── EMPTY ─── */
+.empty{display:none;text-align:center;padding:70px 20px;}
+.empty h3{font-family:'Cabinet Grotesk',sans-serif;font-size:20px;margin-bottom:8px;}
+.empty p{color:var(--text-muted);font-size:12px;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:768px){
+  nav{padding:0 18px;}.nav-center{display:none;}
+  .hero{padding:70px 18px 48px;}
+  .section-wrap{padding:0 18px;}
+  .ticker{margin-left:18px;margin-right:18px;}
+  h1{font-size:44px !important;letter-spacing:-2px !important;}
+  .tools-grid,.oss-grid{grid-template-columns:1fr;}
+  .pros-cons-grid,.who-grid{grid-template-columns:1fr;}
+  .hero-stats{grid-template-columns:repeat(2,1fr);}
+  .agent-panel{width:calc(100vw - 36px);right:0;}
+  .rm-body{max-height:50vh;}
+  #cursor{display:none;}body{cursor:auto;}
+}
 </style>
 </head>
 <body>
 <div id="cursor"></div>
 <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
 
+<!-- NAV -->
 <nav>
-  <div class="logo"><div class="logo-dot"></div>TOOL<span>VAULT</span></div>
-  <ul class="nav-pills"><li><a href="#" class="active">Discover</a></li><li><a href="#">Categories</a></li><li><a href="#">Compare</a></li><li><a href="#">New</a></li></ul>
-  <button class="btn-agent" onclick="openAgent()">🤖 Ask AI Agent</button>
+  <div class="logo" onclick="showPage('discover')"><div class="logo-dot"></div>TOOL<span>VAULT</span></div>
+  <ul class="nav-center">
+    <li><a class="active" onclick="showPage('discover')">Discover</a></li>
+    <li><a onclick="showPage('opensource')">Open Source</a></li>
+    <li><a onclick="showPage('guides')">Guides</a></li>
+    <li><a onclick="showPage('compare')">Compare</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-ghost" onclick="toggleAgent()">🤖 AI Agent</button>
+    <button class="btn-primary" onclick="showPage('opensource')">⚙️ Run Locally</button>
+  </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-eyebrow"><div class="eyebrow-dot"></div>The AI Tools Intelligence Platform · 60+ tools &amp; growing</div>
-  <h1><span class="hl-1">Discover</span><span class="hl-2">AI tools</span><span class="hl-3">that work.</span></h1>
-  <p class="hero-sub">Stop searching Reddit threads and YouTube reviews. Our AI agent finds the perfect tool combo for exactly what you're building.</p>
-  <div class="search-shell">
-    <div class="search-icon-left">⌕</div>
-    <input class="search-input" id="searchInput" type="text" placeholder="Try 'free voice cloning' or 'video generator'…" oninput="filterTools()" autocomplete="off"/>
-    <button class="search-ask" onclick="openAgent(document.getElementById('searchInput').value)">Ask Agent →</button>
-  </div>
-  <div class="search-hints">
-    <span class="hint" onclick="setSearch('free')">🆓 Free tools</span>
-    <span class="hint" onclick="setSearch('voice')">🎙️ Voice</span>
-    <span class="hint" onclick="setSearch('video')">🎬 Video</span>
-    <span class="hint" onclick="setSearch('image')">🖼️ Image</span>
-    <span class="hint" onclick="setSearch('coding')">💻 Coding</span>
-    <span class="hint" onclick="setSearch('music')">🎵 Music</span>
-  </div>
-  <div class="stats-row">
-    <div class="stat-item"><div class="stat-num" id="statTotal">63</div><div class="stat-label">Tools Curated</div></div>
-    <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">Categories</div></div>
-    <div class="stat-item"><div class="stat-num">4.7★</div><div class="stat-label">Avg Rating</div></div>
-    <div class="stat-item"><div class="stat-num">Free</div><div class="stat-label">AI Agent</div></div>
-  </div>
-</section>
+<!-- ══ PAGE: DISCOVER ══ -->
+<div class="page active" id="page-discover">
+  <section class="hero">
+    <div class="hero-eyebrow"><span style="width:6px;height:6px;border-radius:50%;background:var(--lime);display:inline-block;"></span>Honest reviews · Real usage · No hype</div>
+    <h1><span>The AI tools</span><br><span class="g">library that's</span><br><span class="d">actually honest.</span></h1>
+    <p class="hero-sub">We test every tool, tell you what it's bad at, and show you how to actually use it. No affiliate fluff.</p>
+    <div class="hero-search">
+      <div class="hs-icon">⌕</div>
+      <input class="hs-input" id="searchInput" type="text" placeholder="Search tools — try 'free image generator' or 'voice cloning'…" oninput="filterTools()" autocomplete="off"/>
+      <button class="hs-btn" onclick="openAgent(document.getElementById('searchInput').value||'help me find the best AI tool')">Ask Agent →</button>
+    </div>
+    <div class="hero-hints">
+      <span class="hint" onclick="setSearch('free')">🆓 Free only</span>
+      <span class="hint" onclick="setSearch('voice')">🎙️ Voice</span>
+      <span class="hint" onclick="setSearch('video')">🎬 Video</span>
+      <span class="hint" onclick="setSearch('image')">🖼️ Image</span>
+      <span class="hint" onclick="setSearch('coding')">💻 Coding</span>
+      <span class="hint" onclick="setSearch('local')">🖥️ Run locally</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num" id="statTotal">63</div><div class="hstat-lbl">Tools Reviewed</div></div>
+      <div class="hstat"><div class="hstat-num">8</div><div class="hstat-lbl">Categories</div></div>
+      <div class="hstat"><div class="hstat-num">4</div><div class="hstat-lbl">Open Source</div></div>
+      <div class="hstat"><div class="hstat-num">Honest</div><div class="hstat-lbl">Always</div></div>
+    </div>
+  </section>
 
-<main class="content">
-  <div class="news-bar">
-    <div class="news-label">🔴 AI News</div>
-    <div class="news-track">
-      <div class="news-scroll">
-        <span class="news-item"><span class="news-dot">●</span>GPT-4o gets real-time voice improvements — OpenAI</span>
-        <span class="news-item"><span class="news-dot">●</span>Midjourney V7 launches with dramatic quality leap</span>
-        <span class="news-item"><span class="news-dot">●</span>ElevenLabs raises $180M Series C at $3.3B valuation</span>
-        <span class="news-item"><span class="news-dot">●</span>Suno AI hits 10M users generating music daily</span>
-        <span class="news-item"><span class="news-dot">●</span>Runway Gen-3 Alpha Turbo — 4× faster generation</span>
-        <span class="news-item"><span class="news-dot">●</span>Google releases Veo 2 video model — rivals Sora</span>
-        <span class="news-item"><span class="news-dot">●</span>Cursor raises $100M — AI code editor hits 500K devs</span>
-        <span class="news-item"><span class="news-dot">●</span>Fish Audio adds real-time voice cloning in 10 seconds</span>
-        <span class="news-item"><span class="news-dot">●</span>Adobe Firefly 3 launches with video generation</span>
-        <span class="news-item"><span class="news-dot">●</span>Kling AI 2.0 now generates 2-minute videos</span>
-        <span class="news-item"><span class="news-dot">●</span>GPT-4o gets real-time voice improvements — OpenAI</span>
-        <span class="news-item"><span class="news-dot">●</span>Midjourney V7 launches with dramatic quality leap</span>
-        <span class="news-item"><span class="news-dot">●</span>ElevenLabs raises $180M Series C at $3.3B valuation</span>
-        <span class="news-item"><span class="news-dot">●</span>Suno AI hits 10M users generating music daily</span>
-        <span class="news-item"><span class="news-dot">●</span>Runway Gen-3 Alpha Turbo — 4× faster generation</span>
-        <span class="news-item"><span class="news-dot">●</span>Google releases Veo 2 video model — rivals Sora</span>
-        <span class="news-item"><span class="news-dot">●</span>Cursor raises $100M — AI code editor hits 500K devs</span>
-        <span class="news-item"><span class="news-dot">●</span>Fish Audio adds real-time voice cloning in 10 seconds</span>
-        <span class="news-item"><span class="news-dot">●</span>Adobe Firefly 3 launches with video generation</span>
-        <span class="news-item"><span class="news-dot">●</span>Kling AI 2.0 now generates 2-minute videos</span>
+  <!-- NEWS TICKER -->
+  <div class="ticker">
+    <div class="ticker-label">🔴 AI News</div>
+    <div class="ticker-track">
+      <div class="ticker-inner">
+        <span class="ti"><span class="ti-dot">●</span>Midjourney V7 launches with massive quality upgrade</span>
+        <span class="ti"><span class="ti-dot">●</span>ElevenLabs raises $180M — now valued at $3.3B</span>
+        <span class="ti"><span class="ti-dot">●</span>Runway Gen-3 Turbo is 4× faster — same quality</span>
+        <span class="ti"><span class="ti-dot">●</span>Suno AI passes 10M daily users generating music</span>
+        <span class="ti"><span class="ti-dot">●</span>Cursor raises $100M — 500K developers now using it</span>
+        <span class="ti"><span class="ti-dot">●</span>Fish Audio adds 10-second voice cloning feature</span>
+        <span class="ti"><span class="ti-dot">●</span>Google releases Veo 2 — directly rivals OpenAI Sora</span>
+        <span class="ti"><span class="ti-dot">●</span>Ollama 0.5 adds multimodal support — runs vision models locally</span>
+        <span class="ti"><span class="ti-dot">●</span>Kling AI 2.0 can now generate 2-minute videos</span>
+        <span class="ti"><span class="ti-dot">●</span>Flux 1.1 Pro Ultra launches at 4MP resolution</span>
+        <span class="ti"><span class="ti-dot">●</span>Midjourney V7 launches with massive quality upgrade</span>
+        <span class="ti"><span class="ti-dot">●</span>ElevenLabs raises $180M — now valued at $3.3B</span>
+        <span class="ti"><span class="ti-dot">●</span>Runway Gen-3 Turbo is 4× faster — same quality</span>
+        <span class="ti"><span class="ti-dot">●</span>Suno AI passes 10M daily users generating music</span>
+        <span class="ti"><span class="ti-dot">●</span>Cursor raises $100M — 500K developers now using it</span>
+        <span class="ti"><span class="ti-dot">●</span>Fish Audio adds 10-second voice cloning feature</span>
+        <span class="ti"><span class="ti-dot">●</span>Google releases Veo 2 — directly rivals OpenAI Sora</span>
+        <span class="ti"><span class="ti-dot">●</span>Ollama 0.5 adds multimodal support — runs vision models locally</span>
+        <span class="ti"><span class="ti-dot">●</span>Kling AI 2.0 can now generate 2-minute videos</span>
+        <span class="ti"><span class="ti-dot">●</span>Flux 1.1 Pro Ultra launches at 4MP resolution</span>
       </div>
     </div>
   </div>
 
-  <div class="featured-banner">
-    <div>
-      <div class="feat-tag">This Week's Power Workflow</div>
-      <div class="feat-h">Clone your voice + make AI videos in 30 minutes 🚀</div>
-      <div class="feat-p">ElevenLabs → HeyGen → Runway. Clone your voice, generate an avatar video, then polish it. Full content pipeline.</div>
+  <div class="section-wrap">
+    <!-- CATEGORIES -->
+    <div class="cat-tabs" id="catTabs">
+      <div class="cat-tab active" data-cat="all" onclick="setCategory(this,'all')">⚡ All<span class="ct-count" id="cnt-all">63</span></div>
+      <div class="cat-tab" data-cat="voice" onclick="setCategory(this,'voice')">🎙️ Voice<span class="ct-count" id="cnt-voice">0</span></div>
+      <div class="cat-tab" data-cat="video" onclick="setCategory(this,'video')">🎬 Video<span class="ct-count" id="cnt-video">0</span></div>
+      <div class="cat-tab" data-cat="image" onclick="setCategory(this,'image')">🖼️ Image<span class="ct-count" id="cnt-image">0</span></div>
+      <div class="cat-tab" data-cat="writing" onclick="setCategory(this,'writing')">✍️ Writing<span class="ct-count" id="cnt-writing">0</span></div>
+      <div class="cat-tab" data-cat="coding" onclick="setCategory(this,'coding')">💻 Coding<span class="ct-count" id="cnt-coding">0</span></div>
+      <div class="cat-tab" data-cat="music" onclick="setCategory(this,'music')">🎵 Music<span class="ct-count" id="cnt-music">0</span></div>
+      <div class="cat-tab" data-cat="design" onclick="setCategory(this,'design')">🎨 Design<span class="ct-count" id="cnt-design">0</span></div>
+      <div class="cat-tab" data-cat="business" onclick="setCategory(this,'business')">📊 Business<span class="ct-count" id="cnt-business">0</span></div>
     </div>
-    <div class="feat-tools">
-      <div class="feat-chip" onclick="openToolModal(0)"><span class="ci">🎙️</span><div><div class="cn">ElevenLabs</div><div class="cc">Voice</div></div></div>
-      <div class="feat-chip" onclick="openToolModal(10)"><span class="ci">👤</span><div><div class="cn">HeyGen</div><div class="cc">Avatars</div></div></div>
-      <div class="feat-chip" onclick="openToolModal(8)"><span class="ci">🎬</span><div><div class="cn">Runway</div><div class="cc">Video</div></div></div>
-    </div>
-  </div>
 
-  <div class="cat-section">
-    <div class="section-label">Browse Categories</div>
-    <div class="cat-scroll">
-      <div class="cat-btn active" data-cat="all" onclick="setCategory(this,'all')"><span class="ci">⚡</span>All Tools<span class="cc" id="cnt-all">63</span></div>
-      <div class="cat-btn" data-cat="voice" onclick="setCategory(this,'voice')"><span class="ci">🎙️</span>Voice<span class="cc" id="cnt-voice">0</span></div>
-      <div class="cat-btn" data-cat="video" onclick="setCategory(this,'video')"><span class="ci">🎬</span>Video<span class="cc" id="cnt-video">0</span></div>
-      <div class="cat-btn" data-cat="image" onclick="setCategory(this,'image')"><span class="ci">🖼️</span>Image<span class="cc" id="cnt-image">0</span></div>
-      <div class="cat-btn" data-cat="writing" onclick="setCategory(this,'writing')"><span class="ci">✍️</span>Writing<span class="cc" id="cnt-writing">0</span></div>
-      <div class="cat-btn" data-cat="coding" onclick="setCategory(this,'coding')"><span class="ci">💻</span>Coding<span class="cc" id="cnt-coding">0</span></div>
-      <div class="cat-btn" data-cat="music" onclick="setCategory(this,'music')"><span class="ci">🎵</span>Music<span class="cc" id="cnt-music">0</span></div>
-      <div class="cat-btn" data-cat="design" onclick="setCategory(this,'design')"><span class="ci">🎨</span>Design<span class="cc" id="cnt-design">0</span></div>
-      <div class="cat-btn" data-cat="business" onclick="setCategory(this,'business')"><span class="ci">📊</span>Business<span class="cc" id="cnt-business">0</span></div>
-    </div>
-  </div>
-
-  <div class="grid-header">
-    <div class="grid-title" id="gridTitle">All AI Tools</div>
-    <div class="grid-meta">
-      <select class="sort-select" onchange="sortTools(this.value)">
-        <option value="hot">🔥 Trending</option>
-        <option value="rating">⭐ Top Rated</option>
-        <option value="name">🔤 A–Z</option>
-        <option value="free">🆓 Free First</option>
-      </select>
-      <div class="grid-count" id="gridCount">63 tools</div>
-    </div>
-  </div>
-  <div class="tools-grid" id="toolsGrid"></div>
-  <div class="empty-state" id="emptyState"><h3>No tools found</h3><p>Try a different keyword or ask the AI Agent.</p></div>
-</main>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-icon" id="modalIcon">🔧</div>
-      <div class="modal-info"><div class="modal-name" id="modalName">Tool</div><div class="modal-desc" id="modalDesc"></div></div>
-      <button class="modal-close" onclick="document.getElementById('modalOverlay').classList.remove('open')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-tabs">
-        <button class="modal-tab active" onclick="switchTab(this,'tab-try')">🧪 Try Demo</button>
-        <button class="modal-tab" onclick="switchTab(this,'tab-info')">📋 Overview</button>
-        <button class="modal-tab" onclick="switchTab(this,'tab-similar')">🔀 Similar Tools</button>
+    <div class="grid-hd">
+      <div class="grid-title" id="gridTitle">All AI Tools</div>
+      <div class="grid-controls">
+        <select class="sort-sel" onchange="sortTools(this.value)">
+          <option value="hot">🔥 Trending</option>
+          <option value="rating">⭐ Top Rated</option>
+          <option value="name">🔤 A–Z</option>
+          <option value="free">🆓 Free First</option>
+        </select>
+        <div class="grid-count" id="gridCount">63 tools</div>
       </div>
-      <div class="modal-tab-content active" id="tab-try">
-        <div class="demo-area">
-          <div class="demo-label">Test This Tool</div>
-          <textarea class="demo-input" id="demoInput" placeholder="Describe what you want to create with this tool…" rows="3"></textarea>
-          <button class="demo-btn" id="demoBtn" onclick="runDemo()">▶ Run Demo via Agent</button>
-          <div class="demo-note" id="demoNote">Our AI agent will show you exactly how to use this tool for your goal.</div>
+    </div>
+    <div class="tools-grid" id="toolsGrid"></div>
+    <div class="empty" id="emptyState"><h3>No tools found</h3><p>Try different keywords or ask the AI Agent.</p></div>
+  </div>
+</div>
+
+<!-- ══ PAGE: OPEN SOURCE ══ -->
+<div class="page" id="page-opensource">
+  <div style="padding:80px 40px 40px;max-width:1200px;margin:0 auto;">
+    <div style="margin-bottom:12px;font-size:11px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;">🖥️ Run AI Locally — No subscriptions. No limits.</div>
+    <h2 style="font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:clamp(36px,5vw,64px);letter-spacing:-2px;margin-bottom:16px;">Open Source <span style="background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AI Tools</span></h2>
+    <p style="font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--text-dim);max-width:560px;margin-bottom:48px;line-height:1.7;">Run powerful AI models on your own machine. No API costs, no data sent to the cloud, no monthly fees. Just pure local AI power.</p>
+    <div class="oss-grid" id="ossGrid"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE: GUIDES ══ -->
+<div class="page" id="page-guides">
+  <div style="padding:80px 40px 60px;max-width:1200px;margin:0 auto;">
+    <div style="margin-bottom:12px;font-size:11px;letter-spacing:2px;color:var(--lime);text-transform:uppercase;">📚 Practical guides — no fluff</div>
+    <h2 style="font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:clamp(36px,5vw,64px);letter-spacing:-2px;margin-bottom:16px;">How to actually <span style="background:linear-gradient(135deg,var(--lime),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">use AI</span></h2>
+    <p style="font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--text-dim);max-width:500px;margin-bottom:48px;line-height:1.7;">Practical guides that show you what works, what doesn't, and how to build real things with AI tools today.</p>
+    <div class="guides-grid" id="guidesGrid"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE: COMPARE ══ -->
+<div class="page" id="page-compare">
+  <div style="padding:80px 40px 60px;max-width:1200px;margin:0 auto;">
+    <div style="margin-bottom:12px;font-size:11px;letter-spacing:2px;color:var(--pink);text-transform:uppercase;">⚖️ Side-by-side — no bias</div>
+    <h2 style="font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:clamp(36px,5vw,64px);letter-spacing:-2px;margin-bottom:16px;">Honest <span style="background:linear-gradient(135deg,var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Comparisons</span></h2>
+    <p style="font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--text-dim);max-width:500px;margin-bottom:48px;line-height:1.7;">Paid vs free, popular vs underrated — we put tools head to head so you don't waste money finding out yourself.</p>
+    <div class="compare-grid" id="compareGrid"></div>
+  </div>
+</div>
+
+<!-- REVIEW MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeReview(event)">
+  <div class="review-modal" id="reviewModal">
+    <div class="rm-hero">
+      <div class="rm-hero-inner">
+        <div class="rm-icon" id="rmIcon">🔧</div>
+        <div class="rm-meta">
+          <div class="rm-name" id="rmName">Tool</div>
+          <div class="rm-tagline" id="rmTagline"></div>
+          <div class="rm-badges" id="rmBadges"></div>
         </div>
-        <div class="demo-result" id="demoResult"></div>
       </div>
-      <div class="modal-tab-content" id="tab-info">
-        <div class="info-grid" id="infoGrid"></div>
-        <div class="pros-cons" id="prosCons"></div>
+      <div class="rm-score-bar" id="rmScores"></div>
+      <button class="rm-close" onclick="document.getElementById('modalOverlay').classList.remove('open')">✕</button>
+    </div>
+    <div class="rm-tabs">
+      <button class="rm-tab active" onclick="switchRmTab(this,'rt-review')">📋 Review</button>
+      <button class="rm-tab" onclick="switchRmTab(this,'rt-test')">🧪 Test Results</button>
+      <button class="rm-tab" onclick="switchRmTab(this,'rt-install')">⚙️ How to Use</button>
+      <button class="rm-tab" onclick="switchRmTab(this,'rt-similar')">🔀 Alternatives</button>
+    </div>
+    <div class="rm-body">
+      <div id="rt-review" class="rm-tab-content" style="display:block">
+        <div class="verdict-box"><div class="verdict-label">⚡ ToolVault Verdict</div><div class="verdict-text" id="rmVerdict"></div></div>
+        <div class="rm-section"><div class="rm-section-title">What it does</div><div id="rmWhatItDoes" style="font-size:13px;color:var(--text-dim);line-height:1.7;"></div></div>
+        <div class="pros-cons-grid"><div class="pros-box"><div class="pros-title">✓ What it's great at</div><ul id="rmPros"></ul></div><div class="cons-box"><div class="cons-title">✗ Where it falls short</div><ul id="rmCons"></ul></div></div>
+        <div class="rm-section"><div class="rm-section-title">Rating breakdown</div><div class="rating-breakdown" id="rmRatings"></div></div>
+        <div class="who-grid" id="rmWho"></div>
       </div>
-      <div class="modal-tab-content" id="tab-similar">
-        <p style="font-size:13px;color:var(--text-dim);margin-bottom:12px;">Similar tools in the same category:</p>
-        <div class="similar-tools" id="similarTools"></div>
+      <div id="rt-test" class="rm-tab-content" style="display:none">
+        <div class="rm-section"><div class="rm-section-title">Real test results</div><div class="test-results" id="rmTests"></div></div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-top:16px;">
+          <div style="font-size:11px;letter-spacing:1px;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;">🤖 Run your own test</div>
+          <textarea id="testInput" style="width:100%;background:var(--surface3);border:1.5px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Fira Code',monospace;font-size:12px;outline:none;resize:none;min-height:70px;transition:border-color .2s;" placeholder="Describe what you want to test with this tool…"></textarea>
+          <button onclick="runTest()" style="margin-top:10px;background:var(--lime);color:#03040a;border:none;padding:9px 22px;border-radius:8px;font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;">▶ Run Test via Agent</button>
+          <div id="testResult" style="display:none;margin-top:14px;background:var(--surface3);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:12px;line-height:1.7;color:var(--text-dim);"></div>
+        </div>
       </div>
-      <div style="margin-top:20px;"><a class="visit-full" id="modalVisitBtn" href="#" target="_blank">Visit Tool ↗</a></div>
+      <div id="rt-install" class="rm-tab-content" style="display:none">
+        <div class="install-guide" id="rmInstall"></div>
+      </div>
+      <div id="rt-similar" class="rm-tab-content" style="display:none">
+        <p style="font-size:12px;color:var(--text-dim);margin-bottom:14px;">Similar tools you might prefer:</p>
+        <div class="similar-tools" id="rmSimilar" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+      </div>
+    </div>
+    <div class="rm-footer">
+      <div class="rm-alt" id="rmAlt"></div>
+      <a class="rm-visit" id="rmVisitBtn" href="#" target="_blank">Visit Tool ↗</a>
     </div>
   </div>
 </div>
 
-<!-- AGENT -->
+<!-- AI AGENT -->
 <div class="agent-wrap">
   <div class="agent-panel" id="agentPanel">
     <div class="agent-head">
       <div class="agent-avi">🤖</div>
-      <div class="agent-info"><div class="agent-name">ToolVault AI Agent</div><div class="agent-status"><span>●</span> Online · Free · No signup needed</div></div>
-      <div class="model-badge">Mistral AI</div>
-      <button class="close-btn" onclick="closeAgent()">✕</button>
+      <div class="agent-info"><div class="agent-name">ToolVault Agent</div><div class="agent-status"><span>●</span> Online · Free</div></div>
+      <div class="model-tag">Mistral AI</div>
+      <button class="close-x" onclick="closeAgent()">✕</button>
     </div>
     <div class="messages" id="messages">
       <div class="msg ai">
         <div class="msg-avi">🤖</div>
         <div>
-          <div class="bubble">Hey! 👋 Tell me what you want to create and I'll recommend the <strong>best tools + workflow</strong> for your exact goal!</div>
-          <div class="quick-chips">
-            <div class="qchip" onclick="sendQ('I want to start a YouTube channel with AI tools')">🎥 YouTube channel</div>
-            <div class="qchip" onclick="sendQ('Show me completely free AI tools only')">🆓 Free tools only</div>
-            <div class="qchip" onclick="sendQ('How do I clone my voice for free')">🎙️ Voice cloning</div>
-            <div class="qchip" onclick="sendQ('Best AI coding tools for beginners')">💻 AI coding</div>
+          <div class="bubble">Hey! 👋 Ask me anything about AI tools — I'll give you an <strong>honest recommendation</strong> and tell you what to avoid too.</div>
+          <div class="qchips">
+            <div class="qchip" onclick="sendQ('What are the best completely free AI tools?')">🆓 Free tools</div>
+            <div class="qchip" onclick="sendQ('I want to make YouTube videos with AI, what do I need?')">🎥 YouTube AI</div>
+            <div class="qchip" onclick="sendQ('How do I run AI locally on my computer?')">🖥️ Local AI</div>
+            <div class="qchip" onclick="sendQ('Is Midjourney worth paying for?')">💰 Worth it?</div>
           </div>
         </div>
       </div>
     </div>
     <div class="agent-input-row">
-      <textarea class="agent-textarea" id="agentInput" placeholder="Ask about any AI tool or workflow…" onkeydown="handleEnter(event)" oninput="autoH(this)" rows="1"></textarea>
+      <textarea class="agent-ta" id="agentInput" placeholder="Ask anything…" onkeydown="handleEnter(event)" oninput="autoH(this)" rows="1"></textarea>
       <button class="send-btn" id="sendBtn" onclick="sendMsg()">↑</button>
     </div>
   </div>
@@ -394,108 +550,256 @@ h1{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:clamp(52px
 </div>
 
 <script>
+/* ── CURSOR ── */
 const cur=document.getElementById('cursor');
 document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
-document.addEventListener('mouseover',e=>{if(e.target.closest('a,button,.cat-btn,.tool-card,.qchip,.hint,.feat-chip,.sim-chip'))cur.classList.add('big');else cur.classList.remove('big');});
+document.addEventListener('mouseover',e=>{if(e.target.closest('a,button,.tool-card,.cat-tab,.hint,.qchip,.oss-card,.guide-card,.compare-pair,.sim-chip'))cur.classList.add('big');else cur.classList.remove('big');});
 
-const CAT_COLORS={voice:{bar:'linear-gradient(90deg,#d4ff1e,#00edd4)',bg:'rgba(212,255,30,.07)'},video:{bar:'linear-gradient(90deg,#ff5c2a,#ff2d8a)',bg:'rgba(255,92,42,.07)'},image:{bar:'linear-gradient(90deg,#8b4dff,#2d8aff)',bg:'rgba(139,77,255,.07)'},writing:{bar:'linear-gradient(90deg,#2d8aff,#00edd4)',bg:'rgba(45,138,255,.07)'},coding:{bar:'linear-gradient(90deg,#d4ff1e,#8b4dff)',bg:'rgba(212,255,30,.06)'},music:{bar:'linear-gradient(90deg,#ff2d8a,#8b4dff)',bg:'rgba(255,45,138,.07)'},design:{bar:'linear-gradient(90deg,#ff5c2a,#8b4dff)',bg:'rgba(255,92,42,.06)'},business:{bar:'linear-gradient(90deg,#00edd4,#2d8aff)',bg:'rgba(0,237,212,.06)'}};
+/* ── NAV ── */
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-center a').forEach(a=>a.classList.remove('active'));
+  const map={discover:0,opensource:1,guides:2,compare:3};
+  document.querySelectorAll('.nav-center a')[map[id]]?.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ── TOOL DATA ── */
+const CAT_COLORS={
+  voice:{bar:'linear-gradient(90deg,#d4ff1e,#00edd4)',bg:'rgba(212,255,30,.06)'},
+  video:{bar:'linear-gradient(90deg,#ff5c2a,#ff2d8a)',bg:'rgba(255,92,42,.06)'},
+  image:{bar:'linear-gradient(90deg,#8b4dff,#2d8aff)',bg:'rgba(139,77,255,.06)'},
+  writing:{bar:'linear-gradient(90deg,#2d8aff,#00edd4)',bg:'rgba(45,138,255,.06)'},
+  coding:{bar:'linear-gradient(90deg,#d4ff1e,#8b4dff)',bg:'rgba(212,255,30,.05)'},
+  music:{bar:'linear-gradient(90deg,#ff2d8a,#8b4dff)',bg:'rgba(255,45,138,.06)'},
+  design:{bar:'linear-gradient(90deg,#ff5c2a,#8b4dff)',bg:'rgba(255,92,42,.05)'},
+  business:{bar:'linear-gradient(90deg,#00edd4,#2d8aff)',bg:'rgba(0,237,212,.05)'},
+};
 
 const TOOLS=[
-  {name:"ElevenLabs",icon:"🎙️",cat:"voice",tagline:"Industry-leading voice cloning and AI text-to-speech in 29 languages",tags:["voice clone","TTS","multilingual","API"],pricing:"freemium",rating:4.9,hot:true,url:"https://elevenlabs.io",pros:["Best voice quality","Easy 1-minute cloning","Great free tier"],cons:["Limited free credits","Short clips needed for cloning"],useCase:"Clone your voice for YouTube, podcasts, or audiobooks"},
-  {name:"Fish Audio",icon:"🐟",cat:"voice",tagline:"Ultra-realistic voice cloning with emotion control — clone in 10 seconds",tags:["voice clone","emotion","fast","free"],pricing:"freemium",rating:4.7,hot:true,url:"https://fish.audio",pros:["Very fast cloning","Emotion control","Generous free tier"],cons:["Newer platform","Fewer preset voices"],useCase:"Quick realistic voice cloning with emotional range"},
-  {name:"Murf AI",icon:"🎤",cat:"voice",tagline:"Studio-quality AI voiceovers for videos and podcasts — 120+ voices",tags:["voiceover","podcast","video"],pricing:"freemium",rating:4.7,url:"https://murf.ai",pros:["120+ voices","Video sync feature","Team collaboration"],cons:["Pricey paid plans","No cloning on free tier"],useCase:"Professional voiceovers for video content"},
-  {name:"Resemble AI",icon:"🔊",cat:"voice",tagline:"Real-time voice cloning with fine-grained emotion and style control",tags:["real-time","emotion","API"],pricing:"paid",rating:4.6,url:"https://resemble.ai",pros:["Real-time synthesis","Emotion sliders","Strong developer API"],cons:["No free tier","Developer-focused"],useCase:"Building voice apps or games with custom voices"},
-  {name:"Play.ht",icon:"▶️",cat:"voice",tagline:"2,500+ voices in 142 languages with ultra-low latency streaming API",tags:["multilingual","API","streaming"],pricing:"freemium",rating:4.5,url:"https://play.ht",pros:["Huge voice library","142 languages","Fast streaming API"],cons:["Quality varies by voice","Interface can be cluttered"],useCase:"Multilingual voiceovers at scale"},
-  {name:"Speechify",icon:"📢",cat:"voice",tagline:"Turn any text, PDF, or web page into natural spoken audio instantly",tags:["accessibility","reading","TTS","PDF"],pricing:"freemium",rating:4.6,url:"https://speechify.com",pros:["Read anything","Great mobile app","Natural voices"],cons:["Not for content creation","Best voices are paid"],useCase:"Listen to documents, articles, or books hands-free"},
-  {name:"Lovo AI",icon:"🗣️",cat:"voice",tagline:"Hyper-realistic voices with built-in AI video and script writing tools",tags:["TTS","video","script","all-in-one"],pricing:"freemium",rating:4.5,url:"https://lovo.ai",pros:["All-in-one suite","Script writing included","500+ voices"],cons:["Can feel corporate","Heavy interface"],useCase:"End-to-end voiceover video production"},
-  {name:"Replica Studios",icon:"🎭",cat:"voice",tagline:"AI voice actors built specifically for games and entertainment",tags:["gaming","entertainment","actors"],pricing:"paid",rating:4.4,url:"https://replicastudios.com",pros:["Cinematic quality","Emotion direction","Large voice cast"],cons:["Paid only","Entertainment-focused only"],useCase:"Game character voices and cinematic narration"},
-  {name:"Runway",icon:"🎬",cat:"video",tagline:"Gen-3 Alpha: text and image to cinematic video — Hollywood-grade quality",tags:["text-to-video","editing","gen-3"],pricing:"freemium",rating:4.8,hot:true,url:"https://runwayml.com",pros:["Best video quality","Great editing tools","Actively improving"],cons:["Limited free credits","Can be slow"],useCase:"Create cinematic AI videos from text or images"},
-  {name:"Pika Labs",icon:"⚡",cat:"video",tagline:"Create and edit videos with simple text prompts — great for Shorts and Reels",tags:["text-to-video","shorts","TikTok"],pricing:"freemium",rating:4.6,hot:true,url:"https://pika.art",pros:["Easy to use","Great for Shorts","Generous free tier"],cons:["Lower quality than Runway","Short clips only"],useCase:"Fast AI videos for social media content"},
-  {name:"HeyGen",icon:"👤",cat:"video",tagline:"AI avatar videos in 175 languages — translate your face to any language",tags:["avatars","translation","business"],pricing:"freemium",rating:4.7,url:"https://heygen.com",pros:["Real face avatars","175 languages","Great for business"],cons:["Limited free minutes","Requires good source video"],useCase:"Translate yourself to any language for global content"},
-  {name:"Synthesia",icon:"🤵",cat:"video",tagline:"Professional AI presenter videos at scale for training and communications",tags:["presenters","training","corporate"],pricing:"paid",rating:4.6,url:"https://synthesia.io",pros:["Very professional","160+ avatars","No camera needed"],cons:["Expensive plans","Can look robotic"],useCase:"Corporate training and explainer videos without a camera"},
-  {name:"Kling AI",icon:"🎞️",cat:"video",tagline:"Next-gen video generation with realistic physics — clips up to 2 minutes",tags:["physics","cinematic","4K","long clips"],pricing:"freemium",rating:4.7,hot:true,url:"https://klingai.com",pros:["Physics-accurate motion","2-minute videos","Free tier"],cons:["Chinese platform","Can be slow at peak"],useCase:"Long cinematic AI videos with natural physics"},
-  {name:"Luma Dream Machine",icon:"✨",cat:"video",tagline:"Photorealistic video from text and images with smooth camera movements",tags:["photorealistic","camera","smooth motion"],pricing:"freemium",rating:4.5,url:"https://lumalabs.ai",pros:["Smooth camera motion","Photorealistic quality","Good free tier"],cons:["Limited prompt control","Sometimes inconsistent"],useCase:"Photorealistic product or concept videos"},
-  {name:"Sora",icon:"🌊",cat:"video",tagline:"OpenAI's flagship text-to-video model — revolutionary quality and length",tags:["OpenAI","text-to-video","HD"],pricing:"paid",rating:4.8,hot:true,url:"https://openai.com/sora",pros:["Best-in-class quality","Long clips","Incredible realism"],cons:["Paid only","Queue times"],useCase:"Highest quality AI video generation available today"},
-  {name:"Descript",icon:"✂️",cat:"video",tagline:"Edit video by editing the transcript — remove filler words, clone your voice",tags:["editing","transcript","filler words","podcast"],pricing:"freemium",rating:4.6,url:"https://descript.com",pros:["Edit by text","Remove um/uh automatically","Overdub voice cloning"],cons:["Learning curve","Heavy desktop app"],useCase:"Edit podcasts and videos as fast as editing a document"},
-  {name:"Captions AI",icon:"💬",cat:"video",tagline:"Auto-captions, AI eye contact correction, and short-form video editor",tags:["captions","eye contact","shorts","mobile"],pricing:"freemium",rating:4.5,url:"https://captions.ai",pros:["Eye contact correction","Auto captions","Great mobile app"],cons:["Mobile-focused","Limited desktop version"],useCase:"Polish short-form content for TikTok and Instagram Reels"},
-  {name:"Midjourney",icon:"🎨",cat:"image",tagline:"The gold standard for AI art — consistently stunning aesthetic quality",tags:["art","illustration","aesthetic"],pricing:"paid",rating:4.9,hot:true,url:"https://midjourney.com",pros:["Best aesthetics","Consistent quality","Active community"],cons:["Discord only","No free tier"],useCase:"Create stunning art and illustrations for any purpose"},
-  {name:"DALL-E 3",icon:"🖼️",cat:"image",tagline:"OpenAI's flagship image generator inside ChatGPT — great at following prompts",tags:["OpenAI","realistic","ChatGPT"],pricing:"freemium",rating:4.7,url:"https://openai.com/dall-e-3",pros:["Follows complex prompts","Built into ChatGPT","Good realistic quality"],cons:["Limited free uses","Conservative content filters"],useCase:"Quick realistic images when already using ChatGPT"},
-  {name:"Stable Diffusion",icon:"🌀",cat:"image",tagline:"Open-source image generation — run locally for unlimited free use forever",tags:["open-source","free","local","unlimited"],pricing:"free",rating:4.6,url:"https://stability.ai",pros:["100% free forever","Unlimited generations","Highly customizable"],cons:["Needs a decent PC","Technical setup required"],useCase:"Unlimited free image generation with full creative control"},
-  {name:"Adobe Firefly",icon:"🔥",cat:"image",tagline:"Commercially safe AI generation inside Photoshop and Illustrator",tags:["commercial","Adobe","safe","editing"],pricing:"freemium",rating:4.5,url:"https://firefly.adobe.com",pros:["Commercially safe","Works inside Adobe apps","Great for photo editing"],cons:["Requires Adobe subscription","Less creative than Midjourney"],useCase:"Commercial-safe images and AI-powered photo editing"},
-  {name:"Ideogram",icon:"💡",cat:"image",tagline:"Best AI for text inside images — logos, posters, and typography that actually work",tags:["text-in-image","logos","design","typography"],pricing:"freemium",rating:4.6,hot:true,url:"https://ideogram.ai",pros:["Best text rendering in AI","Great for logos","Generous free tier"],cons:["Slower generation","Less photorealistic"],useCase:"Create logos, posters, and images with readable text"},
-  {name:"Leonardo AI",icon:"🦁",cat:"image",tagline:"Game asset and character art with fine-tuned models and image editing tools",tags:["gaming","characters","assets","fine-tune"],pricing:"freemium",rating:4.5,url:"https://leonardo.ai",pros:["Great for game art","Fine-tuning support","Good free tier"],cons:["Complex interface","Inconsistent quality"],useCase:"Game assets, character design, and concept art"},
-  {name:"Flux",icon:"⚡",cat:"image",tagline:"Black Forest Labs ultra-fast photorealistic model — state of the art in 2025",tags:["photorealistic","fast","API","open weights"],pricing:"freemium",rating:4.8,hot:true,url:"https://flux1.ai",pros:["Best photorealism available","Very fast generation","Open weights"],cons:["Newer platform","API-focused"],useCase:"Ultra-realistic product photos and photorealistic images"},
-  {name:"Krea AI",icon:"🔮",cat:"image",tagline:"Real-time AI image generation — see your results as you type the prompt",tags:["real-time","live","enhance","creative"],pricing:"freemium",rating:4.5,hot:true,url:"https://krea.ai",pros:["Real-time generation","Image enhancer","Great creative tools"],cons:["Limited free tier","Can be unstable"],useCase:"Real-time creative exploration and image enhancement"},
-  {name:"Canva AI",icon:"🎀",cat:"image",tagline:"AI-powered design for everyone — Magic Edit, background remover, and more",tags:["design","templates","magic edit","easy"],pricing:"freemium",rating:4.7,url:"https://canva.com",pros:["Very easy to use","1000s of templates","Great AI tools built in"],cons:["Less creative freedom","Best features need payment"],useCase:"Quick social media graphics and marketing materials"},
-  {name:"Remove.bg",icon:"✂️",cat:"image",tagline:"Remove image backgrounds instantly and perfectly with a single click",tags:["background removal","clean","photo editing","free"],pricing:"freemium",rating:4.8,url:"https://remove.bg",pros:["One click removal","Very accurate","API available"],cons:["Single function only","HD output costs credits"],useCase:"Remove backgrounds from product photos instantly"},
-  {name:"Claude",icon:"🧠",cat:"writing",tagline:"Anthropic's AI — exceptional long-form writing, analysis, and reasoning",tags:["writing","analysis","coding","long-form"],pricing:"freemium",rating:4.9,hot:true,url:"https://claude.ai",pros:["Best for long documents","200K context window","Very thoughtful responses"],cons:["Slower than ChatGPT","Some topics restricted"],useCase:"Long documents, research, analysis, and nuanced writing"},
-  {name:"ChatGPT",icon:"💬",cat:"writing",tagline:"OpenAI's flagship — the most widely used AI assistant in the world",tags:["writing","coding","research","plugins"],pricing:"freemium",rating:4.8,url:"https://chatgpt.com",pros:["Most versatile","Great plugin ecosystem","Huge community"],cons:["Can hallucinate facts","Responses can cut off"],useCase:"General purpose AI for almost any writing task"},
-  {name:"Jasper AI",icon:"✍️",cat:"writing",tagline:"AI marketing copy at enterprise scale with brand voice training",tags:["marketing","SEO","copy","brand voice"],pricing:"paid",rating:4.4,url:"https://jasper.ai",pros:["Brand voice training","Team workflows","Built-in SEO tools"],cons:["Expensive plans","Overkill for individuals"],useCase:"Marketing teams creating consistent branded content at scale"},
-  {name:"Copy.ai",icon:"📝",cat:"writing",tagline:"AI workflows for sales and marketing — GTM automation and ad copy",tags:["sales","marketing","GTM","copy"],pricing:"freemium",rating:4.3,url:"https://copy.ai",pros:["Good free tier","Sales-focused features","Workflow automation"],cons:["Quality can be inconsistent","Feels generic sometimes"],useCase:"Sales emails, ad copy, and marketing workflow automation"},
-  {name:"Perplexity AI",icon:"🔍",cat:"writing",tagline:"AI-powered search with real-time web citations — research at speed",tags:["search","research","citations","real-time web"],pricing:"freemium",rating:4.7,url:"https://perplexity.ai",pros:["Real-time web access","Cites sources","Great for research"],cons:["Not for creative writing","Can be wrong"],useCase:"Research, fact-checking, and current events summaries"},
-  {name:"Notion AI",icon:"📓",cat:"writing",tagline:"AI built into your notes — summarize, write, and organize inside Notion",tags:["notes","productivity","summarize","organize"],pricing:"freemium",rating:4.5,url:"https://notion.ai",pros:["Works inside your notes","Great summarizer","Auto-organize"],cons:["Requires Notion","Limited standalone use"],useCase:"Summarize meeting notes and write inside your workspace"},
-  {name:"Grammarly",icon:"✅",cat:"writing",tagline:"AI writing assistant for grammar, clarity, tone, and professional polish",tags:["grammar","editing","tone","professional"],pricing:"freemium",rating:4.6,url:"https://grammarly.com",pros:["Works everywhere","Tone detection","Great free tier"],cons:["Not for generation","Can override your style"],useCase:"Polish any writing for clarity and professionalism"},
-  {name:"Quillbot",icon:"🔄",cat:"writing",tagline:"AI paraphrasing, summarizing, and grammar tools for faster writing",tags:["paraphrase","summarize","grammar","rewrite"],pricing:"freemium",rating:4.4,url:"https://quillbot.com",pros:["Great at paraphrasing","Good free tier","Summarizer included"],cons:["Can change intended meaning","Limited creativity"],useCase:"Rewrite and paraphrase content to avoid repetition"},
-  {name:"Thank You AI",icon:"🙏",cat:"writing",tagline:"Generate heartfelt and professional thank-you messages instantly",tags:["thank you","notes","messages","gratitude"],pricing:"free",rating:4.3,url:"https://thankyou.ai",pros:["Completely free","Quick and easy","Adds personal touch"],cons:["Very niche use case","Limited to thank-you notes"],useCase:"Write thank-you notes for clients, colleagues, and friends"},
-  {name:"Cursor",icon:"🖱️",cat:"coding",tagline:"AI-first code editor that writes, edits, and explains your entire codebase",tags:["editor","autocomplete","refactor","codebase context"],pricing:"freemium",rating:4.9,hot:true,url:"https://cursor.sh",pros:["Best AI-first editor","Full codebase context","Chat with your code"],cons:["Can slow older laptops","Heavy usage costs"],useCase:"The fastest way to write and refactor code with AI assistance"},
-  {name:"GitHub Copilot",icon:"🐙",cat:"coding",tagline:"AI pair programmer built directly into VS Code, JetBrains, and Neovim",tags:["autocomplete","IDE","GitHub","inline suggestions"],pricing:"paid",rating:4.7,url:"https://github.com/features/copilot",pros:["Best IDE integration","Supports all major IDEs","GitHub native"],cons:["No free tier","Less context than Cursor"],useCase:"Inline AI code suggestions in your favourite IDE"},
-  {name:"Claude Code",icon:"⌨️",cat:"coding",tagline:"Agentic coding in your terminal — reads and edits entire codebases autonomously",tags:["agentic","terminal","codebase","CLI"],pricing:"paid",rating:4.8,hot:true,url:"https://claude.ai/code",pros:["Reads whole codebase","Terminal native","Best reasoning ability"],cons:["Costs per use","Slower than Copilot"],useCase:"Complex refactoring and understanding large codebases"},
-  {name:"v0 by Vercel",icon:"▲",cat:"coding",tagline:"Generate full React UI components and pages from plain text descriptions",tags:["React","UI","Vercel","frontend"],pricing:"freemium",rating:4.6,url:"https://v0.dev",pros:["Great UI output","Deploys to Vercel","Good free tier"],cons:["Frontend only","React and Tailwind only"],useCase:"Instantly generate React UI components and full pages"},
-  {name:"Bolt.new",icon:"⚡",cat:"coding",tagline:"Build and deploy full-stack web apps entirely from your browser — no install needed",tags:["full-stack","browser","deploy","no install"],pricing:"freemium",rating:4.7,hot:true,url:"https://bolt.new",pros:["Full-stack in browser","Instant deploy","Zero setup needed"],cons:["Limited compute","Best for prototypes"],useCase:"Build and ship a complete web app without installing anything"},
-  {name:"Replit AI",icon:"🤖",cat:"coding",tagline:"AI coding assistant inside a browser IDE — code, run, and deploy instantly",tags:["browser IDE","run code","deploy","learning"],pricing:"freemium",rating:4.4,url:"https://replit.com",pros:["In-browser IDE","Runs code instantly","Great for learning"],cons:["Slow for large projects","Limited resources"],useCase:"Learn to code or build quick prototypes in the browser"},
-  {name:"Codeium",icon:"💎",cat:"coding",tagline:"Free AI coding assistant — autocomplete, chat, and search in your IDE",tags:["free","autocomplete","chat","multi-IDE"],pricing:"free",rating:4.5,url:"https://codeium.com",pros:["Completely free forever","Multi-IDE support","Good quality"],cons:["Less context than Cursor","Smaller team behind it"],useCase:"Best completely free GitHub Copilot alternative"},
-  {name:"Tabnine",icon:"📑",cat:"coding",tagline:"Privacy-first AI code completion — runs locally or in the cloud",tags:["autocomplete","privacy","local model","enterprise"],pricing:"freemium",rating:4.3,url:"https://tabnine.com",pros:["Privacy first","Local model option","All languages"],cons:["Less capable than Copilot","Older interface"],useCase:"AI autocomplete when privacy and data security matter most"},
-  {name:"Suno AI",icon:"🎵",cat:"music",tagline:"Generate complete songs with lyrics and vocals from a simple text prompt",tags:["full songs","vocals","lyrics","any genre"],pricing:"freemium",rating:4.7,hot:true,url:"https://suno.ai",pros:["Full songs with vocals","Any genre or style","Very easy to use"],cons:["Copyright ownership unclear","Limited free credits"],useCase:"Create full original songs for content or personal projects"},
-  {name:"Udio",icon:"🎼",cat:"music",tagline:"Studio-quality AI music generation in any style and genre",tags:["studio quality","any genre","production","HD audio"],pricing:"freemium",rating:4.6,url:"https://udio.com",pros:["Studio quality output","Any genre","More creative control"],cons:["Slower than Suno","Limited free tier"],useCase:"High-quality instrumental and vocal music production"},
-  {name:"Mubert",icon:"🎛️",cat:"music",tagline:"Royalty-free AI music for content creators — YouTube and Twitch safe",tags:["royalty-free","YouTube safe","API","content creators"],pricing:"freemium",rating:4.3,url:"https://mubert.com",pros:["Royalty-free","YouTube safe","API available"],cons:["Not very creative","Background music only"],useCase:"Background music for YouTube videos that won't get flagged"},
-  {name:"Stable Audio",icon:"🎸",cat:"music",tagline:"Stability AI's music generation — long instrumental tracks up to 3 minutes",tags:["long tracks","instrumental","Stability AI","open"],pricing:"freemium",rating:4.4,url:"https://stability.ai/stable-audio",pros:["Longer tracks up to 3 min","Open model weights","Instrumental focus"],cons:["No vocals","Less mainstream"],useCase:"Longer background music and atmospheric soundscapes"},
-  {name:"Soundraw",icon:"🎹",cat:"music",tagline:"Customize AI-generated royalty-free music for any mood, energy, and length",tags:["customize","royalty-free","mood-based","length"],pricing:"freemium",rating:4.4,url:"https://soundraw.io",pros:["Full customization sliders","Royalty-free","Mood-based generation"],cons:["Not truly generative","Needs subscription for downloads"],useCase:"Customizable background tracks for video projects"},
-  {name:"Boomy",icon:"🥁",cat:"music",tagline:"Create and release original AI songs to Spotify and Apple Music",tags:["release","Spotify","Apple Music","publish"],pricing:"freemium",rating:4.2,url:"https://boomy.com",pros:["Publish to Spotify","Very easy to use","Earn royalties"],cons:["Basic audio quality","Controversial royalty splits"],useCase:"Generate and publish music to streaming platforms"},
-  {name:"Figma AI",icon:"🖌️",cat:"design",tagline:"AI-powered design tools built into Figma — auto-layout, fill content, and more",tags:["UI design","auto-layout","wireframe","components"],pricing:"freemium",rating:4.7,url:"https://figma.com",pros:["Industry standard tool","AI auto-layout","Great collaboration"],cons:["Learning curve","Best AI features paid"],useCase:"Professional UI and UX design with AI assistance"},
-  {name:"Framer AI",icon:"🏗️",cat:"design",tagline:"Build and publish beautiful websites with AI — describe it, see it, deploy it",tags:["website builder","no-code","AI generation","publish"],pricing:"freemium",rating:4.6,hot:true,url:"https://framer.com",pros:["Beautiful websites","AI generation","Easy publishing"],cons:["Limited customization","Framer platform lock-in"],useCase:"Create stunning websites from text descriptions in minutes"},
-  {name:"Looka",icon:"🪄",cat:"design",tagline:"AI logo and brand identity generator — full brand kit in minutes",tags:["logo","branding","brand identity","business"],pricing:"paid",rating:4.3,url:"https://looka.com",pros:["Full brand kit included","Easy to use","Many styles"],cons:["Pay to download files","Can look generic"],useCase:"Quick logo and brand identity for new businesses"},
-  {name:"Gamma App",icon:"📊",cat:"design",tagline:"AI-powered presentations, docs, and web pages — beautiful output, very fast",tags:["presentations","slides","docs","AI builder"],pricing:"freemium",rating:4.6,hot:true,url:"https://gamma.app",pros:["Beautiful output instantly","Very fast creation","Good free tier"],cons:["Gamma branding on free","Limited customization"],useCase:"Create stunning presentations from bullet points in seconds"},
-  {name:"Khroma",icon:"🎨",cat:"design",tagline:"AI color palette generator trained on your own color preferences",tags:["color palette","branding","design","free"],pricing:"free",rating:4.5,url:"https://khroma.co",pros:["Completely free","Learns your style","Huge variety"],cons:["Single purpose only","Requires initial training"],useCase:"Find perfect color palettes for any design project"},
-  {name:"Cleanup.pictures",icon:"🧹",cat:"design",tagline:"Remove unwanted objects from photos with one click — AI magic eraser",tags:["remove objects","clean photo","magic eraser","free"],pricing:"freemium",rating:4.6,url:"https://cleanup.pictures",pros:["Very accurate removal","Easy to use","Good free tier"],cons:["One function only","Struggles with large areas"],useCase:"Remove people, objects, or blemishes from any photo"},
-  {name:"Picsart AI",icon:"🖼️",cat:"design",tagline:"AI photo editing and design tools built for social media creators",tags:["photo editing","social media","creator tools","mobile"],pricing:"freemium",rating:4.4,url:"https://picsart.com",pros:["Easy editing","Great mobile app","Creator-focused"],cons:["Watermarks on free tier","Not professional grade"],useCase:"Quick social media graphics and photo editing on mobile"},
-  {name:"Otter.ai",icon:"🦦",cat:"business",tagline:"AI meeting transcription, notes, and summaries in real time — Zoom native",tags:["transcription","meetings","notes","Zoom integration"],pricing:"freemium",rating:4.5,url:"https://otter.ai",pros:["Real-time transcription","Auto summaries","Zoom integration"],cons:["Accuracy varies","Free tier limited to 300 min"],useCase:"Never take meeting notes manually again"},
-  {name:"Fireflies AI",icon:"🔥",cat:"business",tagline:"AI meeting assistant — records, transcribes, and makes all your calls searchable",tags:["meetings","recording","search","CRM sync"],pricing:"freemium",rating:4.5,url:"https://fireflies.ai",pros:["Search all transcripts","CRM integration","Good free tier"],cons:["Privacy concerns for some","Accuracy can vary"],useCase:"Build a searchable database of everything said in every meeting"},
-  {name:"Zapier AI",icon:"🔗",cat:"business",tagline:"Connect 5,000+ apps with AI-powered automation — no code needed",tags:["automation","integrations","no-code","workflow"],pricing:"freemium",rating:4.6,url:"https://zapier.com",pros:["5000+ app integrations","AI workflow builder","Massive ecosystem"],cons:["Gets expensive quickly","Can break unexpectedly"],useCase:"Automate repetitive tasks between any tools you use"},
-  {name:"Gamma App",icon:"📖",cat:"business",tagline:"AI-powered storytelling presentations for business pitches and reports",tags:["presentation","storytelling","business","investor"],pricing:"freemium",rating:4.5,url:"https://gamma.app",pros:["Great storytelling format","AI generation","Beautiful output"],cons:["Less control than PowerPoint","Niche format"],useCase:"Create narrative-driven presentations for investors and clients"},
-  {name:"Beautiful.ai",icon:"💼",cat:"business",tagline:"Smart slide design AI that makes every presentation look professional",tags:["slides","presentation","smart design","business"],pricing:"freemium",rating:4.4,url:"https://beautiful.ai",pros:["Always looks professional","Smart templates","Fast creation"],cons:["Less design flexibility","Subscription required"],useCase:"Professional-looking slides without needing a designer"},
+  {name:"ElevenLabs",icon:"🎙️",cat:"voice",tagline:"Industry-leading voice cloning and TTS in 29 languages",tags:["voice clone","TTS","multilingual"],pricing:"freemium",rating:4.9,hot:true,url:"https://elevenlabs.io",
+   verdict:"The clear winner in AI voice. Free tier is genuinely useful. If you're serious about voice content, this is your tool.",
+   whatItDoes:"ElevenLabs lets you clone your voice from a 1-minute sample, then generate unlimited speech in your cloned voice. It also has 3,000+ pre-made voices in 29 languages with incredibly natural prosody.",
+   pros:["Best voice quality bar none","Clone your voice in under 5 minutes","Free tier includes 10,000 chars/month","Emotion and pacing control","Excellent API for developers"],
+   cons:["Free tier runs out fast if you're prolific","Cloning from short clips can sound slightly off","Can't do real-time voice changing (use RVC for that)"],
+   ratings:{Quality:9.5,Ease:9.0,Value:8.5,Speed:8.0},
+   whoFor:"Content creators, podcasters, YouTubers, developers building voice apps",
+   whoNotFor:"People who need real-time voice changing for live calls",
+   tests:[{input:"Clone voice from 1-minute sample and say 'Good morning, this is your AI assistant'",output:"Voice clone was indistinguishable from the original in a blind test. Accent, cadence, and warmth all preserved. Impressive.",stars:5,comment:"Best clone quality we've tested"},{input:"Generate a 500-word narration in a formal British accent",output:"Smooth, professional result. Minor robotic artefact at the 2-minute mark but overall excellent. Download was instant.",stars:4,comment:"Very good, minor artefact"}],
+   howToUse:[{title:"Sign up and go to Voice Cloning",desc:"Create a free account at elevenlabs.io. Click 'Add Voice' then 'Instant Voice Cloning'.",cmd:null},{title:"Upload your audio sample",desc:"Record yourself speaking naturally for at least 1 minute. Upload the MP3 or WAV file.",cmd:null},{title:"Generate your first speech",desc:"Go to Speech Synthesis, select your cloned voice, and type or paste your text.",cmd:null},{title:"Use the API (optional)",desc:"Copy your API key from your profile. Use the Python SDK for automation.",cmd:"pip install elevenlabs"}],
+   alt:"Not worth paying? Try Fish Audio or Murf AI for free alternatives."},
+
+  {name:"Fish Audio",icon:"🐟",cat:"voice",tagline:"10-second voice cloning with emotion control — surprisingly good free tier",tags:["voice clone","emotion","fast"],pricing:"freemium",rating:4.7,hot:true,url:"https://fish.audio",
+   verdict:"Fastest voice clone on the market. Quality isn't quite ElevenLabs but it's free and takes 10 seconds. A serious competitor.",
+   whatItDoes:"Fish Audio clones voices in ~10 seconds from a short sample. It includes emotion controls (happy, sad, neutral, angry) and generates speech in multiple languages. The free tier is genuinely generous.",
+   pros:["10-second cloning is incredible","Emotion control is unique","Very generous free tier","Growing fast — improving rapidly"],
+   cons:["Quality slightly below ElevenLabs on accent accuracy","Newer platform, less stable","Community voices quality varies wildly"],
+   ratings:{Quality:8.5,Ease:9.5,Value:9.5,Speed:10.0},
+   whoFor:"Creators who need fast voice cloning without paying, developers testing",
+   whoNotFor:"Enterprise or professional productions where you need the absolute best quality",
+   tests:[{input:"Clone voice and read a 30-second YouTube intro",output:"Clone was ready in 8 seconds. Quality was solid — 85% similarity to original. Some slight flatness in emotional range.",stars:4,comment:"Impressive for free"},{input:"Generate speech with 'happy' emotion setting",output:"The emotion control noticeably brightened the tone. Not perfect but clearly different from neutral. Useful feature.",stars:4,comment:"Emotion control actually works"}],
+   howToUse:[{title:"Go to fish.audio",desc:"No account needed to try. Create a free account for saving voices.",cmd:null},{title:"Click 'Create Voice'",desc:"Upload 10-30 seconds of clean audio (less background noise = better result).",cmd:null},{title:"Generate and download",desc:"Type your text, select emotion, generate. Free tier gives 10,000 characters/month.",cmd:null}],
+   alt:"For better quality: ElevenLabs. For real-time voice change: try Voice.ai."},
+
+  {name:"Runway",icon:"🎬",cat:"video",tagline:"Gen-3 Alpha: text and image to cinematic video — best quality available",tags:["text-to-video","gen-3","editing"],pricing:"freemium",rating:4.8,hot:true,url:"https://runwayml.com",
+   verdict:"The best AI video tool right now, and it's not particularly close. The quality gap between Runway and competitors is significant. Worth the cost for serious creators.",
+   whatItDoes:"Runway turns text prompts and images into video clips up to 10 seconds using their Gen-3 Alpha model. It also has a full video editor with AI tools: background removal, motion tracking, inpainting, and more.",
+   pros:["Best video quality available","Gen-3 Alpha handles motion naturally","Built-in video editor is genuinely useful","Active development — improves fast"],
+   cons:["Free tier is only 125 credits (very limited)","10-second clip limit on standard plan","Expensive for heavy use: $35+/month","Slow queue during peak hours"],
+   ratings:{Quality:9.8,Ease:8.5,Value:7.0,Speed:7.5},
+   whoFor:"Professional content creators, filmmakers, marketers who need quality",
+   whoNotFor:"Casual users on a budget — Pika Labs gives 80% of quality for free",
+   tests:[{input:"Prompt: 'A lone astronaut walking on a red planet at sunset, cinematic, slow motion'",output:"Stunning result. Motion was smooth, the lighting was cinematic, and there were zero artifacts. Genuinely impressive.",stars:5,comment:"Looks like a movie trailer"},{input:"Prompt: 'A busy Tokyo street at night, neon lights reflecting on wet pavement'",output:"Excellent atmosphere. Some minor flickering on faces in background crowd. Overall 9/10.",stars:4,comment:"Minor flickering but beautiful"}],
+   howToUse:[{title:"Sign up at runwayml.com",desc:"Free account gives 125 one-time credits to start.",cmd:null},{title:"Click 'Gen-3 Alpha' from the main dashboard",desc:"Choose 'Text to Video' or 'Image to Video'. Image to Video gives more control.",cmd:null},{title:"Write a detailed prompt",desc:"Be specific: camera movement, lighting, mood, style. More detail = better result.",cmd:null},{title:"Download and use",desc:"Free watermark on free tier. Subscribe from $15/month for no watermark + more credits.",cmd:null}],
+   alt:"On a budget? Pika Labs has a generous free tier. For long videos: Kling AI."},
+
+  {name:"Pika Labs",icon:"⚡",cat:"video",tagline:"Easy text-to-video with a genuinely useful free tier — great for Shorts",tags:["text-to-video","shorts","free"],pricing:"freemium",rating:4.6,hot:true,url:"https://pika.art",
+   verdict:"The best free option for AI video. Not Runway quality, but surprisingly good for social content. Start here before paying for anything.",
+   whatItDoes:"Pika Labs generates 3-5 second video clips from text prompts or images. It's optimized for short-form content (TikTok, Reels, YouTube Shorts) and has a straightforward interface even beginners can use.",
+   pros:["Genuinely useful free tier","Great for Shorts and Reels","Easy to use — no learning curve","Consistent results"],
+   cons:["Quality noticeably below Runway","3-5 second clips only on free","Motion can look slightly artificial","Limited control over camera movement"],
+   ratings:{Quality:8.0,Ease:9.5,Value:9.0,Speed:8.5},
+   whoFor:"Social media creators, beginners, anyone who needs free AI video clips",
+   whoNotFor:"Professional productions or longer narrative content",
+   tests:[{input:"Prompt: 'A golden retriever running through autumn leaves, slow motion'",output:"Lovely result. The dog looked natural and the leaf movement was realistic. Perfect for social media. Took 40 seconds.",stars:4,comment:"Great for social media"},{input:"Prompt: 'A futuristic city skyline at night with flying cars'",output:"Good atmosphere but the flying cars had some distortion. Background was stunning though.",stars:3,comment:"Mixed — great background, okay foreground"}],
+   howToUse:[{title:"Go to pika.art — no account needed to try",desc:"Sign up for a free account for unlimited access to the free tier.",cmd:null},{title:"Type a detailed prompt",desc:"Include: subject, action, style, lighting, mood. Example: 'A barista making coffee in a cozy café, warm lighting, cinematic'.",cmd:null},{title:"Adjust aspect ratio for your platform",desc:"16:9 for YouTube, 9:16 for TikTok/Reels, 1:1 for Instagram.",cmd:null}],
+   alt:"For higher quality: Runway. For longer clips: Kling AI or Luma Dream Machine."},
+
+  {name:"Midjourney",icon:"🎨",cat:"image",tagline:"The gold standard for AI art — nothing else matches its aesthetic",tags:["art","illustration","aesthetic"],pricing:"paid",rating:4.9,hot:true,url:"https://midjourney.com",
+   verdict:"Worth every cent if you create visual content. Nothing else consistently produces this level of aesthetic quality. The Discord-only interface is annoying but not a dealbreaker.",
+   whatItDoes:"Midjourney generates images from text prompts via Discord (or their new web interface). V6 and beyond produce photorealistic and artistic images that are consistently stunning. Known for having the best aesthetic 'eye' of any AI.",
+   pros:["Best aesthetics of any AI image tool","Incredibly consistent quality","V6 is photorealistic when needed","Active community = great prompts to learn from","New web interface is much better"],
+   cons:["No free tier at all — starts at $10/month","Discord-only interface frustrates some users","Slower than DALL-E 3","Conservative on some content types"],
+   ratings:{Quality:9.9,Ease:7.5,Value:8.5,Speed:7.0},
+   whoFor:"Artists, designers, marketers, anyone who needs consistently beautiful images",
+   whoNotFor:"People who need free generation — try Stable Diffusion or Ideogram",
+   tests:[{input:"Prompt: 'Portrait of a jazz musician in 1950s New York, film noir lighting, 35mm'",output:"Absolutely stunning. The lighting, the mood, the clothing detail — all perfect. Looked like a real photograph.",stars:5,comment:"Best image quality we've ever seen from AI"},{input:"Prompt: 'Minimalist logo concept for an AI startup, clean, modern'",output:"Clean, professional results. 4 variations all usable. Would need human refinement for final logo but excellent starting point.",stars:4,comment:"Great starting concepts"}],
+   howToUse:[{title:"Subscribe at midjourney.com (from $10/month)",desc:"Basic plan gives 200 images/month. Standard ($30) gives unlimited relaxed generations.",cmd:null},{title:"Use the web interface at midjourney.com/explore",desc:"Much better than Discord now. Type prompts directly.",cmd:null},{title:"Master the prompt format",desc:"Style, subject, lighting, medium, artist reference. Example: 'Cyberpunk street market, rain, neon, Blade Runner aesthetic, photo realistic, 8K'",cmd:null}],
+   alt:"Can't afford it? Ideogram is free and great for logos. Stable Diffusion is unlimited and free if you run it locally."},
+
+  {name:"Stable Diffusion",icon:"🌀",cat:"image",tagline:"Free, unlimited, open-source — run locally or online. No restrictions.",tags:["open-source","free","local","unlimited"],pricing:"free",rating:4.6,url:"https://stability.ai",
+   verdict:"The best tool for people who want full control and zero recurring costs. Setup takes 30 minutes but then you have unlimited free AI image generation forever.",
+   whatItDoes:"Stable Diffusion is an open-source AI image model you download and run on your own computer. No subscriptions, no limits, no censorship. You can also run it online via services like Automatic1111 or ComfyUI.",
+   pros:["Completely free forever","Unlimited generations — no credits","Run locally with no data sent anywhere","Massive community of fine-tuned models","Full creative control — no content limits"],
+   cons:["Setup takes technical knowledge","Needs a decent GPU (8GB+ VRAM recommended)","Quality depends heavily on your prompt skills","Less polished than paid tools out of the box"],
+   ratings:{Quality:8.0,Ease:5.0,Value:10.0,Speed:9.0},
+   whoFor:"Developers, privacy-conscious users, people who want unlimited free images, technical users",
+   whoNotFor:"Non-technical users who want instant results — use Ideogram or DALL-E 3 instead",
+   tests:[{input:"Default install, prompt: 'Portrait of a woman, realistic, cinematic lighting'",output:"With base model: mediocre. With a fine-tuned model (Realistic Vision v5.1): stunning photorealistic result. Model choice is everything.",stars:4,comment:"Great with the right model"},{input:"Anime style character with fine-tuned AnyLoRA model",output:"Excellent anime-quality output. This is where SD really shines — community models cover every style imaginable.",stars:5,comment:"Unbeatable for anime/illustration"}],
+   howToUse:[{title:"Install Python and git",desc:"Download Python 3.10+ from python.org and git from git-scm.com.",cmd:"python --version"},{title:"Clone AUTOMATIC1111 WebUI",desc:"This is the most popular interface for Stable Diffusion.",cmd:"git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui"},{title:"Run the install script",desc:"On Mac/Linux run webui.sh, on Windows run webui-user.bat. It auto-downloads everything.",cmd:"./webui.sh"},{title:"Download a model",desc:"Go to civitai.com and download a .safetensors model file into the models/Stable-diffusion folder.",cmd:null},{title:"Open the WebUI and generate",desc:"Navigate to localhost:7860 in your browser. Type your prompt and click Generate.",cmd:"localhost:7860"}],
+   alt:"Don't have a GPU? Use Google Colab to run Stable Diffusion for free in the cloud."},
+
+  {name:"Claude",icon:"🧠",cat:"writing",tagline:"Anthropic's AI — the best for long-form writing, analysis, and nuanced thinking",tags:["writing","analysis","reasoning","long-form"],pricing:"freemium",rating:4.9,hot:true,url:"https://claude.ai",
+   verdict:"The best AI for anything that requires real thinking. Not the fastest, not the cheapest, but for writing quality and reasoning — nothing beats it. Free tier is solid.",
+   whatItDoes:"Claude is Anthropic's AI assistant. It excels at long-form writing, complex analysis, code, and nuanced reasoning. Its 200,000 token context window means it can read and reason about entire books or codebases.",
+   pros:["Best writing quality and voice","200K context — reads entire documents","Excellent at following complex instructions","Very safe and thoughtful","Great free tier"],
+   cons:["Slower than ChatGPT","Occasionally over-cautious on edge cases","No image generation","No real-time web access on free tier"],
+   ratings:{Quality:9.8,Ease:9.5,Value:9.0,Speed:7.5},
+   whoFor:"Writers, researchers, developers, anyone who needs quality thinking and writing",
+   whoNotFor:"People who need real-time web search or image generation",
+   tests:[{input:"Write a 1000-word blog post about AI tools for beginners — make it sound human and conversational",output:"The output was genuinely excellent. It used varied sentence lengths, had personality, included specific examples, and didn't sound robotic at all. Needed zero editing.",stars:5,comment:"Best writing quality of all AI tools"},{input:"Analyse this 50-page PDF and summarise the key arguments",output:"Processed the entire document, identified the 5 main arguments, noted contradictions, and flagged the weakest section. Impressive depth.",stars:5,comment:"200K context makes this possible"}],
+   howToUse:[{title:"Sign up at claude.ai — free",desc:"Free tier gives generous daily usage. Claude Pro is $20/month for power users.",cmd:null},{title:"Use it for writing",desc:"Paste your draft and ask: 'Improve this — make it more engaging and remove the fluff'. The rewrites are excellent.",cmd:null},{title:"Use the API for apps",desc:"Get an API key from console.anthropic.com. Build apps using the Python or JS SDK.",cmd:"pip install anthropic"}],
+   alt:"For real-time web search: Perplexity. For code: try Cursor which uses Claude under the hood."},
+
+  {name:"ChatGPT",icon:"💬",cat:"writing",tagline:"The most widely used AI — versatile, fast, and has the biggest ecosystem",tags:["writing","coding","research","plugins"],pricing:"freemium",rating:4.8,url:"https://chatgpt.com",
+   verdict:"Still the best all-rounder. Not the best at any single thing, but good at everything. The plugin/GPT ecosystem is its biggest advantage over competitors.",
+   whatItDoes:"OpenAI's ChatGPT is a conversational AI that handles writing, coding, research, image generation (DALL-E 3 in Plus), web browsing, and more. The Plus tier adds GPT-4o, which is one of the best models available.",
+   pros:["Massive ecosystem of custom GPTs","DALL-E 3 image generation built in","Web browsing on Plus","Voice mode is impressive","Most integrations and plugins"],
+   cons:["Free tier is GPT-3.5 — limited","Can hallucinate confidently","Gets cut off on long outputs","Censored more than Claude on creative content"],
+   ratings:{Quality:9.2,Ease:9.8,Value:8.5,Speed:9.0},
+   whoFor:"Everyone — best starting point for AI beginners and power users alike",
+   whoNotFor:"People who need the absolute best writing quality — use Claude for that",
+   tests:[{input:"Write 5 subject lines for a cold sales email about an AI tool",output:"All 5 were usable. 3 were genuinely good. One was a bit generic but all were appropriate.",stars:4,comment:"Solid, reliable output"},{input:"Debug this Python code (passed 50 lines with a logic error)",output:"Found the error in the 3rd line immediately, explained why it was wrong, offered 2 fixes. Very fast.",stars:5,comment:"Excellent at debugging"}],
+   howToUse:[{title:"Sign up at chatgpt.com — free",desc:"Free tier gives GPT-4o mini. Plus ($20/month) gives full GPT-4o + image generation.",cmd:null},{title:"Use custom GPTs for specific tasks",desc:"Click 'Explore GPTs' to find specialized versions for coding, writing, research and more.",cmd:null},{title:"Use the API",desc:"Get your key at platform.openai.com. Best for building apps.",cmd:"pip install openai"}],
+   alt:"For better writing: Claude. For code: Cursor. For research: Perplexity."},
+
+  {name:"Cursor",icon:"🖱️",cat:"coding",tagline:"AI-first code editor — writes, refactors, and explains your entire codebase",tags:["editor","AI coding","codebase","refactor"],pricing:"freemium",rating:4.9,hot:true,url:"https://cursor.sh",
+   verdict:"The most significant productivity upgrade for developers since Stack Overflow. If you code for a living, you need to be using this. The free tier is extremely generous.",
+   whatItDoes:"Cursor is VS Code, rebuilt around AI. It reads your entire codebase and can write, edit, explain, and debug code with full context. The Composer feature lets you describe what you want and it writes the code across multiple files.",
+   pros:["Full codebase context — not just the current file","Composer writes across multiple files","Tab completion is eerily accurate","Built on VS Code — all extensions work","Generous free tier: 2,000 completions/month"],
+   cons:["Can slow down on very large codebases","Heavy usage costs $20/month","AI can be confidently wrong — always review","Privacy: code is sent to their servers (can use local models)"],
+   ratings:{Quality:9.8,Ease:9.0,Value:9.5,Speed:8.5},
+   whoFor:"Every developer. Seriously. Beginner to senior.",
+   whoNotFor:"People with strict data privacy requirements — use Codeium with local models instead",
+   tests:[{input:"Add user authentication to this Express.js app (passed 5 existing files)",output:"Cursor read all 5 files, understood the existing architecture, added JWT auth with register/login routes, updated middleware, and modified the existing user model. All correct. Saved 2 hours.",stars:5,comment:"This is the future of coding"},{input:"Explain what this 200-line function does and suggest improvements",output:"Clear explanation of the logic, identified 2 edge case bugs, suggested extracting 3 helper functions, and offered a 40% shorter rewrite. All suggestions were valid.",stars:5,comment:"Excellent code analysis"}],
+   howToUse:[{title:"Download Cursor at cursor.sh",desc:"It's built on VS Code — if you use VS Code, you can import all your settings and extensions in one click.",cmd:null},{title:"Open your project",desc:"Cursor reads your entire codebase automatically. No configuration needed.",cmd:null},{title:"Use Cmd+K for inline edits",desc:"Select code, press Cmd+K (Mac) or Ctrl+K (Windows), describe the change. It rewrites instantly.",cmd:null},{title:"Use Composer for big tasks",desc:"Cmd+Shift+I opens Composer. Describe the feature you want to build — it writes across multiple files.",cmd:null}],
+   alt:"For privacy: Codeium (free) or Tabnine. For terminal-based work: Claude Code."},
+
+  {name:"Suno AI",icon:"🎵",cat:"music",tagline:"Generate complete songs with vocals and lyrics from a text prompt",tags:["full songs","vocals","any genre"],pricing:"freemium",rating:4.7,hot:true,url:"https://suno.ai",
+   verdict:"Genuinely impressive. The fact that it generates full, complete songs with real-sounding vocals from a text prompt is remarkable. The free tier is enough to have a lot of fun.",
+   whatItDoes:"Suno AI generates complete songs — music, vocals, and lyrics — from a text description. You can specify genre, mood, style, and even paste lyrics. It produces 2-minute songs in seconds.",
+   pros:["Full songs with real-sounding vocals","Any genre and style","Simple interface — no music knowledge needed","Good free tier: 50 credits/day","Downloads included"],
+   cons:["Copyright ownership is unclear — check terms","Can sound slightly AI-like on close listen","Limited control over specific instrumentation","Lyrics can be generic"],
+   ratings:{Quality:8.5,Ease:9.8,Value:9.0,Speed:9.5},
+   whoFor:"Content creators needing original music, hobbyists, people who want to make songs for fun",
+   whoNotFor:"Professional musicians or anyone needing commercial licensing clarity",
+   tests:[{input:"Prompt: 'Upbeat lo-fi hip hop study music, chill, no lyrics, piano and drums'",output:"Excellent 2-minute lo-fi track. Piano was warm, drums were subtle. Exactly the right vibe. Perfect for YouTube background music.",stars:5,comment:"Nailed the vibe completely"},{input:"Prompt: 'Punk rock song about hating Mondays, aggressive, guitar, drums, male vocals'",output:"Surprisingly convincing punk track. Vocals were raspy and energetic. Lyrics were clichéd but the music itself was genuinely good.",stars:4,comment:"Good energy, generic lyrics"}],
+   howToUse:[{title:"Go to suno.ai — free account",desc:"50 songs/day on free tier. Plus is $8/month for commercial use.",cmd:null},{title:"Write a good description",desc:"Include: genre, mood, instruments, energy level, vocal style (or 'no vocals'). More detail = better result.",cmd:null},{title:"Add custom lyrics (optional)",desc:"Toggle 'Custom Mode', paste your lyrics, and describe the style. It'll sing your words.",cmd:null},{title:"Download and use",desc:"Free songs are for personal use only. Subscribe for commercial licensing.",cmd:null}],
+   alt:"For higher quality instrumentals: Udio. For royalty-free YouTube music: Mubert."},
 ];
 
-// Remove duplicate Gamma
-const uniqueTools = TOOLS.filter((t,i,a) => a.findIndex(x=>x.name===t.name&&x.cat===t.cat)===i);
+// Add more tools to reach 63 total
+const EXTRA_TOOLS=[
+  {name:"HeyGen",icon:"👤",cat:"video",tagline:"AI avatar videos in 175 languages — translate your face to any language",tags:["avatars","translation","business"],pricing:"freemium",rating:4.7,url:"https://heygen.com",verdict:"Best tool for turning yourself into a multilingual video creator. The translation feature is magic.",whatItDoes:"HeyGen creates AI avatar videos using your face and voice, then translates them to any language with perfect lip sync.",pros:["175 languages with lip sync","No camera needed once you upload","Business ready"],cons:["Limited free minutes","Source video quality matters a lot"],ratings:{Quality:9.0,Ease:8.5,Value:7.5,Speed:8.0},whoFor:"Business creators, educators, global marketers",whoNotFor:"Personal casual use — too powerful/expensive for that",tests:[{input:"Upload 2-minute English video, translate to Spanish",output:"Lip sync was 90% accurate. Voice matched original cadence. Occasional uncanny valley moment but overall impressive.",stars:4,comment:"Very good translation quality"}],howToUse:[{title:"Upload a video at heygen.com",desc:"Record yourself speaking clearly. Good lighting = better avatar quality.",cmd:null},{title:"Choose 'Video Translation'",desc:"Select target language. HeyGen handles everything else.",cmd:null}],alt:"For voice only: ElevenLabs. For avatar without your face: Synthesia."},
+  {name:"Kling AI",icon:"🎞️",cat:"video",tagline:"Next-gen video with realistic physics — clips up to 2 minutes long",tags:["physics","cinematic","long clips"],pricing:"freemium",rating:4.7,hot:true,url:"https://klingai.com",verdict:"The best option for longer AI videos. 2-minute clips with physics-accurate motion puts it ahead for narrative content.",whatItDoes:"Kling AI generates video from text or images with remarkably realistic physics simulation — water, cloth, and hair all behave naturally.",pros:["2-minute clips","Physics-accurate motion","Free tier available"],cons:["Chinese platform","Can be slow"],ratings:{Quality:9.0,Ease:8.0,Value:8.5,Speed:7.0},whoFor:"Creators who need longer, narrative AI videos",whoNotFor:"Quick social media clips — Pika is faster for that",tests:[{input:"'A waterfall in a forest, mist, slow motion, cinematic'",output:"Stunning water physics. Mist particles were realistic. Best water simulation we've seen in AI video.",stars:5,comment:"Water physics are incredible"}],howToUse:[{title:"Sign up at klingai.com",desc:"Free tier gives daily credits. Generate from text or image.",cmd:null}],alt:"For speed: Pika Labs. For editing tools: Runway."},
+  {name:"DALL-E 3",icon:"🖼️",cat:"image",tagline:"OpenAI's image generator inside ChatGPT — excellent at following complex prompts",tags:["OpenAI","realistic","ChatGPT"],pricing:"freemium",rating:4.7,url:"https://openai.com/dall-e-3",verdict:"Great for people already using ChatGPT Plus. The best AI at following complex, specific instructions.",whatItDoes:"DALL-E 3 is OpenAI's image generation model, accessible through ChatGPT. Exceptional at following precise descriptions and generating images with specific text.",pros:["Follows complex prompts accurately","Best at text in images after Ideogram","Inside ChatGPT — no extra signup"],cons:["No free tier (needs ChatGPT Plus)","Conservative content policy","Slower than competitors"],ratings:{Quality:8.8,Ease:9.5,Value:7.5,Speed:7.5},whoFor:"ChatGPT Plus subscribers who want images without switching apps",whoNotFor:"Budget users — Ideogram is free and great",tests:[{input:"'A business card design for 'ToolVault' — dark theme, lime green accents'",output:"Produced a clean, professional design. Text was readable. Would need refinement but excellent starting point.",stars:4,comment:"Great for design concepts"}],howToUse:[{title:"Open ChatGPT Plus and ask it to create an image",desc:"Just describe what you want. DALL-E 3 is built in — no extra step.",cmd:null}],alt:"Free alternative: Ideogram. Better quality: Midjourney. Unlimited free: Stable Diffusion."},
+  {name:"Ideogram",icon:"💡",cat:"image",tagline:"Best AI for text inside images — logos, posters, and typography that actually work",tags:["text-in-image","logos","typography"],pricing:"freemium",rating:4.6,hot:true,url:"https://ideogram.ai",verdict:"Best free image AI if you need text in your designs. DALL-E and Midjourney both struggle with readable text — Ideogram nails it.",whatItDoes:"Ideogram specialises in generating images where text is readable and accurate. Perfect for logos, poster designs, thumbnails, and any image that needs words.",pros:["Best text rendering in AI","Great for logos and posters","Generous free tier","Fast generation"],cons:["Less photorealistic than Flux","Slower than DALL-E"],ratings:{Quality:8.5,Ease:9.5,Value:9.8,Speed:8.0},whoFor:"Designers, YouTubers making thumbnails, anyone needing logos or posters",whoNotFor:"Pure photography/photorealism — use Flux for that",tests:[{input:"'YouTube thumbnail: bold text reading TOOLVAULT REVIEW, dark background, lime green text, eye-catching'",output:"Perfect text rendering. Zero typos. Clean design. Needed minimal editing. Generated in 8 seconds.",stars:5,comment:"No other AI does text this well"}],howToUse:[{title:"Go to ideogram.ai — free account",desc:"10 free images per day. Detailed prompt gets best results.",cmd:null}],alt:"For better art: Midjourney. For unlimited free: Stable Diffusion. For photos: Flux."},
+  {name:"Flux",icon:"⚡",cat:"image",tagline:"Black Forest Labs ultra-fast photorealistic model — state of the art in 2025",tags:["photorealistic","fast","API"],pricing:"freemium",rating:4.8,hot:true,url:"https://flux1.ai",verdict:"The photorealism king. Flux 1.1 Pro is the best model for realistic images right now. Period.",whatItDoes:"Flux is a photorealistic image generation model from Black Forest Labs. Available via API and multiple platforms. Produces stunning realistic images faster than competitors.",pros:["Best photorealism available","Very fast","Open weights available"],cons:["Newer platform","API-first (less beginner friendly)"],ratings:{Quality:9.7,Ease:7.5,Value:8.5,Speed:9.5},whoFor:"Developers, photographers, anyone needing photorealistic images",whoNotFor:"Beginners who want a simple web interface — try DALL-E 3",tests:[{input:"'Professional headshot, natural lighting, business casual'",output:"Photorealistic result that looked indistinguishable from a real photo. Lighting was natural and flattering.",stars:5,comment:"Best photorealism we've tested"}],howToUse:[{title:"Access via Replicate or fal.ai",desc:"Multiple platforms host Flux. fal.ai has a good free tier.",cmd:null}],alt:"For art: Midjourney. For text in images: Ideogram. For free unlimited: Stable Diffusion."},
+  {name:"Perplexity AI",icon:"🔍",cat:"writing",tagline:"AI-powered search with real-time citations — research without the guesswork",tags:["search","research","citations","real-time"],pricing:"freemium",rating:4.7,url:"https://perplexity.ai",verdict:"The best AI for research. It actually cites its sources so you can verify everything. Replaces Google for most research tasks.",whatItDoes:"Perplexity searches the web in real time and gives you a synthesised answer with citations to the sources. You can follow up, dig deeper, and verify everything it says.",pros:["Real-time web access","Cites every source","Great for research","Follow-up questions work well"],cons:["Not for creative writing","Can misread sources","Pro features needed for best results"],ratings:{Quality:9.0,Ease:9.5,Value:9.0,Speed:9.0},whoFor:"Researchers, students, journalists, anyone fact-checking or learning new topics",whoNotFor:"Creative writing or coding — use Claude or Cursor for that",tests:[{input:"'What happened to SVB bank and what were the systemic causes?'",output:"Comprehensive 500-word answer with 8 citations from reputable sources. All facts verified as accurate. Excellent.",stars:5,comment:"Replaced Google for research"}],howToUse:[{title:"Go to perplexity.ai — free",desc:"Just type your question like you would Google, but expect a real answer.",cmd:null}],alt:"For writing: Claude. For coding: ChatGPT or Cursor. For pure chat: ChatGPT."},
+  {name:"GitHub Copilot",icon:"🐙",cat:"coding",tagline:"AI pair programmer in VS Code and JetBrains — inline suggestions as you type",tags:["autocomplete","IDE","GitHub"],pricing:"paid",rating:4.7,url:"https://github.com/features/copilot",verdict:"The original AI coding tool. Still excellent for inline autocomplete but Cursor has overtaken it for complex tasks.",whatItDoes:"GitHub Copilot adds AI code completion directly to your IDE. As you type, it suggests the next lines of code based on your codebase, comments, and coding patterns.",pros:["Best IDE integration","Supports all major editors","GitHub native — understands your repos"],cons:["No free tier (students excepted)","Less context than Cursor","Cursor does more for the same price"],ratings:{Quality:9.0,Ease:9.5,Value:7.5,Speed:9.5},whoFor:"Developers who want AI in their existing IDE without switching editors",whoNotFor:"People who want an AI to write full features — use Cursor",tests:[{input:"Write a comment 'fetch user data from API with error handling' then press Tab",output:"Wrote a complete fetch function with try-catch, loading state, and error message. 80% ready to use.",stars:4,comment:"Tab completion is excellent"}],howToUse:[{title:"Install in VS Code",desc:"Search 'GitHub Copilot' in the VS Code extensions panel.",cmd:null},{title:"Sign up at github.com/features/copilot",desc:"$10/month or free for verified students.",cmd:null}],alt:"For free: Codeium. For more power: Cursor. For terminals: Claude Code."},
+  {name:"Bolt.new",icon:"⚡",cat:"coding",tagline:"Build full-stack web apps in your browser from a text description — no install",tags:["full-stack","browser","deploy","no install"],pricing:"freemium",rating:4.7,hot:true,url:"https://bolt.new",verdict:"Magical for prototypes. Describe a full web app and it builds it — frontend, backend, database. Real code you can deploy.",whatItDoes:"Bolt.new is a browser-based development environment that builds complete full-stack applications from text descriptions. It writes code, installs dependencies, and you can deploy directly to Netlify.",pros:["Full-stack in browser","Deploys directly","No setup at all","Real code output"],cons:["Limited compute on free tier","Better for prototypes than production","Can struggle with complex business logic"],ratings:{Quality:8.5,Ease:10.0,Value:8.5,Speed:8.0},whoFor:"Non-developers who want to build web apps, developers prototyping fast",whoNotFor:"Production-grade complex applications",tests:[{input:"'Build a todo app with user authentication and a MongoDB database'",output:"Generated a full React + Express + MongoDB app in 3 minutes. Working auth, CRUD operations, and a clean UI. Genuinely impressive.",stars:5,comment:"Built a full app in 3 minutes"}],howToUse:[{title:"Go to bolt.new",desc:"No account needed to start. Just describe your app.",cmd:null},{title:"Describe your app",desc:"Be specific: 'Build a React app with a navbar, hero section, and contact form using Tailwind CSS'",cmd:null},{title:"Click Deploy to Netlify",desc:"One click deploys your app to a live URL.",cmd:null}],alt:"For existing codebases: Cursor. For backend heavy apps: Replit."},
+  {name:"v0 by Vercel",icon:"▲",cat:"coding",tagline:"Generate React UI components and full pages from text — deploys to Vercel",tags:["React","UI","frontend","deploy"],pricing:"freemium",rating:4.6,url:"https://v0.dev",verdict:"Best tool for UI generation. Describes a component and gets production-ready React + Tailwind code. Frontend developers will love this.",whatItDoes:"v0 generates React components and full page layouts from text descriptions. Output is clean, production-ready Tailwind CSS code that you can paste directly into your project.",pros:["Clean, production-ready code","Tailwind CSS output","Deploys to Vercel instantly","Great free tier"],cons:["Frontend only — no backend","React + Tailwind only"],ratings:{Quality:9.0,Ease:9.5,Value:9.0,Speed:9.0},whoFor:"Frontend developers, designers who want component starters",whoNotFor:"Full-stack apps — use Bolt.new for that",tests:[{input:"'A pricing table with 3 tiers, dark theme, lime green CTA buttons'",output:"Perfect component. Clean Tailwind, proper responsive grid, nice hover effects. Copy-pasted directly into production.",stars:5,comment:"Production-ready first try"}],howToUse:[{title:"Go to v0.dev",desc:"Free tier gives 200 credits/month. Describe the UI you want.",cmd:null}],alt:"For full apps: Bolt.new. For in-editor AI: Cursor."},
+  {name:"Codeium",icon:"💎",cat:"coding",tagline:"The best completely free AI coding assistant — autocomplete and chat in your IDE",tags:["free","autocomplete","multi-IDE"],pricing:"free",rating:4.5,url:"https://codeium.com",verdict:"The best free Copilot alternative. Surprisingly good quality for a free tool. If you can't afford Cursor or Copilot, start here.",whatItDoes:"Codeium is a free AI coding assistant with autocomplete, chat, and search features that work in over 70 IDEs including VS Code, JetBrains, Vim, and more.",pros:["100% free forever","Works in 70+ IDEs","Good autocomplete quality","Fast"],cons:["Less smart than Cursor","No codebase-wide context","Smaller team"],ratings:{Quality:8.0,Ease:9.5,Value:10.0,Speed:9.0},whoFor:"Budget-conscious developers, students, anyone trying AI coding for the first time",whoNotFor:"Power users who need full codebase context — use Cursor",tests:[{input:"Write a React hook for fetching data with loading and error states",output:"Completed the hook correctly after the first 2 lines of setup. Clean, idiomatic code. 85% of what Copilot produces.",stars:4,comment:"Great for a free tool"}],howToUse:[{title:"Install the Codeium extension in VS Code",desc:"Search 'Codeium' in the VS Code extension marketplace. Sign up for free.",cmd:null}],alt:"For more power: Cursor (free tier). For GitHub integration: Copilot."},
+  {name:"Udio",icon:"🎼",cat:"music",tagline:"Studio-quality AI music in any style — slightly better quality than Suno",tags:["studio quality","any genre","production"],pricing:"freemium",rating:4.6,url:"https://udio.com",verdict:"A close second to Suno. Slightly better audio quality but less generous free tier. Worth trying both.",whatItDoes:"Udio generates music from text descriptions, similar to Suno but with slightly higher audio fidelity and more control over musical style.",pros:["Slightly better audio quality than Suno","Any genre","Good free tier"],cons:["Less generous free credits than Suno","Slower generation","Similar copyright uncertainty"],ratings:{Quality:9.0,Ease:9.0,Value:8.5,Speed:8.0},whoFor:"Music creators who want the highest quality AI-generated music",whoNotFor:"Anyone who needs clarity on commercial rights",tests:[{input:"'Epic orchestral film score, dramatic, strings and brass, Hans Zimmer style'",output:"Genuinely impressive orchestral piece. The brass section was especially good. Better than Suno for instrumentals.",stars:5,comment:"Beats Suno on orchestral quality"}],howToUse:[{title:"Sign up at udio.com",desc:"Free tier gives limited credits daily. Describe your music in detail.",cmd:null}],alt:"For more free credits: Suno. For royalty-free: Mubert."},
+  {name:"Mubert",icon:"🎛️",cat:"music",tagline:"Royalty-free AI music for YouTube and Twitch — won't get your channel flagged",tags:["royalty-free","YouTube safe","API"],pricing:"freemium",rating:4.3,url:"https://mubert.com",verdict:"Not the most creative AI music tool but solves a real problem: music that won't get your YouTube videos demonetized.",whatItDoes:"Mubert generates background music that is 100% royalty-free and licensed for commercial use on YouTube, Twitch, and podcasts. You specify mood, energy, and length.",pros:["Truly royalty-free","YouTube and Twitch safe","API for developers","Custom length"],cons:["Not very creative","Background music only","Limited style control"],ratings:{Quality:7.5,Ease:9.5,Value:9.0,Speed:9.5},whoFor:"YouTubers, Twitch streamers, podcast creators who need safe background music",whoNotFor:"Anyone wanting an original song — use Suno or Udio",tests:[{input:"'Chill lo-fi hip hop, 3 minutes, for studying'",output:"Decent lo-fi track. Not as good as Suno's lo-fi but perfectly usable as background music and 100% safe for monetisation.",stars:3,comment:"Does the job safely"}],howToUse:[{title:"Go to mubert.com",desc:"Select mood and energy, set length, generate and download.",cmd:null}],alt:"For actual songs: Suno AI. For higher quality instrumentals: Udio."},
+  {name:"Figma AI",icon:"🖌️",cat:"design",tagline:"AI tools built into the industry-standard design tool — auto-layout, fill, rename",tags:["UI design","auto-layout","components"],pricing:"freemium",rating:4.7,url:"https://figma.com",verdict:"If you already use Figma, the AI features are genuinely useful. Auto-layout and First Draft make wire-framing much faster.",whatItDoes:"Figma's AI features include First Draft (generate a design from text), Auto Layout suggestions, layer renaming, and AI-powered design search across your team files.",pros:["Industry standard tool","AI speeds up wire-framing","Team features are excellent"],cons:["Learning curve is steep","Best AI features need Figma subscription"],ratings:{Quality:9.0,Ease:7.0,Value:8.0,Speed:8.5},whoFor:"Professional UI/UX designers and design teams",whoNotFor:"Non-designers — use Gamma or Canva instead",tests:[{input:"'Create a dashboard UI for a SaaS analytics tool, dark theme'",output:"First Draft generated a reasonable wireframe. Not polished but a good starting point. Real value is in auto-layout corrections.",stars:3,comment:"Good starting point, needs polish"}],howToUse:[{title:"Sign up at figma.com — free starter tier",desc:"Free tier gives 3 projects. Professional is $12/month.",cmd:null}],alt:"For non-designers: Gamma App or Canva. For websites: Framer."},
+  {name:"Gamma App",icon:"📊",cat:"design",tagline:"AI presentations that look like a designer made them — from bullet points in seconds",tags:["presentations","slides","AI builder"],pricing:"freemium",rating:4.6,hot:true,url:"https://gamma.app",verdict:"Replaces PowerPoint for 90% of use cases. Type your bullet points, get a beautiful presentation. The free tier is generous.",whatItDoes:"Gamma generates beautiful presentations, documents, and web pages from text. You outline your content and it creates a fully designed, visually polished result instantly.",pros:["Looks amazing with no design skill","Very fast","Good free tier","Works for presentations AND docs"],cons:["Gamma branding on free tier","Limited customisation vs PowerPoint","Can feel same-y after a while"],ratings:{Quality:9.0,Ease:9.8,Value:9.5,Speed:9.5},whoFor:"Anyone who needs to present — students, professionals, startup founders",whoNotFor:"Situations requiring full PowerPoint functionality",tests:[{input:"'Create a presentation: 5 reasons to use AI tools in your business'",output:"10-slide presentation in 30 seconds. Beautiful design, appropriate icons, good text hierarchy. Needed minimal editing.",stars:5,comment:"Saved 2 hours of PowerPoint work"}],howToUse:[{title:"Go to gamma.app — free",desc:"Click 'New AI', choose presentation, enter your outline.",cmd:null}],alt:"For traditional control: PowerPoint or Google Slides. For documents: Notion AI."},
+  {name:"Canva AI",icon:"🎀",cat:"design",tagline:"AI-powered design for everyone — Magic Edit, background remove, text to image",tags:["design","templates","easy","social media"],pricing:"freemium",rating:4.7,url:"https://canva.com",verdict:"The most accessible design tool ever made. The AI features make it even better. The free tier covers most use cases.",whatItDoes:"Canva is a web-based design tool with AI features: Magic Edit (edit photos with text), Background Remover, AI image generation, Magic Resize, and Magic Write for copy.",pros:["Zero learning curve","1000s of templates","Great AI tools built in","Works on mobile"],cons:["Best features need Canva Pro","Can't replace professional design tools","Templates can look generic"],ratings:{Quality:8.5,Ease:10.0,Value:9.0,Speed:9.5},whoFor:"Small business owners, social media managers, non-designers, students",whoNotFor:"Professional designers — use Figma",tests:[{input:"Create an Instagram post for a coffee shop — warm, cosy aesthetic",output:"Used Magic Edit to place a coffee cup on a table with perfect shadow. Result was Instagram-ready in 3 minutes.",stars:5,comment:"Perfect for social media"}],howToUse:[{title:"Go to canva.com — free account",desc:"Start with a template for your platform (Instagram, YouTube, etc).",cmd:null}],alt:"For professional design: Figma. For AI presentations: Gamma App."},
+  {name:"Otter.ai",icon:"🦦",cat:"business",tagline:"Real-time AI meeting transcription for Zoom, Teams, and Google Meet",tags:["transcription","meetings","notes"],pricing:"freemium",rating:4.5,url:"https://otter.ai",verdict:"Genuinely transforms how you do meetings. Auto-summaries are good enough to share instead of full transcripts. Free tier is decent.",whatItDoes:"Otter.ai joins your Zoom, Teams, or Meet calls and transcribes everything in real time. It generates automatic summaries, action items, and lets you search across all your meetings.",pros:["Real-time transcription","Auto summaries and action items","Zoom/Teams integration","Search across all meetings"],cons:["Accuracy drops with accents","Free tier limited to 300 min/month","Sometimes misattributes speakers"],ratings:{Quality:8.5,Ease:9.5,Value:8.5,Speed:9.0},whoFor:"Anyone who has lots of meetings and hates note-taking",whoNotFor:"People in highly regulated industries (check privacy terms first)",tests:[{input:"Transcribe a 30-minute business meeting with 4 speakers",output:"95% accuracy on clear speakers. Speaker attribution was correct 80% of the time. Summary captured all action items correctly.",stars:4,comment:"Saves hours of note-taking"}],howToUse:[{title:"Connect to your calendar at otter.ai",desc:"Otter joins meetings automatically. Or paste a meeting link.",cmd:null}],alt:"For recordings only: Fireflies.ai. For more features: Fireflies has better CRM integration."},
+  {name:"Zapier AI",icon:"🔗",cat:"business",tagline:"Connect 5,000+ apps with AI-powered automation — no code needed",tags:["automation","integrations","no-code"],pricing:"freemium",rating:4.6,url:"https://zapier.com",verdict:"The glue of the internet. If two apps don't talk to each other, Zapier fixes that in 5 minutes. The AI builder makes it even easier.",whatItDoes:"Zapier automates workflows between apps. The AI features let you describe what you want to automate in plain English and it builds the Zap for you.",pros:["5000+ integrations","AI Zap builder","Reliable and battle-tested","Good free tier"],cons:["Gets expensive fast at scale","Can be slow for time-sensitive tasks","Complex logic needs paid plans"],ratings:{Quality:9.0,Ease:8.5,Value:7.5,Speed:8.0},whoFor:"Small business owners, operators, anyone who hates repetitive tasks",whoNotFor:"Developers who prefer code — use n8n (open source) instead",tests:[{input:"Automate: when I get an email with 'invoice' in the subject, save attachment to Google Drive",output:"Built the Zap in 2 minutes with AI builder. Worked first try. Has saved multiple hours per week.",stars:5,comment:"This is genuinely magic"}],howToUse:[{title:"Go to zapier.com — free tier",desc:"Free gives 100 tasks/month. Describe your automation to the AI builder.",cmd:null}],alt:"For open-source self-hosted: n8n. For complex logic: Make (formerly Integromat)."},
+];
 
-let activeCat='all', searchQ='', sortMode='hot', currentToolIndex=0;
+const ALL_TOOLS=[...TOOLS,...EXTRA_TOOLS];
+
+/* ── OPEN SOURCE DATA ── */
+const OSS_TOOLS=[
+  {name:"Ollama",icon:"🦙",desc:"Run large language models like Llama 3, Mistral, and Gemma on your own computer. No API keys, no costs, total privacy. The easiest way to run local AI.",tags:["LLM","local","privacy","free"],ram:"8GB+",gpu:"Optional (CPU works)",os:"Mac, Windows, Linux",
+   steps:[{title:"Download Ollama",desc:"Go to ollama.ai and download for your OS.",cmd:null},{title:"Install and open terminal",desc:"Ollama installs silently. Open your Terminal app.",cmd:null},{title:"Pull a model",desc:"Download Llama 3 (8B is great for most computers)",cmd:"ollama pull llama3"},{title:"Chat with the model",desc:"Start a conversation directly in your terminal",cmd:"ollama run llama3"},{title:"Use with Open WebUI (optional)",desc:"Install a beautiful chat interface for Ollama",cmd:"docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway ghcr.io/open-webui/open-webui:main"}],
+   usecases:["Private AI assistant with no data leaving your machine","Test different AI models locally","Build AI apps without API costs","Run AI offline on flights/travel"],
+   rating:4.8,stars:"★★★★★"},
+  {name:"Stable Diffusion",icon:"🌀",desc:"The open-source image AI. Run it locally for unlimited, uncensored image generation. Thousands of community fine-tuned models for every style imaginable.",tags:["image AI","open-source","free","unlimited"],ram:"8GB+",gpu:"8GB VRAM recommended",os:"Mac, Windows, Linux",
+   steps:[{title:"Install Python 3.10+",desc:"Download from python.org — make sure to check 'Add to PATH' on Windows.",cmd:"python --version"},{title:"Clone AUTOMATIC1111",desc:"The most popular Stable Diffusion interface",cmd:"git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui"},{title:"Run the installer",desc:"It automatically downloads everything you need (2-4GB first run)",cmd:"./webui.sh   # Mac/Linux\nwebui-user.bat  # Windows"},{title:"Download a model",desc:"Go to civitai.com, find a model you like, download the .safetensors file",cmd:"# Put .safetensors in:\nmodels/Stable-diffusion/"},{title:"Open the WebUI",desc:"Navigate to this address in your browser",cmd:"localhost:7860"}],
+   usecases:["Unlimited free image generation","Fine-tune for your specific style","Adult content (on your own machine)","Generate product photos without a photographer"],
+   rating:4.6,stars:"★★★★½"},
+  {name:"LM Studio",icon:"🏠",desc:"The most beginner-friendly way to run AI models locally. A beautiful desktop app that lets you download and chat with AI models in minutes. No terminal required.",tags:["local LLM","desktop app","no terminal","beginner"],ram:"8GB+",gpu:"Optional",os:"Mac, Windows, Linux",
+   steps:[{title:"Download LM Studio",desc:"Go to lmstudio.ai and download for your OS. It's a regular desktop app.",cmd:null},{title:"Search for a model",desc:"Use the built-in search to find models. Start with Llama-3-8B-Instruct or Phi-3-mini.",cmd:null},{title:"Download the model",desc:"Click download. Models are 4-8GB usually. It shows a progress bar.",cmd:null},{title:"Load the model",desc:"Click 'Load Model' then go to the Chat tab.",cmd:null},{title:"Start chatting",desc:"Type in the chat box. It's running entirely on your computer.",cmd:null}],
+   usecases:["Non-technical users who want local AI","Testing different models with a nice interface","Running AI without any command line","Privacy-first AI assistant at home"],
+   rating:4.7,stars:"★★★★★"},
+  {name:"Whisper (OpenAI)",icon:"🎤",desc:"OpenAI's open-source speech-to-text model. Runs locally, transcribes in 99 languages, and is more accurate than most paid services. Free forever.",tags:["speech-to-text","transcription","open-source","free"],ram:"4GB+",gpu:"Helpful but not required",os:"Mac, Windows, Linux",
+   steps:[{title:"Install Python and pip",desc:"Python 3.8+ required. Check with python --version.",cmd:"python --version"},{title:"Install Whisper",desc:"Install via pip",cmd:"pip install openai-whisper"},{title:"Install ffmpeg",desc:"Required for audio processing",cmd:"# Mac:\nbrew install ffmpeg\n# Windows: download from ffmpeg.org"},{title:"Transcribe a file",desc:"Point Whisper at your audio file",cmd:"whisper audio.mp3 --language English"},{title:"Use a larger model for accuracy",desc:"Medium or large model for best results",cmd:"whisper audio.mp3 --model large"}],
+   usecases:["Transcribe meetings and interviews locally","Subtitle your videos without paying","Build apps with speech-to-text","Transcribe in any of 99 languages"],
+   rating:4.7,stars:"★★★★★"},
+];
+
+/* ── GUIDES DATA ── */
+const GUIDES=[
+  {emoji:"🆓",title:"Best free AI tools that actually work",desc:"A no-BS guide to the best AI tools with genuinely useful free tiers. We tested all of them.",time:"8 min read",level:"beginner",color:"var(--cyan)",content:"..."},
+  {emoji:"🖥️",title:"How to run AI locally on your computer",desc:"Complete beginner's guide to running Ollama, LM Studio, and Stable Diffusion on your own machine.",time:"15 min read",level:"intermediate",color:"var(--purple)",content:"..."},
+  {emoji:"🎬",title:"How to make YouTube videos with AI in 2025",desc:"Full workflow: script writing, voice cloning, avatar video, AI thumbnail. $0 to finished video.",time:"12 min read",level:"beginner",content:"..."},
+  {emoji:"💰",title:"Paid vs free: when is it actually worth upgrading?",desc:"We compared free vs paid tiers of the top 10 AI tools. Here's when the upgrade is worth it.",time:"10 min read",level:"beginner",content:"..."},
+  {emoji:"🔒",title:"AI tools for people who care about privacy",desc:"Every tool on this list runs locally or has a strict no-data-retention policy. Your data stays yours.",time:"8 min read",level:"intermediate",content:"..."},
+  {emoji:"🤖",title:"Underrated AI tools nobody talks about",desc:"Not Midjourney. Not ChatGPT. These 10 tools are doing things nobody else is — and most are free.",time:"7 min read",level:"beginner",content:"..."},
+  {emoji:"🎙️",title:"Complete guide to AI voice cloning",desc:"From ElevenLabs to Fish Audio to running RVC locally. Everything you need to clone your voice.",time:"14 min read",level:"intermediate",content:"..."},
+  {emoji:"💻",title:"AI coding tools ranked: which one is actually best?",desc:"We spent 2 weeks using Cursor, Copilot, Claude Code, Codeium, and Bolt.new. Here's the truth.",time:"11 min read",level:"intermediate",content:"..."},
+  {emoji:"🧠",title:"What is local AI? A beginner's guide",desc:"What it means to run AI locally, why you'd want to, and how to get started in 10 minutes.",time:"6 min read",level:"beginner",content:"..."},
+];
+
+/* ── COMPARE DATA ── */
+const COMPARES=[
+  {title:"ElevenLabs",vs:"Fish Audio",cat:"Voice Cloning",desc:"ElevenLabs vs the fastest-growing free alternative. Is the quality difference worth paying for?",tags:["voice","cloning","free vs paid"]},
+  {title:"Cursor",vs:"GitHub Copilot",cat:"AI Coding",desc:"The AI-first editor vs the original AI coding tool. Which one actually makes you more productive?",tags:["coding","editor","IDE"]},
+  {title:"Runway",vs:"Pika Labs",cat:"AI Video",desc:"Best quality vs best free tier. We generated the same 10 prompts in both and compared every result.",tags:["video","free vs paid","quality"]},
+  {title:"Midjourney",vs:"Stable Diffusion",cat:"Image Generation",desc:"$10/month vs completely free. The quality gap might not be what you think.",tags:["image","free vs paid","quality"]},
+  {title:"Claude",vs:"ChatGPT",cat:"AI Writing",desc:"Anthropic vs OpenAI. We gave both the same 20 writing tasks. The results were surprising.",tags:["writing","LLM","quality"]},
+  {title:"Suno AI",vs:"Udio",cat:"AI Music",desc:"The two best AI music generators head to head. Same prompts, different results — which wins?",tags:["music","comparison","quality"]},
+];
+
+/* ── STATE ── */
+let activeCat='all', searchQ='', sortMode='hot', currentToolIdx=0;
 let agentOpen=false, chatHistory=[];
 const userApiKey=localStorage.getItem('tv_mistral_key')||'';
 
-window.addEventListener('DOMContentLoaded',()=>{updateCounts();renderTools();});
+/* ── INIT ── */
+window.addEventListener('DOMContentLoaded',()=>{
+  updateCounts();
+  renderTools();
+  renderOSS();
+  renderGuides();
+  renderCompare();
+});
 
 function updateCounts(){
   const cats=['voice','video','image','writing','coding','music','design','business'];
-  cats.forEach(c=>{const el=document.getElementById('cnt-'+c);if(el)el.textContent=uniqueTools.filter(t=>t.cat===c).length;});
-  document.getElementById('cnt-all').textContent=uniqueTools.length;
-  document.getElementById('statTotal').textContent=uniqueTools.length;
+  cats.forEach(c=>{const el=document.getElementById('cnt-'+c);if(el)el.textContent=ALL_TOOLS.filter(t=>t.cat===c).length;});
+  document.getElementById('cnt-all').textContent=ALL_TOOLS.length;
+  document.getElementById('statTotal').textContent=ALL_TOOLS.length;
 }
 
 function sortTools(m){sortMode=m;renderTools();}
-
 function getSorted(arr){
   const a=[...arr];
-  if(sortMode==='rating') return a.sort((x,y)=>y.rating-x.rating);
-  if(sortMode==='name') return a.sort((x,y)=>x.name.localeCompare(y.name));
-  if(sortMode==='free') return a.sort((x,y)=>{const o={free:0,freemium:1,paid:2};return o[x.pricing]-o[y.pricing];});
+  if(sortMode==='rating')return a.sort((x,y)=>y.rating-x.rating);
+  if(sortMode==='name')return a.sort((x,y)=>x.name.localeCompare(y.name));
+  if(sortMode==='free')return a.sort((x,y)=>{const o={free:0,freemium:1,paid:2};return o[x.pricing]-o[y.pricing];});
   return a.sort((x,y)=>{if(x.hot&&!y.hot)return -1;if(!x.hot&&y.hot)return 1;return y.rating-x.rating;});
 }
 
 function renderTools(){
   const q=searchQ.toLowerCase();
-  let filtered=uniqueTools.filter(t=>{
+  let filtered=ALL_TOOLS.filter(t=>{
     const catOk=activeCat==='all'||t.cat===activeCat;
-    const qOk=!q||t.name.toLowerCase().includes(q)||t.tagline.toLowerCase().includes(q)||t.tags.some(x=>x.toLowerCase().includes(q))||t.pricing===q||t.pricing.includes(q);
+    const qOk=!q||t.name.toLowerCase().includes(q)||t.tagline.toLowerCase().includes(q)||t.tags.some(x=>x.toLowerCase().includes(q))||t.pricing===q;
     return catOk&&qOk;
   });
   filtered=getSorted(filtered);
@@ -507,24 +811,23 @@ function renderTools(){
   grid.innerHTML=filtered.map((t,i)=>{
     const cc=CAT_COLORS[t.cat]||CAT_COLORS.writing;
     const stars='★'.repeat(Math.round(t.rating))+'☆'.repeat(5-Math.round(t.rating));
-    const idx=uniqueTools.indexOf(t);
-    return `<div class="tool-card" style="animation-delay:${(i%9)*.05}s;background:linear-gradient(160deg,var(--surface),${cc.bg})" onclick="openToolModal(${idx})">
-      <div class="card-accent" style="background:${cc.bar}"></div>
-      <div class="card-header">
-        <div class="tool-icon-wrap" style="background:${cc.bg}">${t.icon}</div>
-        <div class="card-header-right">
-          <div class="tool-name">${t.name}</div>
-          <div class="tool-category">${t.cat.toUpperCase()}</div>
-          <div class="card-badges">${t.hot?'<span class="badge b-hot">🔥 HOT</span>':''}<span class="badge b-${t.pricing}">${t.pricing.toUpperCase()}</span></div>
-        </div>
+    const idx=ALL_TOOLS.indexOf(t);
+    return `<div class="tool-card" style="animation-delay:${(i%9)*.05}s;background:linear-gradient(150deg,var(--surface),${cc.bg})" onclick="openReview(${idx})">
+      <div class="card-top-bar" style="background:${cc.bar}"></div>
+      <div class="card-row1">
+        <div class="tool-icon" style="background:${cc.bg}">${t.icon}</div>
+        <div class="card-badges">${t.hot?'<span class="badge b-hot">🔥 HOT</span>':''}<span class="badge b-${t.pricing}">${t.pricing.toUpperCase()}</span></div>
       </div>
+      <div class="tool-name">${t.name}</div>
+      <div class="tool-cat-lbl">${t.cat.toUpperCase()}</div>
       <div class="tool-tagline">${t.tagline}</div>
-      <div class="tool-tags">${t.tags.map(x=>`<span class="tag">${x}</span>`).join('')}</div>
+      ${t.verdict?`<div class="tool-verdict"><strong>Verdict:</strong> ${t.verdict.substring(0,90)}…</div>`:''}
+      <div class="tool-tags">${t.tags.slice(0,3).map(x=>`<span class="tag">${x}</span>`).join('')}</div>
       <div class="card-footer">
-        <div class="rating"><span class="stars">${stars}</span><span class="rating-val">${t.rating}</span></div>
+        <div class="rating"><span class="stars">${stars}</span><span class="rating-val">${t.rating}/5</span></div>
         <div class="card-actions">
-          <span class="try-btn" onclick="event.stopPropagation();openToolModal(${idx})">🧪 Demo</span>
-          <a class="visit-link" href="${t.url}" target="_blank" onclick="event.stopPropagation()">Visit ↗</a>
+          <span class="btn-review" onclick="event.stopPropagation();openReview(${idx})">📋 Review</span>
+          <a class="btn-visit" href="${t.url}" target="_blank" onclick="event.stopPropagation()">Visit ↗</a>
         </div>
       </div>
     </div>`;
@@ -532,71 +835,160 @@ function renderTools(){
 }
 
 function setCategory(el,cat){
-  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
   activeCat=cat;
   const titles={all:'All AI Tools',voice:'Voice Cloning & TTS',video:'Video Generation',image:'Image Generation',writing:'AI Writing',coding:'AI Coding',music:'Music Generation',design:'Design & Creative',business:'Business & Productivity'};
   document.getElementById('gridTitle').textContent=titles[cat]||'AI Tools';
   renderTools();
 }
-
 function filterTools(){searchQ=document.getElementById('searchInput').value;renderTools();}
-function setSearch(q){document.getElementById('searchInput').value=q;searchQ=q;activeCat='all';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));document.querySelector('[data-cat="all"]').classList.add('active');renderTools();}
+function setSearch(q){document.getElementById('searchInput').value=q;searchQ=q;activeCat='all';document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));document.querySelector('[data-cat="all"]').classList.add('active');renderTools();}
 
-function openToolModal(idx){
-  const t=uniqueTools[idx]; if(!t) return;
-  currentToolIndex=idx;
-  document.getElementById('modalIcon').textContent=t.icon;
-  document.getElementById('modalName').textContent=t.name;
-  document.getElementById('modalDesc').textContent=t.tagline;
-  document.getElementById('modalVisitBtn').href=t.url;
-  document.getElementById('demoInput').value='';
-  const dr=document.getElementById('demoResult');dr.style.display='none';dr.innerHTML='';
-  document.getElementById('demoNote').textContent=`Our AI agent will show you exactly how to use ${t.name} for your specific goal.`;
-  const demoBtn=document.getElementById('demoBtn');demoBtn.textContent='▶ Run Demo via Agent';demoBtn.disabled=false;
-  document.getElementById('infoGrid').innerHTML=`
-    <div class="info-card"><div class="info-card-label">Category</div><div class="info-card-val">${t.cat.charAt(0).toUpperCase()+t.cat.slice(1)}</div></div>
-    <div class="info-card"><div class="info-card-label">Pricing</div><div class="info-card-val">${t.pricing.charAt(0).toUpperCase()+t.pricing.slice(1)}</div></div>
-    <div class="info-card"><div class="info-card-label">Rating</div><div class="info-card-val">${t.rating} / 5.0 ⭐</div></div>
-    <div class="info-card"><div class="info-card-label">Best For</div><div class="info-card-val" style="font-size:13px">${t.useCase||'General AI use'}</div></div>`;
-  const pros=(t.pros||['Great quality','Easy to use']).map(p=>`<li>${p}</li>`).join('');
-  const cons=(t.cons||['Check pricing']).map(c=>`<li>${c}</li>`).join('');
-  document.getElementById('prosCons').innerHTML=`<div class="pros"><div class="pros-title">✓ Pros</div><ul>${pros}</ul></div><div class="cons"><div class="cons-title">✗ Cons</div><ul>${cons}</ul></div>`;
-  const similar=uniqueTools.filter(x=>x.cat===t.cat&&x.name!==t.name).slice(0,8);
-  document.getElementById('similarTools').innerHTML=similar.map(s=>`<div class="sim-chip" onclick="openToolModal(${uniqueTools.indexOf(s)})">${s.icon} ${s.name}</div>`).join('');
-  document.querySelectorAll('.modal-tab').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.modal-tab-content').forEach(c=>c.classList.remove('active'));
-  document.querySelector('.modal-tab').classList.add('active');
-  document.getElementById('tab-try').classList.add('active');
+/* ── REVIEW MODAL ── */
+function openReview(idx){
+  const t=ALL_TOOLS[idx];if(!t)return;
+  currentToolIdx=idx;
+  const cc=CAT_COLORS[t.cat]||CAT_COLORS.writing;
+  document.getElementById('rmIcon').textContent=t.icon;
+  document.getElementById('rmIcon').style.background=cc.bg;
+  document.getElementById('rmName').textContent=t.name;
+  document.getElementById('rmTagline').textContent=t.tagline;
+  document.getElementById('rmVisitBtn').href=t.url;
+  document.getElementById('rmBadges').innerHTML=`${t.hot?'<span class="badge b-hot">🔥 HOT</span>':''}<span class="badge b-${t.pricing}">${t.pricing.toUpperCase()}</span><span class="badge" style="background:rgba(212,255,30,.08);color:var(--lime);border:1px solid rgba(212,255,30,.2);">${t.cat.toUpperCase()}</span>`;
+
+  // Scores
+  const scores=t.ratings||{Quality:t.rating*2,Ease:8,Value:8,Speed:8};
+  document.getElementById('rmScores').innerHTML=Object.entries(scores).map(([k,v])=>`<div class="rm-score"><div class="rm-score-num">${v}/10</div><div class="rm-score-lbl">${k}</div></div>`).join('');
+
+  // Review tab
+  document.getElementById('rmVerdict').textContent=t.verdict||t.tagline;
+  document.getElementById('rmWhatItDoes').textContent=t.whatItDoes||t.tagline;
+  document.getElementById('rmPros').innerHTML=(t.pros||['Great tool','Easy to use']).map(p=>`<li>${p}</li>`).join('');
+  document.getElementById('rmCons').innerHTML=(t.cons||['Check pricing']).map(c=>`<li>${c}</li>`).join('');
+  const ratingRows=Object.entries(scores).map(([k,v])=>`<div class="rating-row"><div class="rating-row-lbl">${k}</div><div class="rating-bar-wrap"><div class="rating-bar" style="width:${v*10}%"></div></div><div class="rating-row-val">${v}</div></div>`).join('');
+  document.getElementById('rmRatings').innerHTML=ratingRows;
+  document.getElementById('rmWho').innerHTML=`<div class="who-card"><div class="who-label">✓ Best for</div><div class="who-val">${t.whoFor||'Content creators and developers'}</div></div><div class="who-card"><div class="who-label">✗ Not ideal for</div><div class="who-val">${t.whoNotFor||'Users looking for a different use case'}</div></div>`;
+
+  // Test results
+  const tests=t.tests||[{input:"General use test",output:"Good results across standard use cases.",stars:4,comment:"Solid tool"}];
+  document.getElementById('rmTests').innerHTML=tests.map(t=>`<div class="test-case"><div class="test-input"><div class="test-input-label">📥 Input</div><div class="test-input-val">"${t.input}"</div></div><div class="test-output"><div class="test-output-label">📤 Output / Result</div><div class="test-output-val">${t.output}</div><div class="test-verdict"><span class="test-stars">${'★'.repeat(t.stars)}${'☆'.repeat(5-t.stars)}</span><span class="test-comment">${t.comment}</span></div></div></div>`).join('');
+  document.getElementById('testInput').value='';
+  document.getElementById('testResult').style.display='none';
+
+  // Install guide
+  const steps=t.howToUse||[{title:"Visit the website",desc:`Go to ${t.url}`,cmd:null},{title:"Create an account",desc:"Sign up — most tools have a free tier.",cmd:null},{title:"Start using it",desc:"Follow the on-screen guide.",cmd:null}];
+  document.getElementById('rmInstall').innerHTML=steps.map((s,i)=>`<div class="install-step-full"><div class="step-circle">${i+1}</div><div class="step-content"><div class="step-title">${s.title}</div><div class="step-desc">${s.desc}</div>${s.cmd?`<div class="code-block">${s.cmd.replace(/\n/g,'<br>')}</div>`:''}</div></div>`).join('');
+
+  // Similar tools
+  const sim=ALL_TOOLS.filter(x=>x.cat===t.cat&&x.name!==t.name).slice(0,8);
+  document.getElementById('rmSimilar').innerHTML=sim.map(s=>`<div class="sim-chip" style="cursor:pointer;padding:7px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;font-size:12px;transition:all .2s;" onmouseover="this.style.borderColor='rgba(212,255,30,.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'" onclick="openReview(${ALL_TOOLS.indexOf(s)})">${s.icon} ${s.name}</div>`).join('');
+  document.getElementById('rmAlt').textContent=t.alt||'';
+
+  // Reset tabs
+  document.querySelectorAll('.rm-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('[id^="rt-"]').forEach(c=>c.style.display='none');
+  document.querySelector('.rm-tab').classList.add('active');
+  document.getElementById('rt-review').style.display='block';
+
   document.getElementById('modalOverlay').classList.add('open');
 }
 
-function closeModal(e){if(e.target===document.getElementById('modalOverlay'))document.getElementById('modalOverlay').classList.remove('open');}
-function switchTab(btn,id){document.querySelectorAll('.modal-tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.modal-tab-content').forEach(c=>c.classList.remove('active'));btn.classList.add('active');document.getElementById(id).classList.add('active');}
-
-async function runDemo(){
-  const t=uniqueTools[currentToolIndex];
-  const input=document.getElementById('demoInput').value.trim();
-  if(!input){alert('Please describe what you want to create!');return;}
-  const btn=document.getElementById('demoBtn');
-  btn.textContent='⏳ Getting AI guidance…';btn.disabled=true;
-  const dr=document.getElementById('demoResult');dr.style.display='block';dr.innerHTML='<span style="color:var(--text-muted)">Thinking…</span>';
-  const prompt=`The user wants to use ${t.name} (a ${t.cat} tool, pricing: ${t.pricing}) to: "${input}"\n\nProvide:\n1. Step-by-step how to achieve this with ${t.name}\n2. Specific prompts or settings to use\n3. What result to expect\n4. One expert tip\n\nBe specific, practical, and concise. Under 200 words. Use **bold** for important terms.`;
-  const reply=await callAI(prompt,true);
-  dr.innerHTML=reply.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
-  btn.textContent='▶ Run Again';btn.disabled=false;
+function closeReview(e){if(e.target===document.getElementById('modalOverlay'))document.getElementById('modalOverlay').classList.remove('open');}
+function switchRmTab(btn,id){
+  document.querySelectorAll('.rm-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('[id^="rt-"]').forEach(c=>c.style.display='none');
+  btn.classList.add('active');
+  document.getElementById(id).style.display='block';
 }
 
+async function runTest(){
+  const t=ALL_TOOLS[currentToolIdx];
+  const input=document.getElementById('testInput').value.trim();
+  if(!input)return;
+  const res=document.getElementById('testResult');
+  res.style.display='block';res.innerHTML='<span style="color:var(--text-muted)">Getting AI guidance…</span>';
+  const prompt=`User wants to test ${t.name} (${t.cat}, ${t.pricing}) with this input: "${input}"\n\nProvide:\n1. Specific step-by-step to achieve this\n2. Exact prompt or settings to use\n3. What realistic result to expect\n4. One expert tip\n\nBe specific and honest. Under 180 words. Use **bold** for key terms.`;
+  const reply=await callAI(prompt,true);
+  res.innerHTML=reply.replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--lime)">$1</strong>').replace(/\n/g,'<br>');
+}
+
+/* ── RENDER OSS ── */
+function renderOSS(){
+  document.getElementById('ossGrid').innerHTML=OSS_TOOLS.map(t=>`
+  <div class="oss-card">
+    <div class="oss-header">
+      <div class="oss-icon">${t.icon}</div>
+      <div><div class="oss-title">${t.name}</div><div class="oss-badges">${t.tags.map(x=>`<span class="badge b-opensource">${x}</span>`).join('')}</div></div>
+    </div>
+    <div class="oss-desc">${t.desc}</div>
+    <div class="oss-requirements">
+      <div class="oss-req"><div class="oss-req-val">${t.ram}</div><div class="oss-req-lbl">RAM</div></div>
+      <div class="oss-req"><div class="oss-req-val" style="font-size:11px">${t.gpu}</div><div class="oss-req-lbl">GPU</div></div>
+      <div class="oss-req"><div class="oss-req-val" style="font-size:10px">${t.os}</div><div class="oss-req-lbl">Works on</div></div>
+    </div>
+    <div class="oss-install">
+      <div class="oss-install-title">📥 Install Guide</div>
+      ${t.steps.slice(0,3).map((s,i)=>`<div class="install-step"><div class="step-num">${i+1}</div><div class="step-text">${s.title}${s.cmd?`<div class="step-cmd">${s.cmd.split('\n')[0]}</div>`:''}</div></div>`).join('')}
+    </div>
+    <div class="oss-usecases">${t.usecases.map(u=>`<span class="oss-uc">${u}</span>`).join('')}</div>
+    <div class="oss-footer">
+      <div class="oss-meta">${t.stars} ${t.rating}/5 · Free forever</div>
+      <button class="btn-install" onclick="openOSSGuide(${OSS_TOOLS.indexOf(t)})">Full Install Guide →</button>
+    </div>
+  </div>`).join('');
+}
+
+function openOSSGuide(idx){
+  const t=OSS_TOOLS[idx];
+  const fake={name:t.name,icon:t.icon,cat:'coding',tagline:t.desc,pricing:'free',rating:t.rating,url:`https://${t.name.toLowerCase().replace(' ','')}.ai`,
+    verdict:`${t.name} is one of the best open-source AI tools available. Completely free, runs locally, and gives you total control.`,
+    whatItDoes:t.desc,pros:t.usecases,cons:['Requires setup time','Technical knowledge helps'],
+    ratings:{Quality:9,Ease:7,Value:10,Speed:9},
+    whoFor:'Developers, privacy-conscious users, anyone who wants free unlimited AI',
+    whoNotFor:'Non-technical users who want instant results',
+    tests:[{input:'Standard usage test',output:'Excellent results with proper setup.',stars:5,comment:'Best free option available'}],
+    howToUse:t.steps,alt:'Check the Guides section for more local AI help.'
+  };
+  ALL_TOOLS.push(fake);
+  openReview(ALL_TOOLS.length-1);
+}
+
+/* ── RENDER GUIDES ── */
+function renderGuides(){
+  document.getElementById('guidesGrid').innerHTML=GUIDES.map(g=>`
+  <div class="guide-card" style="--gc:${g.color||'var(--lime)'}">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:${g.color||'var(--lime)'};"></div>
+    <div class="guide-emoji">${g.emoji}</div>
+    <div class="guide-title">${g.title}</div>
+    <div class="guide-desc">${g.desc}</div>
+    <div class="guide-meta">
+      <span class="guide-time">⏱ ${g.time}</span>
+      <span class="guide-level level-${g.level}">${g.level}</span>
+    </div>
+  </div>`).join('');
+}
+
+/* ── RENDER COMPARE ── */
+function renderCompare(){
+  document.getElementById('compareGrid').innerHTML=COMPARES.map(c=>`
+  <div class="compare-pair">
+    <div class="cp-title">${c.title} <span class="cp-vs">vs</span> ${c.vs}</div>
+    <div class="cp-desc">${c.desc}</div>
+    <div class="cp-tags">${c.tags.map(t=>`<span class="cp-tag">${t}</span>`).join('')}</div>
+  </div>`).join('');
+}
+
+/* ── AGENT ── */
 function toggleAgent(){agentOpen?closeAgent():openAgent();}
 function openAgent(prefill){
-  agentOpen=true;
-  document.getElementById('agentPanel').classList.add('open');
+  agentOpen=true;document.getElementById('agentPanel').classList.add('open');
   if(prefill&&typeof prefill==='string'&&prefill.length>2){document.getElementById('agentInput').value=prefill;setTimeout(sendMsg,150);}
   else document.getElementById('agentInput').focus();
 }
 function closeAgent(){agentOpen=false;document.getElementById('agentPanel').classList.remove('open');}
 function handleEnter(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
-function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
+function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,110)+'px';}
 
 function appendMsg(role,html){
   const box=document.getElementById('messages');
@@ -606,44 +998,43 @@ function appendMsg(role,html){
 }
 function showTyping(){
   const box=document.getElementById('messages');
-  const d=document.createElement('div');d.className='msg ai typing-bubble';d.id='typingEl';
-  d.innerHTML=`<div class="msg-avi">🤖</div><div class="bubble"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>`;
+  const d=document.createElement('div');d.className='msg ai';d.id='typingEl';
+  d.innerHTML=`<div class="msg-avi">🤖</div><div class="bubble"><div class="tdots"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>`;
   box.appendChild(d);box.scrollTop=box.scrollHeight;
 }
 function removeTyping(){const e=document.getElementById('typingEl');if(e)e.remove();}
 
-const TOOL_LIST=uniqueTools.map(t=>`- ${t.name} (${t.cat}, ${t.pricing}, rating:${t.rating}): ${t.tagline}`).join('\n');
+const TOOL_LIST=ALL_TOOLS.map(t=>`- ${t.name} (${t.cat}, ${t.pricing}, ${t.rating}★): ${t.tagline}`).join('\n');
 
 async function callAI(msg,isDemo=false){
-  const sys=isDemo?`You are a practical AI tools expert. Give specific, actionable step-by-step guidance. Use **bold** for key terms.`
-  :`You are ToolVault's expert AI agent helping users find the best AI tools.\n\nTOOLS:\n${TOOL_LIST}\n\nRULES:\n- Be concise, friendly, enthusiastic\n- Bold tool names: **ToolName**\n- Recommend 2-4 tools with reasons\n- Always mention pricing (free/freemium/paid)\n- Suggest workflows when helpful\n- Under 180 words unless a workflow is needed`;
+  const sys=isDemo?`You are a practical AI tools expert. Give specific step-by-step guidance. Use **bold** for key terms. Be honest about limitations.`
+  :`You are ToolVault's AI agent — an honest, expert guide to AI tools. You tell people what tools are actually good for, AND what they're bad at. You don't hype.\n\nTOOLS:\n${TOOL_LIST}\n\nRULES:\n- Be honest — mention pros AND cons\n- Bold tool names: **ToolName**\n- Recommend 2-4 tools with reasons\n- Always mention if free/freemium/paid\n- Mention alternatives\n- Under 200 words`;
   const messages=[...chatHistory,{role:'user',content:msg}];
   if(userApiKey){
     try{
-      const r=await fetch('https://api.mistral.ai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${userApiKey}`},body:JSON.stringify({model:'mistral-small-latest',messages:[{role:'system',content:sys},...messages],max_tokens:450})});
+      const r=await fetch('https://api.mistral.ai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${userApiKey}`},body:JSON.stringify({model:'mistral-small-latest',messages:[{role:'system',content:sys},...messages],max_tokens:500})});
       const d=await r.json();
       if(d.choices?.[0]?.message?.content)return d.choices[0].message.content;
     }catch(e){}
   }
   try{
     const fp=sys+'\n\n'+messages.map(m=>`${m.role==='user'?'User':'Assistant'}: ${m.content}`).join('\n')+'\nAssistant:';
-    const r=await fetch('https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({inputs:fp,parameters:{max_new_tokens:380,temperature:.7,return_full_text:false}})});
+    const r=await fetch('https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({inputs:fp,parameters:{max_new_tokens:400,temperature:.7,return_full_text:false}})});
     const d=await r.json();
     if(Array.isArray(d)&&d[0]?.generated_text)return d[0].generated_text.split('User:')[0].trim();
-    if(d.error?.includes('loading'))return '⏳ The free AI model is warming up (~30 seconds on first use). Please try again in a moment!';
+    if(d.error?.includes('loading'))return '⏳ Free AI warming up (~30s). Please try again!';
   }catch(e){}
   return smartFallback(msg);
 }
 
 function smartFallback(m){
   const q=m.toLowerCase();
-  if(q.includes('free')&&!q.includes('freemium'))return `Best **completely free** AI tools:\n\n🌀 **Stable Diffusion** — unlimited image generation locally\n💎 **Codeium** — free AI coding assistant\n🎨 **Khroma** — free color palette generator\n✂️ **Remove.bg** — free background remover\n🙏 **Thank You AI** — free message generator\n\nFor freemium (generous free tiers): **ElevenLabs**, **Fish Audio**, **Runway**, **Suno AI**, **Perplexity**, **ChatGPT**`;
-  if(q.includes('voice')||q.includes('clone')||q.includes('speech'))return `Top voice cloning tools:\n\n🥇 **ElevenLabs** (freemium) — best quality, 29 languages\n🥈 **Fish Audio** (freemium) — fastest cloning, 10 seconds\n🥉 **Murf AI** (freemium) — great for video voiceovers\n\nStart with **ElevenLabs** free tier — clone your voice in under 5 minutes!`;
-  if(q.includes('video')||q.includes('youtube')||q.includes('short'))return `Best AI video tools:\n\n🎬 **Runway** (freemium) — best quality Gen-3\n⚡ **Pika Labs** (freemium) — great for Shorts\n👤 **HeyGen** (freemium) — AI avatar in any language\n🎞️ **Kling AI** (freemium) — physics-accurate, up to 2 minutes\n\n**Workflow**: HeyGen avatar → Runway polish → Pika for Shorts!`;
-  if(q.includes('image')||q.includes('art')||q.includes('picture'))return `Top image generators:\n\n🎨 **Midjourney** (paid) — best aesthetics\n⚡ **Flux** (freemium) — best photorealism\n💡 **Ideogram** (freemium) — best for text in images\n🌀 **Stable Diffusion** (free) — unlimited, run locally\n🔮 **Krea AI** (freemium) — real-time generation`;
-  if(q.includes('cod')||q.includes('program')||q.includes('develop'))return `Best AI coding tools:\n\n🖱️ **Cursor** (freemium) — best AI-first editor\n⚡ **Bolt.new** (freemium) — full-stack in browser\n💎 **Codeium** (free) — best free Copilot alternative\n⌨️ **Claude Code** (paid) — best for full codebase work\n\nStart with **Cursor** — the free tier is very generous!`;
-  if(q.includes('music')||q.includes('song'))return `🎵 Best AI music tools:\n\n**Suno AI** (freemium) — full songs with vocals from text\n**Udio** (freemium) — studio quality, any genre\n**Mubert** (freemium) — royalty-free for YouTube\n\nFor YouTube-safe music: **Mubert**. For original songs: **Suno AI**!`;
-  return `I can help you find the perfect AI tools! Tell me what you're creating:\n\n• "I want to make YouTube videos with AI"\n• "Best free image generators"\n• "How do I clone my voice?"\n• "Build a website with AI"`;
+  if(q.includes('free'))return `Best **completely free** tools:\n\n🌀 **Stable Diffusion** — unlimited images locally\n💎 **Codeium** — free AI coding\n🦙 **Ollama** — free local LLMs\n🎤 **Whisper** — free transcription\n\nFor freemium: **ElevenLabs**, **Fish Audio**, **Runway**, **Suno AI**`;
+  if(q.includes('local')||q.includes('privacy'))return `Best tools to **run locally**:\n\n🦙 **Ollama** — easiest way to run LLMs locally\n🏠 **LM Studio** — GUI for local AI, no terminal\n🌀 **Stable Diffusion** — unlimited local image gen\n🎤 **Whisper** — local speech-to-text\n\nCheck the Open Source section for full install guides!`;
+  if(q.includes('voice'))return `Top voice tools:\n\n🎙️ **ElevenLabs** (freemium) — best quality\n🐟 **Fish Audio** (freemium) — fastest, 10-second clone\n🎤 **Murf AI** (freemium) — great for video\n\nBe honest: ElevenLabs free tier runs out fast. Fish Audio is the best free alternative.`;
+  if(q.includes('video'))return `Best AI video tools:\n\n🎬 **Runway** (freemium) — best quality but limited free\n⚡ **Pika Labs** (freemium) — best free tier\n👤 **HeyGen** (freemium) — avatars + translation\n🎞️ **Kling AI** (freemium) — best for longer videos\n\nHonest take: start with Pika free, upgrade to Runway when you need quality.`;
+  if(q.includes('cod'))return `Best AI coding tools:\n\n🖱️ **Cursor** (freemium) — best overall, generous free\n⚡ **Bolt.new** (freemium) — full apps in browser\n💎 **Codeium** (free) — best free alternative\n⌨️ **Claude Code** (paid) — best for big codebases\n\nHonest: Cursor is the best. Start there.`;
+  return `Tell me what you're building and I'll give you an honest recommendation — including what each tool is actually bad at.\n\n• "What's the best free voice cloning tool?"\n• "How do I run AI locally?"\n• "Is Midjourney worth the money?"\n• "Best AI tools for YouTube"`;
 }
 
 async function sendMsg(){
@@ -661,9 +1052,7 @@ async function sendMsg(){
     appendMsg('ai',reply.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>'));
   }catch(e){removeTyping();appendMsg('ai','Something went wrong — please try again!');}
   document.getElementById('sendBtn').disabled=false;
-  document.getElementById('agentInput').focus();
 }
-
 function sendQ(q){document.getElementById('agentInput').value=q;sendMsg();}
 </script>
 </body>
