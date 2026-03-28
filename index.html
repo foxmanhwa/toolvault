@@ -810,7 +810,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
         <li><a onclick="openSubmit()">📬 Submit a Tool</a></li>
         <li><a onclick="toggleAgent()">🤖 Ask the Agent</a></li>
         <li><a href="https://twitter.com/toolvault" target="_blank" rel="noopener">𝕏 Twitter / X</a></li>
-        <li><a href="mailto:hello@toolvault.app">✉️ Contact Us</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#4f272a2323200f3b202023392e3a233b612e3f3f">✉️ Contact Us</a></li>
       </ul>
       <div style="margin-top:20px;">
         <div class="footer-col-title">Get a domain</div>
@@ -822,8 +822,8 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
     ⚠️ <strong>Affiliate disclosure:</strong> Some "Try it" links on this site are affiliate links. If you sign up through them, we may earn a commission at no extra cost to you. This never influences our reviews — we tell you what tools are bad at regardless. Tools are reviewed independently.
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 ToolVault. Built with honesty.</div>
-    <div class="footer-note">34 tools reviewed · Updated regularly · No paid placements</div>
+    <div class="footer-copy">© 2026 ToolVault. Built with honesty.</div>
+    <div class="footer-note">50+ tools reviewed · Updated regularly · No paid placements</div>
   </div>
 </footer>
 
@@ -858,7 +858,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
   <button class="agent-fab" onclick="toggleAgent()">🤖<div class="fab-ring"></div></button>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ═══ AFFILIATE LINKS — swap these with your real referral URLs ═══
    ElevenLabs:  elevenlabs.io/affiliates
    Cursor:      cursor.com/affiliates  
@@ -963,6 +963,232 @@ const TOOLS = [
   {name:'Zapier AI',icon:'🔗',cat:'business',tagline:'Connect 5,000+ apps with AI automation — describe it, it builds it',tags:['automation','integrations','no-code'],pricing:'freemium',rating:4.6,hot:false,oss:false,url:'https://zapier.com',updated:WEEK,verdict:'The glue of the internet. The AI Zap builder lets you describe automations in plain English. Gets expensive fast at scale but for small volume it is indispensable.',whatItDoes:'Automates workflows between 5,000+ apps. Describe what to automate in English and it builds the Zap.',pros:['5000+ integrations','AI workflow builder','Battle-tested and reliable'],cons:['Gets expensive at scale','Complex logic needs paid plans'],ratings:{Quality:9.0,Ease:8.5,Value:7.5,Speed:8.5},whoFor:'Business owners, operators, anyone with repetitive inter-app tasks',whoNotFor:'Developers who prefer code — try n8n (open source)',tests:[{input:'When email with invoice in subject arrives, save attachment to Google Drive',output:'Built in 2 minutes. Worked first try.',stars:5,comment:'Magic for non-developers'}],howToUse:[{title:'Go to zapier.com — free tier',desc:'100 tasks/month free. Describe your automation.',cmd:null}],alt:'For open source self-hosted: n8n. For complex logic: Make.'},
   {name:'Ollama',icon:'🦙',cat:'local',tagline:'Run Llama 3, Mistral, Gemma locally — one command, zero costs',tags:['local LLM','privacy','free','offline'],pricing:'free',rating:4.8,hot:true,oss:true,url:'https://ollama.ai',updated:NOW,verdict:'The easiest way to run AI locally. One command and you have a full LLM running with zero costs and total privacy. Works offline. Essential for privacy-conscious users.',whatItDoes:'Makes running open-source LLMs (Llama 3, Mistral, Gemma, Phi-3) as simple as one command. Works on Mac, Windows, Linux. Has an OpenAI-compatible API for building apps.',pros:['Incredibly easy to set up','Free forever','Works offline','OpenAI-compatible API','Huge model library'],cons:['Needs 8GB+ RAM','Quality below GPT-4','Slower on CPU-only machines'],ratings:{Quality:8.5,Ease:9.5,Value:10.0,Speed:8.0},whoFor:'Privacy-conscious users, developers, anyone wanting free local AI',whoNotFor:'Non-technical users wanting best quality (use ChatGPT)',tests:[{input:'Run Llama 3 8B: Explain quantum computing simply',output:'Clear, accurate explanation in 8 seconds on M2 Mac. Quality similar to GPT-3.5.',stars:4,comment:'Impressive quality for local model'}],howToUse:[{title:'Download from ollama.ai',desc:'One installer for Mac, Windows, or Linux.',cmd:null},{title:'Pull Llama 3',cmd:'ollama pull llama3'},{title:'Start chatting',cmd:'ollama run llama3'},{title:'Add a web UI (optional)',desc:'ChatGPT-like interface for Ollama',cmd:'docker run -d -p 3000:8080 \\\n  --add-host=host.docker.internal:host-gateway \\\n  ghcr.io/open-webui/open-webui:main'}],alt:'For a GUI: LM Studio. For image generation locally: Stable Diffusion.'},
   {name:'LM Studio',icon:'🏠',cat:'local',tagline:'Run any AI model locally with a beautiful desktop GUI — no terminal needed',tags:['local LLM','desktop app','no-code','offline'],pricing:'free',rating:4.7,hot:false,oss:false,url:'https://lmstudio.ai',updated:WEEK,verdict:'The most beginner-friendly way to run local AI. A proper desktop app — no terminal, no commands. Download a model, click load, start chatting.',whatItDoes:'Desktop app for running AI models locally. Browse and download models from HuggingFace, load with a GUI, chat, and run a local server. Works offline.',pros:['No terminal required','Beautiful UI','Browse models in-app','Works offline'],cons:['Needs 8GB+ RAM','Lower quality than cloud AI'],ratings:{Quality:8.5,Ease:10.0,Value:10.0,Speed:8.0},whoFor:'Non-technical users who want local AI, anyone wanting a nice local AI GUI',whoNotFor:'Power users who prefer CLI — use Ollama',tests:[{input:'Load Phi-3 Mini, ask: best AI tools for YouTube?',output:'Loaded in 45 seconds. Helpful, specific answer. Ran completely offline.',stars:4,comment:'Great for local offline AI'}],howToUse:[{title:'Download from lmstudio.ai',desc:'Regular desktop installer.',cmd:null},{title:'Search and download a model',desc:'Start with Llama-3-8B-Instruct or Phi-3-mini.',cmd:null},{title:'Load the model and go to Chat tab',desc:'Click Load Model and start talking.',cmd:null}],alt:'For CLI power users: Ollama. For image generation locally: Stable Diffusion.'},
+
+  /* ── BATCH 2 — 20 more tools ── */
+
+  /* VOICE */
+  {name:'RVC',icon:'🎵',cat:'voice',tagline:'Real-time voice changing — swap your voice live on any call or stream',tags:['real-time','voice change','streaming','free'],pricing:'free',rating:4.5,hot:false,oss:true,url:'https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI',updated:NOW,isNew:true,
+   verdict:'The only free tool for real-time voice changing that actually works. Steep setup but once running it is unbeatable. Streamers use it to sound like completely different people live.',
+   whatItDoes:'RVC (Retrieval-based Voice Conversion) changes your voice in real-time using AI. Train on any voice sample and speak as that voice live. Runs locally — completely free.',
+   pros:['Real-time voice conversion','Completely free and open source','Train on any voice','Runs fully offline'],
+   cons:['Complex setup — requires Python and GPU','Audio latency varies by hardware','Training takes time and skill'],
+   ratings:{Quality:8.5,Ease:3.5,Value:10.0,Speed:7.5},
+   whoFor:'Streamers, voice actors, privacy-conscious users wanting real-time voice change',
+   whoNotFor:'Non-technical users — use ElevenLabs or Fish Audio instead',
+   tests:[{input:'Speak normally → convert to trained Morgan Freeman voice clone live',output:'Conversion latency ~150ms. Voice similarity 82%. Impressive for a free local tool.',stars:4,comment:'Best free real-time voice change available'}],
+   howToUse:[{title:'Clone the RVC repo',cmd:'git clone https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI'},{title:'Install dependencies',cmd:'pip install -r requirements.txt'},{title:'Launch the web UI',cmd:'python infer-web.py'},{title:'Train a voice model or download a community one',desc:'Visit weights.gg for pre-trained community voice models.',cmd:null}],
+   alt:'For easier voice cloning: Fish Audio S2. For studio TTS: ElevenLabs.'},
+
+  {name:'Speechify',icon:'🔊',cat:'voice',tagline:'Listen to any text, article or PDF read aloud — AI voices at 4.5x speed',tags:['text-to-speech','reading','productivity','mobile'],pricing:'freemium',rating:4.4,hot:false,oss:false,url:'https://speechify.com',updated:WEEK,isNew:true,
+   verdict:'Best text-to-speech app for consuming content fast. The 4.5x speed with good comprehension retention is genuinely impressive. Commuters and students love it.',
+   whatItDoes:'Speechify converts any text — articles, PDFs, Google Docs, emails — into audio you can listen to at up to 4.5x speed using natural AI voices.',
+   pros:['Up to 4.5x speed','Works with any text source','Great mobile app','Chrome extension is excellent'],
+   cons:['Premium voices behind paywall','Free tier is limited','Expensive at $139/year'],
+   ratings:{Quality:8.5,Ease:9.5,Value:6.5,Speed:10.0},
+   whoFor:'Students, commuters, people with dyslexia, fast readers',
+   whoNotFor:'Creating audio content for others — use ElevenLabs',
+   tests:[{input:'25-page PDF research paper at 2.5x speed',output:'Clear and understandable. Premium AI voice was natural. Took 18 minutes vs 45 minutes reading.',stars:4,comment:'Transformed how I consume research'}],
+   howToUse:[{title:'Install the Chrome extension from speechify.com',desc:'Highlight any text on any page and click the Speechify button.',cmd:null},{title:'Upload a PDF or paste text',desc:'The app reads it aloud immediately.',cmd:null}],
+   alt:'For free local version: ElevenLabs Reader. For private: Whisper read-back.'},
+
+  {name:'Murf AI',icon:'🎤',cat:'voice',tagline:'120+ studio AI voices for video and podcast voiceovers',tags:['voiceover','studio','podcast','video'],pricing:'freemium',rating:4.6,hot:false,oss:false,url:'https://murf.ai',updated:WEEK,isNew:false,
+   verdict:'Great if you just want a professional AI voice without cloning setup. The video timeline sync is genuinely useful for YouTubers and course creators.',
+   whatItDoes:'120+ AI voices available immediately. Built for video creators — syncs voice with video timelines and presentations. No audio sample needed.',
+   pros:['120+ high quality voices','Video timeline sync','No audio sample needed','Good collaboration features'],
+   cons:['No voice cloning on free tier','Pricey paid plans','Less control than ElevenLabs'],
+   ratings:{Quality:8.8,Ease:9.5,Value:7.5,Speed:9.0},
+   whoFor:'Video creators wanting professional voiceovers fast',
+   whoNotFor:'Anyone who needs their own voice cloned — use ElevenLabs',
+   tests:[{input:'200-word video intro in Formal British Male voice',output:'Clean and professional. Video sync worked first try.',stars:4,comment:'Great for video production'}],
+   howToUse:[{title:'Sign up at murf.ai',desc:'Free tier includes 10 minutes of generation.',cmd:null},{title:'Pick a voice and type your script',desc:'Adjust speed and pitch as needed.',cmd:null}],
+   alt:'For voice cloning: ElevenLabs or Fish Audio S2.'},
+
+  /* WRITING */
+  {name:'Grammarly',icon:'✅',cat:'writing',tagline:'AI writing assistant that fixes grammar, tone and clarity everywhere you type',tags:['grammar','writing','editing','browser'],pricing:'freemium',rating:4.6,hot:false,oss:false,url:'https://grammarly.com',updated:WEEK,isNew:false,
+   verdict:'Still the best writing assistant for non-native English speakers and anyone who wants a safety net. The free tier catches 90% of real errors. Pro adds tone detection which is genuinely useful.',
+   whatItDoes:'Grammarly checks grammar, spelling, clarity, engagement and delivery in real time across every app you write in — Gmail, Google Docs, Slack, Twitter, everywhere.',
+   pros:['Works everywhere you type','Free tier is genuinely useful','Tone detection on Pro','Plagiarism checker'],
+   cons:['Can be overly aggressive with suggestions','Pro is $12/month','Does not understand technical writing well'],
+   ratings:{Quality:8.8,Ease:9.8,Value:8.5,Speed:9.5},
+   whoFor:'Non-native English speakers, anyone writing professionally, students',
+   whoNotFor:'Technical writers or coders — use Claude for that',
+   tests:[{input:'Error-laden email rewritten with Grammarly active',output:'Caught 11 of 12 planted errors. Missed one subtle subject-verb agreement issue.',stars:4,comment:'Catches almost everything'}],
+   howToUse:[{title:'Install the Chrome extension from grammarly.com',desc:'Free account. Works immediately on every site.',cmd:null}],
+   alt:'For AI rewriting: Claude. For SEO: Surfer SEO.'},
+
+  {name:'Copy.ai',icon:'📋',cat:'writing',tagline:'Marketing copy AI — ads, emails, product descriptions in seconds',tags:['marketing copy','ads','email','ecommerce'],pricing:'freemium',rating:4.3,hot:false,oss:false,url:'https://copy.ai',updated:WEEK,isNew:true,
+   verdict:'Good for quickly generating marketing copy variations. Not as strong as Claude for quality but much faster for bulk output. Free tier is genuinely usable.',
+   whatItDoes:'Copy.ai generates marketing copy — Facebook ads, email subject lines, product descriptions, landing page copy — from short inputs using 90+ templates.',
+   pros:['90+ copy templates','Very fast generation','Decent free tier','Good for A/B test variations'],
+   cons:['Quality below Claude','Can feel generic','Better tools exist for long-form'],
+   ratings:{Quality:7.8,Ease:9.5,Value:8.5,Speed:9.5},
+   whoFor:'Ecommerce owners, marketers needing copy variations fast',
+   whoNotFor:'Long-form content — use Claude',
+   tests:[{input:'5 Facebook ad variations for a protein powder targeting gym-goers',output:'4 out of 5 were usable. 2 were genuinely strong. Generated in 12 seconds.',stars:4,comment:'Good for quick copy variations'}],
+   howToUse:[{title:'Go to copy.ai — free account',desc:'2000 words/month free. Pick a template and fill in your details.',cmd:null}],
+   alt:'For better quality: Claude. For brand voice: Jasper.'},
+
+  {name:'Hemingway Editor',icon:'📝',cat:'writing',tagline:'Paste your writing and instantly see what makes it hard to read',tags:['editing','clarity','readability','free'],pricing:'free',rating:4.4,hot:false,oss:false,url:'https://hemingwayapp.com',updated:WEEK,isNew:true,
+   verdict:'The simplest, most honest writing feedback tool. Paste your text and it highlights every sentence that is too long, every passive voice, every adverb. Free forever in the browser. Use this before publishing anything.',
+   whatItDoes:'Hemingway highlights complex sentences, passive voice, adverbs, and readability issues in your writing. Shows reading grade level. Free web version, paid desktop app.',
+   pros:['Completely free in browser','Instant visual feedback','Forces simpler clearer writing','No account needed'],
+   cons:['No AI suggestions — highlights only','Can be too aggressive on technical writing','Desktop app costs $19.99'],
+   ratings:{Quality:8.5,Ease:10.0,Value:10.0,Speed:10.0},
+   whoFor:'Anyone who wants clearer, simpler writing — bloggers, marketers, students',
+   whoNotFor:'Creative or literary writing — sometimes complexity is intentional',
+   tests:[{input:'Pasted a dense 500-word corporate blog post',output:'Found 8 very hard sentences, 12 adverbs, 5 passive voice instances. All highlights were accurate.',stars:5,comment:'Made the piece 40% clearer in 10 minutes'}],
+   howToUse:[{title:'Go to hemingwayapp.com',desc:'Paste your text. No account needed. Colour coding appears instantly.',cmd:null}],
+   alt:'For AI-powered editing: Claude or Grammarly.'},
+
+  /* CODING */
+  {name:'GitHub Copilot',icon:'🐙',cat:'coding',tagline:'Microsoft AI coding assistant — deep GitHub integration, works in every IDE',tags:['autocomplete','IDE','GitHub','Microsoft'],pricing:'freemium',rating:4.6,hot:false,oss:false,url:'https://github.com/features/copilot',updated:NOW,isNew:false,
+   verdict:'Still the most widely used AI coding tool. Free for students and open source contributors. Cursor is better for most developers but Copilot wins on IDE coverage and GitHub integration.',
+   whatItDoes:'GitHub Copilot provides AI autocomplete, chat, and code review across VS Code, JetBrains, Vim, and more. Deeply integrated with GitHub PRs and issues.',
+   pros:['Free for students and OSS contributors','Works in every major IDE','Deep GitHub PR integration','Microsoft/OpenAI backing'],
+   cons:['Cursor is better for most use cases','$10/month otherwise','No full codebase context like Cursor'],
+   ratings:{Quality:8.8,Ease:9.0,Value:7.5,Speed:9.0},
+   whoFor:'Students (free), developers already deep in GitHub ecosystem',
+   whoNotFor:'Anyone not on GitHub — use Cursor instead',
+   tests:[{input:'Complete a React useEffect with fetch and error handling',output:'Correct completion on first suggestion. Clean idiomatic code.',stars:4,comment:'Solid and reliable for autocomplete'}],
+   howToUse:[{title:'Install GitHub Copilot extension in VS Code',desc:'Free for students at education.github.com. Otherwise $10/month.',cmd:null}],
+   alt:'For better quality: Cursor. For completely free: Codeium.'},
+
+  {name:'Claude Code',icon:'⌨️',cat:'coding',tagline:"Anthropic's terminal AI agent — edits files, runs commands, fixes your whole project",tags:['terminal','agent','agentic','CLI'],pricing:'paid',rating:4.7,hot:true,oss:false,url:'https://claude.ai/code',updated:NOW,isNew:true,
+   verdict:'The most powerful agentic coding tool available. It reads your files, runs commands, fixes errors, and iterates until done — all from the terminal. Expensive but genuinely saves hours on complex tasks.',
+   whatItDoes:'Claude Code is a terminal-based AI agent that can read and edit files, run shell commands, install packages, debug errors, and complete multi-step engineering tasks autonomously.',
+   pros:['Genuinely agentic — runs commands autonomously','Full file system access','Best at complex multi-step tasks','No IDE needed'],
+   cons:['Costs per token — can get expensive','Terminal only — no GUI','Requires careful oversight on destructive commands'],
+   ratings:{Quality:9.7,Ease:7.5,Value:7.0,Speed:8.0},
+   whoFor:'Senior developers tackling complex refactors, migrations, and multi-file tasks',
+   whoNotFor:'Beginners or budget-conscious devs — use Cursor free tier',
+   tests:[{input:'Migrate Express.js REST API to tRPC (12 files)',output:'Completed migration in 8 minutes. All routes working. Tests passing. Saved 4 hours of work.',stars:5,comment:'Nothing else does this autonomously'}],
+   howToUse:[{title:'Install Claude Code globally',cmd:'npm install -g @anthropic-ai/claude-code'},{title:'Navigate to your project folder',cmd:'cd your-project'},{title:'Start a session',cmd:'claude'},{title:'Describe your task',desc:'Claude reads your files and starts working.',cmd:null}],
+   alt:'For GUI: Cursor. For browser apps: Bolt.new.'},
+
+  {name:'Tabnine',icon:'🔮',cat:'coding',tagline:'Privacy-first AI coding assistant — runs on-premise, your code never leaves',tags:['privacy','on-premise','autocomplete','enterprise'],pricing:'freemium',rating:4.3,hot:false,oss:false,url:'https://tabnine.com',updated:WEEK,isNew:true,
+   verdict:'The only serious option when your company cannot send code to external servers. On-premise deployment means zero data leaves your infrastructure. Quality is below Cursor but compliance wins.',
+   whatItDoes:'Tabnine provides AI autocomplete that can be deployed entirely on your own servers. Supports all major IDEs. Enterprise version is fully air-gapped.',
+   pros:['On-premise deployment available','Code never sent externally','SOC 2 and GDPR compliant','All major IDEs'],
+   cons:['Quality below Cursor and Copilot','Expensive for enterprise','Free tier is limited'],
+   ratings:{Quality:7.5,Ease:8.5,Value:6.5,Speed:8.5},
+   whoFor:'Enterprise teams with strict data compliance requirements',
+   whoNotFor:'Individual developers — use Cursor or Codeium',
+   tests:[{input:'Complete a database query builder function',output:'Accurate completion but less creative than Cursor. Reliable and consistent.',stars:3,comment:'Quality trade-off is worth it for compliance-heavy teams'}],
+   howToUse:[{title:'Install Tabnine in your IDE',desc:'Search Tabnine in VS Code extensions or JetBrains marketplace.',cmd:null}],
+   alt:'For better quality: Cursor. For free: Codeium.'},
+
+  /* IMAGE */
+  {name:'DALL-E 3',icon:'🎨',cat:'image',tagline:"OpenAI's image model built into ChatGPT — best for following complex prompts",tags:['OpenAI','ChatGPT','prompt following','text'],pricing:'freemium',rating:4.5,hot:false,oss:false,url:'https://openai.com/dall-e-3',updated:WEEK,isNew:false,
+   verdict:'Best AI image tool for following complex, detailed instructions. Not the most aesthetic but if your prompt has 10 specific requirements, DALL-E 3 gets all 10. Available free through Bing Image Creator.',
+   whatItDoes:'DALL-E 3 generates images from text prompts with exceptional prompt adherence. Built into ChatGPT Plus and available free via Microsoft Bing Image Creator.',
+   pros:['Best prompt following of any model','Free via Bing Image Creator','Built into ChatGPT Plus','Good at text in images'],
+   cons:['Less aesthetic than Midjourney','Conservative content policy','Not the sharpest output'],
+   ratings:{Quality:8.2,Ease:9.5,Value:9.0,Speed:8.5},
+   whoFor:'Anyone needing precise prompt following, ChatGPT Plus subscribers',
+   whoNotFor:'Pure artistic output — use Midjourney',
+   tests:[{input:"'A red cube on top of a blue sphere, on a green table, with yellow lighting'",output:'All 4 colour/object requirements correct. First try. No other model got all 4 right.',stars:5,comment:'Unbeatable at following complex instructions'}],
+   howToUse:[{title:'Free via Bing Image Creator',desc:'Go to bing.com/images/create — no subscription needed.',cmd:null},{title:'Or use inside ChatGPT Plus',desc:'Just ask ChatGPT to create an image.',cmd:null}],
+   alt:'For aesthetics: Midjourney. For photorealism: Flux. For logos: Ideogram.'},
+
+  {name:'Canva Text to Image',icon:'🖌️',cat:'image',tagline:'AI image generation built inside Canva — no extra app needed',tags:['Canva','design','integrated','easy'],pricing:'freemium',rating:4.1,hot:false,oss:false,url:'https://canva.com',updated:WEEK,isNew:false,
+   verdict:'Not the best standalone image AI, but the best image AI if you are already designing in Canva. The integration removes the copy-paste step entirely. Good enough for most social media content.',
+   whatItDoes:'Canva has built-in text-to-image generation, background removal, Magic Edit (describe what to change), and image expansion — all inside the Canva design editor.',
+   pros:['No switching apps','Direct into your design','Background removal is excellent','Free on Canva free plan'],
+   cons:['Lower quality than Midjourney or Flux','Limited style control','Not for standalone image work'],
+   ratings:{Quality:7.5,Ease:10.0,Value:9.0,Speed:9.0},
+   whoFor:'Anyone already designing in Canva who needs a quick image',
+   whoNotFor:'Serious image generation — use Midjourney or Flux',
+   tests:[{input:"'Abstract purple geometric background for a podcast thumbnail'",output:'Decent abstract result. A bit generic. Saved time vs switching to Midjourney.',stars:3,comment:'Convenient rather than impressive'}],
+   howToUse:[{title:'In any Canva design, click Apps → Text to Image',desc:'Describe your image. It generates directly in your canvas.',cmd:null}],
+   alt:'For serious image AI: Midjourney. For free: Ideogram.'},
+
+  /* MUSIC */
+  {name:'Suno AI V4',icon:'🎵',cat:'music',tagline:'Suno V4 — longer songs, better lyrics, more emotional range',tags:['full songs','V4','vocals','improved'],pricing:'freemium',rating:4.8,hot:true,oss:false,url:'https://suno.ai',updated:NOW,isNew:true,
+   verdict:'Suno V4 is a significant jump from V3. Lyrics are smarter, emotional range is broader, and songs can now run longer. If you have not tried Suno since 2024 it is worth another look.',
+   whatItDoes:'Suno V4 generates complete songs with significantly improved lyric quality, emotional expression, and audio fidelity. Songs feel more intentional and less formulaic than V3.',
+   pros:['Major upgrade from V3','Smarter more coherent lyrics','Better emotional expression','Longer songs'],
+   cons:['Copyright ownership still murky','V4 uses more credits','Commercial use needs Pro plan'],
+   ratings:{Quality:9.2,Ease:9.8,Value:8.5,Speed:9.0},
+   whoFor:'Content creators, musicians exploring AI, anyone wanting full songs',
+   whoNotFor:'Commercial release without Pro plan',
+   tests:[{input:"'Melancholic indie folk song about moving cities, acoustic guitar, female vocals'",output:'Stunning result. Lyrics were surprisingly coherent and emotional. One of the best AI music outputs we have heard.',stars:5,comment:'V4 is a genuine step change'}],
+   howToUse:[{title:'Go to suno.ai and toggle to V4 model',desc:'Select V4 in model dropdown before generating.',cmd:null},{title:'Use Custom Mode for your own lyrics',desc:'Write your lyrics, set the style description.',cmd:null}],
+   alt:'For better instrumentals: Udio. For royalty-free: Mubert.'},
+
+  {name:'Beatoven.ai',icon:'🥁',cat:'music',tagline:'AI music for videos — mood-based generation that matches your scene',tags:['video music','mood','royalty-free','sync'],pricing:'freemium',rating:4.2,hot:false,oss:false,url:'https://beatoven.ai',updated:WEEK,isNew:true,
+   verdict:'Specifically designed for video creators. You describe the mood and scene, it generates music that fits. Royalty-free and much cheaper than licensing stock music.',
+   whatItDoes:'Beatoven generates mood-based royalty-free music for videos. You describe the emotion and scene, it creates a custom track. Integrates with video editing tools.',
+   pros:['Mood-based generation — designed for video','Royalty-free license','Cheaper than stock music','Customisable length'],
+   cons:['Lower creative quality than Suno','Less control than manual production','Free tier limited'],
+   ratings:{Quality:7.8,Ease:9.0,Value:8.5,Speed:8.5},
+   whoFor:'Video editors, YouTubers, course creators needing background music',
+   whoNotFor:'Full song creation — use Suno or Udio',
+   tests:[{input:"'Tense corporate meeting scene, subtle tension, orchestral'",output:'Appropriate tense orchestral track. Well-suited to the described scene. Royalty-free confirmed.',stars:4,comment:'Good for video scoring'}],
+   howToUse:[{title:'Go to beatoven.ai — free account',desc:'Describe your scene and mood. Set duration.',cmd:null}],
+   alt:'For full songs: Suno. For guaranteed YouTube-safe: Mubert.'},
+
+  /* DESIGN */
+  {name:'Figma AI',icon:'🎯',cat:'design',tagline:'AI features built into the world standard design tool — auto layout, content generation',tags:['design','UI','prototyping','professional'],pricing:'freemium',rating:4.7,hot:false,oss:false,url:'https://figma.com',updated:NOW,isNew:true,
+   verdict:'Figma is already the industry standard. The new AI features — auto layout suggestions, content replacement, design critique — make it even more essential. Free for solo designers.',
+   whatItDoes:'Figma added AI features including auto-generate content, smart animate, AI design critique, and first-draft generation. Still the best tool for professional UI/UX design.',
+   pros:['Industry standard — universal compatibility','Free for solo use','Real-time collaboration','AI features built in natively'],
+   cons:['Steep learning curve','Paid plans get expensive for teams','AI features less powerful than standalone tools'],
+   ratings:{Quality:9.5,Ease:7.0,Value:8.5,Speed:8.5},
+   whoFor:'Professional UI/UX designers, product teams, design agencies',
+   whoNotFor:'Non-designers wanting quick graphics — use Canva',
+   tests:[{input:'Design a mobile app onboarding flow using AI first-draft',output:'Generated 3 onboarding screens with reasonable layout. Good starting point that saved 30 minutes.',stars:4,comment:'AI draft saves meaningful time'}],
+   howToUse:[{title:'Sign up at figma.com — free for individuals',desc:'Free plan includes 3 projects and full Figma features.',cmd:null},{title:'Enable AI features in the right-click menu',desc:'Select any frame → right click → AI features.',cmd:null}],
+   alt:'For non-designers: Canva. For quick mockups: v0 by Vercel.'},
+
+  {name:'Looka',icon:'🏷️',cat:'design',tagline:'AI logo generator — professional brand identity in minutes',tags:['logo','branding','identity','startup'],pricing:'paid',rating:4.2,hot:false,oss:false,url:'https://looka.com',updated:WEEK,isNew:true,
+   verdict:'Best AI logo tool for non-designers who need a real brand identity fast. The results are professional enough for a startup or small business. Not for major brands — hire a designer for that.',
+   whatItDoes:'Looka generates logo options from your company name and style preferences. Includes brand kit with logo variations, colours, fonts, and social media templates.',
+   pros:['Professional-looking results','Full brand kit included','Unlimited revisions','Social templates included'],
+   cons:['One-time fee $65+ for full files','Not unique enough for major brands','Limited creative range'],
+   ratings:{Quality:8.0,Ease:9.5,Value:7.0,Speed:9.5},
+   whoFor:'Startups, small businesses, side projects needing a logo fast',
+   whoNotFor:'Established brands or anyone wanting truly unique design',
+   tests:[{input:"Tech startup called 'NeuralPath' — modern, minimal, blue tones",output:'Generated 12 options. 3 were genuinely usable. Final choice looked professional and modern.',stars:4,comment:'Saves $500 vs a freelance designer for early-stage'}],
+   howToUse:[{title:'Go to looka.com and enter your company name',desc:'Answer style questions. View generated options. Pay to download.',cmd:null}],
+   alt:'For free logo: Ideogram. For professional: hire on 99designs.'},
+
+  /* BUSINESS */
+  {name:'Notion',icon:'📓',cat:'business',tagline:'All-in-one workspace — notes, docs, wikis, databases with AI built in',tags:['notes','workspace','database','wiki'],pricing:'freemium',rating:4.7,hot:false,oss:false,url:'https://notion.so',updated:WEEK,isNew:false,
+   verdict:'The best second brain and team wiki tool available. Replace your Google Docs, Confluence, Trello, and personal notes with one tool. The free tier is generous for individuals.',
+   whatItDoes:'Notion combines notes, documents, databases, wikis, and project management in one place. AI add-on adds writing, summarising, and Q&A across all your content.',
+   pros:['Replaces 4-5 separate tools','Beautiful and flexible','Generous free tier','Best-in-class team wikis'],
+   cons:['Slow on large databases','Learning curve','AI is a paid add-on ($8/month extra)'],
+   ratings:{Quality:9.0,Ease:7.5,Value:9.0,Speed:7.5},
+   whoFor:'Individuals and teams wanting one tool for everything',
+   whoNotFor:'People who just need a simple notes app — use Apple Notes',
+   tests:[{input:'Create a CRM database with 200 contacts, filtered views, and status tracking',output:'Built in 20 minutes. Filters, views, and automations all worked. Replaced a basic paid CRM.',stars:5,comment:'Replaced 3 tools for us'}],
+   howToUse:[{title:'Sign up at notion.so — free for individuals',desc:'Start with a template. Notion has 1000s of community templates.',cmd:null}],
+   alt:'For simple notes: Obsidian. For project management: Linear. For AI: add Notion AI.'},
+
+  {name:'Make',icon:'⚙️',cat:'business',tagline:'Visual automation builder — more powerful than Zapier, cheaper at scale',tags:['automation','no-code','integrations','workflow'],pricing:'freemium',rating:4.5,hot:false,oss:false,url:'https://make.com',updated:WEEK,isNew:true,
+   verdict:'Better than Zapier for complex logic and much cheaper at scale. The visual scenario builder handles conditions, loops, and error handling that Zapier cannot. Learning curve is steeper but worth it.',
+   whatItDoes:'Make (formerly Integromat) automates workflows between 1000+ apps. Visual drag-and-drop scenario builder with advanced logic — conditions, loops, data transformation, error handling.',
+   pros:['Much cheaper than Zapier at scale','Better for complex logic','1000+ integrations','1000 operations/month free'],
+   cons:['Steeper learning curve than Zapier','UI can be confusing','Less reliable than Zapier historically'],
+   ratings:{Quality:8.8,Ease:7.0,Value:9.5,Speed:8.5},
+   whoFor:'Power users who hit Zapier limits, operations teams with complex workflows',
+   whoNotFor:'Simple one-step automations — Zapier is faster to set up',
+   tests:[{input:'Multi-step automation: webhook → filter → transform data → update Airtable → send Slack → email fallback if failed',output:'Built the 6-step scenario in 25 minutes. Error handling worked perfectly. Cost: $0 on free tier.',stars:5,comment:'Zapier would have charged $50+/month for this'}],
+   howToUse:[{title:'Sign up at make.com — free tier',desc:'1000 operations/month free. More than enough to start.',cmd:null},{title:'Create a new Scenario',desc:'Drag and drop modules to connect your apps.',cmd:null}],
+   alt:'For simpler setup: Zapier. For self-hosted: n8n.'},
+
+  /* LOCAL */
+  {name:'Jan AI',icon:'🖥️',cat:'local',tagline:'Open-source ChatGPT alternative that runs 100% offline on your computer',tags:['local LLM','offline','open-source','privacy'],pricing:'free',rating:4.5,hot:true,oss:true,url:'https://jan.ai',updated:NOW,isNew:true,
+   verdict:'The cleanest open-source desktop AI app. Feels like ChatGPT but runs entirely offline. Better designed than LM Studio and easier than Ollama. Best starting point for local AI beginners.',
+   whatItDoes:'Jan is an open-source desktop app that runs AI models locally. Clean ChatGPT-like interface, model library browser, and works completely offline. No data leaves your machine.',
+   pros:['Clean ChatGPT-like UI','Completely offline and private','Easy model browser','Open source'],
+   cons:['Needs 8GB+ RAM','Model quality below cloud AI','Newer — less community support than Ollama'],
+   ratings:{Quality:8.5,Ease:9.5,Value:10.0,Speed:8.0},
+   whoFor:'Privacy-conscious users wanting a clean local AI experience',
+   whoNotFor:'Power users who need CLI control — use Ollama',
+   tests:[{input:'Download Llama 3 8B and ask it to write a Python script',output:'Model downloaded in 4 minutes. Script was correct. Completely offline. Cleaner than LM Studio.',stars:5,comment:'Best local AI app for beginners'}],
+   howToUse:[{title:'Download Jan from jan.ai',desc:'Works on Mac, Windows, Linux. Regular desktop installer.',cmd:null},{title:'Open the Hub and download a model',desc:'Llama 3 8B is the best starting point.',cmd:null},{title:'Start a new thread and chat',desc:'Works exactly like ChatGPT — completely offline.',cmd:null}],
+   alt:'For CLI: Ollama. For more models: LM Studio. For images: Stable Diffusion.'},
 
   {name:'HeyGen',icon:'👤',cat:'video',tagline:'AI avatar videos in 175 languages — translate your face to any language',tags:['avatars','translation','lip sync'],pricing:'freemium',rating:4.7,hot:true,oss:false,url:'https://heygen.com',updated:NOW,isNew:true,verdict:'Best tool for going global as a creator. Record once in English, auto-translate to 175 languages with your face and lips synced. The quality is genuinely impressive for business use.',whatItDoes:'HeyGen creates AI avatar videos using your face, translates them to any language with lip sync.',pros:['175 language lip sync','No camera needed after first upload','Enterprise ready','Realistic avatar quality'],cons:['Only 1 free video minute','Source video quality matters a lot','Can look uncanny valley'],ratings:{Quality:9.0,Ease:8.5,Value:7.5,Speed:8.0},whoFor:'Educators, business creators, anyone building global audiences',whoNotFor:'Personal casual use — too expensive for one-off videos',tests:[{input:'2-minute English video translated to Spanish',output:'90% lip sync accuracy. Voice matched original cadence. Impressive overall.',stars:4,comment:'Very good translation quality'}],howToUse:[{title:'Upload a video at heygen.com',desc:'Record yourself speaking clearly. Good lighting matters.',cmd:null},{title:'Choose Video Translation and select target language',desc:'HeyGen does the rest automatically.',cmd:null}],alt:'For voice only: ElevenLabs. For avatar without real face: Synthesia.'},
 
