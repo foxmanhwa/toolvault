@@ -20,16 +20,13 @@ html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Fira Code',monospace;min-height:100vh;overflow-x:hidden;cursor:none;}
 
 /* ── MASCOT CURSOR ── */
-#mascot{position:fixed;pointer-events:none;z-index:9999;width:44px;height:44px;transform:translate(-50%,-60%);transition:transform .1s;font-size:28px;filter:drop-shadow(0 0 8px rgba(212,255,30,.5));animation:mascotBob 2s ease-in-out infinite;}
+#mascot{position:fixed;pointer-events:none;z-index:9999;width:44px;height:44px;transform:translate(-50%,-60%);transition:left 0.06s ease, top 0.06s ease;font-size:28px;filter:drop-shadow(0 0 8px rgba(212,255,30,.5));animation:mascotBob 2s ease-in-out infinite;}
 @keyframes mascotBob{0%,100%{filter:drop-shadow(0 0 8px rgba(212,255,30,.5));}50%{filter:drop-shadow(0 0 16px rgba(212,255,30,.9));}}
 #mascot.hover{transform:translate(-50%,-60%) scale(1.3) rotate(-10deg);animation:none;filter:drop-shadow(0 0 20px rgba(212,255,30,1));}
-#mascot-trail{position:fixed;pointer-events:none;z-index:9998;}
-.trail-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--lime);opacity:.6;transform:translate(-50%,-50%);animation:trailFade .6s forwards;}
-@keyframes trailFade{to{opacity:0;transform:translate(-50%,-50%) scale(0);}}
 
 /* ── BG ── */
 .bg-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
-.orb{position:absolute;border-radius:50%;filter:blur(130px);opacity:.22;animation:floatOrb 24s infinite ease-in-out;}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.15;will-change:transform;animation:floatOrb 24s infinite ease-in-out;}
 .orb-1{width:700px;height:700px;background:var(--purple);top:-250px;left:-150px;}
 .orb-2{width:600px;height:600px;background:var(--lime);bottom:-200px;right:-100px;animation-delay:-9s;}
 .orb-3{width:450px;height:450px;background:var(--pink);top:50%;left:60%;animation-delay:-18s;}
@@ -384,7 +381,6 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 
 <!-- MASCOT CURSOR -->
 <div id="mascot">🤖</div>
-<div id="mascot-trail"></div>
 
 <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
 
@@ -592,11 +588,11 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
           </div>
           <div class="fb-question">Your rating</div>
           <div class="fb-stars-row" id="fbStarsRow">
-            <span class="fb-star active" onclick="setRating(1)" data-v="1">★</span>
-            <span class="fb-star active" onclick="setRating(2)" data-v="2">★</span>
-            <span class="fb-star active" onclick="setRating(3)" data-v="3">★</span>
-            <span class="fb-star active" onclick="setRating(4)" data-v="4">★</span>
-            <span class="fb-star" onclick="setRating(5)" data-v="5">★</span>
+            <span class="fb-star active" onclick="setRating(1)">★</span>
+            <span class="fb-star active" onclick="setRating(2)">★</span>
+            <span class="fb-star active" onclick="setRating(3)">★</span>
+            <span class="fb-star active" onclick="setRating(4)">★</span>
+            <span class="fb-star" onclick="setRating(5)">★</span>
           </div>
           <div class="fb-question">What did you use it for? What's your honest take?</div>
           <textarea class="fb-usecase" id="fbText" placeholder="e.g. 'I used ElevenLabs to clone my voice for YouTube videos. Quality was great but free credits ran out fast…'" rows="3"></textarea>
@@ -654,21 +650,11 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 <script>
 /* ══ MASCOT CURSOR ══ */
 const mascot=document.getElementById('mascot');
-const trail=document.getElementById('mascot-trail');
-let mx=0,my=0,cx=0,cy=0,trailDots=[];
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;addTrailDot(mx,my);});
-function lerp(a,b,t){return a+(b-a)*t;}
-function animMascot(){
-  cx=lerp(cx,mx,.12);cy=lerp(cy,my,.12);
-  mascot.style.left=cx+'px';mascot.style.top=cy+'px';
-  requestAnimationFrame(animMascot);
-}
-animMascot();
-function addTrailDot(x,y){
-  const d=document.createElement('div');
-  d.className='trail-dot';d.style.left=x+'px';d.style.top=y+'px';
-  trail.appendChild(d);setTimeout(()=>d.remove(),600);
-}
+let mx=0,my=0;
+document.addEventListener('mousemove', e => {
+  mascot.style.left = e.clientX + 'px';
+  mascot.style.top = e.clientY + 'px';
+});
 document.addEventListener('mouseover',e=>{
   if(e.target.closest('a,button,.tool-card,.cat-tab,.hint,.qchip,.oss-card,.guide-card,.compare-card,.fb-star')){
     mascot.classList.add('hover');
@@ -1161,10 +1147,10 @@ function renderTools(){
   grid.innerHTML=filtered.map((t,i)=>{
     const cc=CAT_COLORS[t.cat]||CAT_COLORS.writing;
     const stars='★'.repeat(Math.round(t.rating))+'☆'.repeat(5-Math.round(t.rating));
-    const idx=TOOLS.indexOf(t);
+    const toolName=t.name;
     const rev=userReviews[t.name];
     const revCount=rev?rev.length:0;
-    return `<div class="tool-card" style="animation-delay:${(i%9)*.05}s;background:linear-gradient(150deg,var(--surface),${cc.bg})" onclick="openReview(${idx})">
+    return `<div class="tool-card" style="animation-delay:${(i%9)*.05}s;background:linear-gradient(150deg,var(--surface),${cc.bg})" onclick="openReview('${toolName}')">
       <div class="card-top-bar" style="background:${cc.bar}"></div>
       ${t.isOSS?'<div class="oss-ribbon">OPEN SOURCE</div>':''}
       <div class="card-row1">
@@ -1180,7 +1166,7 @@ function renderTools(){
         <div class="rating-wrap"><span class="stars">${stars}</span><span class="rating-num">${t.rating}</span>${revCount?`<span class="ph-votes">· ${revCount} review${revCount>1?'s':''}</span>`:''}
         </div>
         <div class="card-actions">
-          <span class="btn-review" onclick="event.stopPropagation();openReview(${idx})">📋 Review</span>
+          <span class="btn-review" onclick="event.stopPropagation();openReview('${toolName}')">📋 Review</span>
           <a class="btn-visit" href="${t.url}" target="_blank" onclick="event.stopPropagation()">Visit ↗</a>
         </div>
       </div>
@@ -1196,13 +1182,23 @@ function setCategory(el,cat){
   document.getElementById('gridTitle').textContent=titles[cat]||'AI Tools';
   renderTools();
 }
-function filterTools(){searchQ=document.getElementById('searchInput').value;renderTools();}
+let searchDebounce;
+function filterTools() {
+  clearTimeout(searchDebounce);
+  searchDebounce = setTimeout(() => {
+    searchQ = document.getElementById('searchInput').value;
+    renderTools();
+  }, 220);
+}
 function setSearch(q){document.getElementById('searchInput').value=q;searchQ=q;activeCat='all';document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));document.querySelector('[data-cat="all"]').classList.add('active');renderTools();}
 
 /* ══ REVIEW MODAL ══ */
-function openReview(idx){
-  const t=TOOLS[idx];if(!t)return;
-  currentToolIdx=idx;
+function openReview(nameOrIdx){
+  const t = typeof nameOrIdx === 'string'
+    ? TOOLS.find(x => x.name === nameOrIdx)
+    : TOOLS[nameOrIdx];
+  if(!t) return;
+  currentToolIdx = TOOLS.indexOf(t);
   const cc=CAT_COLORS[t.cat]||CAT_COLORS.writing;
   document.getElementById('rmIcon').textContent=t.icon;
   document.getElementById('rmIcon').style.background=cc.bg;
@@ -1249,7 +1245,7 @@ function openReview(idx){
   fbRating=4;fbUsed='yes';
   document.querySelectorAll('.fb-used-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('fbUsedYes').classList.add('active');
-  updateStarDisplay();
+  setRating(4);
   document.getElementById('fbText').value='';document.getElementById('fbName').value='';
 
   // Tabs
@@ -1285,10 +1281,10 @@ function setUsed(v){
   document.querySelectorAll('.fb-used-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(`fbUsed${v.charAt(0).toUpperCase()+v.slice(1)}`).classList.add('active');
 }
-function setRating(v){fbRating=v;updateStarDisplay();}
-function updateStarDisplay(){
-  document.querySelectorAll('.fb-star').forEach((s,i)=>{
-    s.classList.toggle('active',i<fbRating);
+function setRating(v) {
+  fbRating = v;
+  document.querySelectorAll('.fb-star').forEach((s, i) => {
+    s.style.color = i < v ? 'var(--gold)' : 'var(--surface3)';
   });
 }
 
