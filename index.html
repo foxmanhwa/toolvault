@@ -782,7 +782,7 @@ function renderTools(){
     const cc=CAT_COLORS[t.cat]||CAT_COLORS.writing;
     const stars='★'.repeat(Math.round(t.rating))+'☆'.repeat(5-Math.round(t.rating));
     const rCount=(reviews[t.name]||[]).length;
-    const safeName=JSON.stringify(t.name);
+    const safeName="'" + t.name + "'";
     return `<div class="card" style="animation-delay:${(i%9)*.05}s;background:linear-gradient(150deg,var(--sf),${cc.bg})" onclick="openReview(${safeName})">
       <div class="card-bar" style="background:${cc.bar}"></div>
       ${t.oss?'<div class="oss-tag">OPEN SOURCE</div>':''}
@@ -833,7 +833,7 @@ function openReview(toolName){
   document.getElementById('testInput').value='';
   document.getElementById('testResult').style.display='none';
   document.getElementById('mInstall').innerHTML=(t.howToUse||[]).map((s,i)=>`<div class="install-step"><div class="step-circle">${i+1}</div><div class="step-body"><div class="step-title">${s.title}</div>${s.desc?`<div class="step-desc">${s.desc}</div>`:''}${s.cmd?`<div class="code-block">${s.cmd.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`:''}</div></div>`).join('');
-  document.getElementById('mSimilar').innerHTML=TOOLS.filter(x=>x.cat===t.cat&&x.name!==t.name).slice(0,8).map(s=>`<div class="sim-chip" onclick="openReview(${JSON.stringify(s.name)})">${s.icon} ${s.name}</div>`).join('');
+  document.getElementById('mSimilar').innerHTML=TOOLS.filter(x=>x.cat===t.cat&&x.name!==t.name).slice(0,8).map(s=>`<div class="sim-chip" onclick="openReview('${s.name}')">${s.icon} ${s.name}</div>`).join('');
   document.getElementById('mAlt').textContent=t.alt||'';
   document.getElementById('mFooterAlt').textContent=t.alt||'';
   fbRating=4;fbUsed='yes';
@@ -888,7 +888,7 @@ function loadReviews(toolName){
 
 /* OSS / GUIDES / COMPARE */
 function renderOSS(){
-  document.getElementById('ossGrid').innerHTML=OSS_DATA.map(t=>`<div class="oss-card"><div class="oss-head"><div class="oss-icon">${t.icon}</div><div><div class="oss-name">${t.name}</div><div class="oss-badges">${t.tags.map(x=>`<span class="badge b-oss">${x}</span>`).join('')}</div></div></div><div class="oss-desc">${t.desc}</div><div class="oss-verdict">⚡ <strong>Verdict:</strong> ${t.verdict}</div><div class="oss-reqs"><div class="oss-req"><div class="oss-req-val">${t.ram}</div><div class="oss-req-lbl">RAM</div></div><div class="oss-req"><div class="oss-req-val" style="font-size:11px">${t.gpu}</div><div class="oss-req-lbl">GPU</div></div><div class="oss-req"><div class="oss-req-val" style="font-size:10px">${t.os}</div><div class="oss-req-lbl">Works on</div></div></div><div class="oss-steps"><div class="oss-steps-title">📥 Quick Install</div>${t.steps.slice(0,4).map((s,i)=>`<div class="oss-step"><div class="oss-step-num">${i+1}</div><div class="oss-step-text">${s.cmd?`<span class="cmd">${s.cmd.split('\n')[0]}</span>`:s.title}</div></div>`).join('')}</div><div class="oss-footer"><div class="oss-meta">${t.stars} ${t.rating}/5 · Free forever</div><button class="btn-oss" onclick="openReview(${JSON.stringify(t.name)})">Full Review →</button></div></div>`).join('');
+  document.getElementById('ossGrid').innerHTML=OSS_DATA.map(t=>`<div class="oss-card"><div class="oss-head"><div class="oss-icon">${t.icon}</div><div><div class="oss-name">${t.name}</div><div class="oss-badges">${t.tags.map(x=>`<span class="badge b-oss">${x}</span>`).join('')}</div></div></div><div class="oss-desc">${t.desc}</div><div class="oss-verdict">⚡ <strong>Verdict:</strong> ${t.verdict}</div><div class="oss-reqs"><div class="oss-req"><div class="oss-req-val">${t.ram}</div><div class="oss-req-lbl">RAM</div></div><div class="oss-req"><div class="oss-req-val" style="font-size:11px">${t.gpu}</div><div class="oss-req-lbl">GPU</div></div><div class="oss-req"><div class="oss-req-val" style="font-size:10px">${t.os}</div><div class="oss-req-lbl">Works on</div></div></div><div class="oss-steps"><div class="oss-steps-title">📥 Quick Install</div>${t.steps.slice(0,4).map((s,i)=>`<div class="oss-step"><div class="oss-step-num">${i+1}</div><div class="oss-step-text">${s.cmd?`<span class="cmd">${s.cmd.split('\n')[0]}</span>`:s.title}</div></div>`).join('')}</div><div class="oss-footer"><div class="oss-meta">${t.stars} ${t.rating}/5 · Free forever</div><button class="btn-oss" onclick="openReview('${t.name}')">Full Review →</button></div></div>`).join('');
 }
 function renderGuides(){
   document.getElementById('guidesGrid').innerHTML=GUIDES_DATA.map(g=>`<div class="guide-card" style="border-top:2px solid var(--lime);"><div class="guide-emoji">${g.emoji}</div><div class="guide-title">${g.title}</div><div class="guide-desc">${g.desc}</div><div class="guide-meta"><span class="guide-time">⏱ ${g.time} read</span><span class="lv-${g.level==='beginner'?'b':'i'}">${g.level}</span></div></div>`).join('');
