@@ -17,19 +17,11 @@
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Fira Code',monospace;min-height:100vh;overflow-x:hidden;cursor:none;}
-
-/* ── MASCOT CURSOR ── */
-#mascot{position:fixed;pointer-events:none;z-index:9999;width:44px;height:44px;transform:translate(-50%,-60%);transition:transform .1s;font-size:28px;filter:drop-shadow(0 0 8px rgba(212,255,30,.5));animation:mascotBob 2s ease-in-out infinite;}
-@keyframes mascotBob{0%,100%{filter:drop-shadow(0 0 8px rgba(212,255,30,.5));}50%{filter:drop-shadow(0 0 16px rgba(212,255,30,.9));}}
-#mascot.hover{transform:translate(-50%,-60%) scale(1.3) rotate(-10deg);animation:none;filter:drop-shadow(0 0 20px rgba(212,255,30,1));}
-#mascot-trail{position:fixed;pointer-events:none;z-index:9998;}
-.trail-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--lime);opacity:.6;transform:translate(-50%,-50%);animation:trailFade .6s forwards;}
-@keyframes trailFade{to{opacity:0;transform:translate(-50%,-50%) scale(0);}}
+body{background:var(--bg);color:var(--text);font-family:'Fira Code',monospace;min-height:100vh;overflow-x:hidden;}
 
 /* ── BG ── */
 .bg-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
-.orb{position:absolute;border-radius:50%;filter:blur(130px);opacity:.22;animation:floatOrb 24s infinite ease-in-out;}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.22;animation:floatOrb 24s infinite ease-in-out;}
 .orb-1{width:700px;height:700px;background:var(--purple);top:-250px;left:-150px;}
 .orb-2{width:600px;height:600px;background:var(--lime);bottom:-200px;right:-100px;animation-delay:-9s;}
 .orb-3{width:450px;height:450px;background:var(--pink);top:50%;left:60%;animation-delay:-18s;}
@@ -382,10 +374,6 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 </head>
 <body>
 
-<!-- MASCOT CURSOR -->
-<div id="mascot">🤖</div>
-<div id="mascot-trail"></div>
-
 <div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
 
 <!-- NAV -->
@@ -652,29 +640,6 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 </div>
 
 <script>
-/* ══ MASCOT CURSOR ══ */
-const mascot=document.getElementById('mascot');
-const trail=document.getElementById('mascot-trail');
-let mx=0,my=0,cx=0,cy=0,trailDots=[];
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;addTrailDot(mx,my);});
-function lerp(a,b,t){return a+(b-a)*t;}
-function animMascot(){
-  cx=lerp(cx,mx,.12);cy=lerp(cy,my,.12);
-  mascot.style.left=cx+'px';mascot.style.top=cy+'px';
-  requestAnimationFrame(animMascot);
-}
-animMascot();
-function addTrailDot(x,y){
-  const d=document.createElement('div');
-  d.className='trail-dot';d.style.left=x+'px';d.style.top=y+'px';
-  trail.appendChild(d);setTimeout(()=>d.remove(),600);
-}
-document.addEventListener('mouseover',e=>{
-  if(e.target.closest('a,button,.tool-card,.cat-tab,.hint,.qchip,.oss-card,.guide-card,.compare-card,.fb-star')){
-    mascot.classList.add('hover');
-  } else {mascot.classList.remove('hover');}
-});
-
 /* ══ LAST UPDATED ══ */
 function getUpdatedStr(){
   const now=new Date();
