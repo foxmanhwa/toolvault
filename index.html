@@ -17,11 +17,7 @@
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--tx);font-family:'Fira Code',monospace;min-height:100vh;overflow-x:hidden;cursor:none;}
-
-/* ── MASCOT CURSOR (simple, no trail) ── */
-#mascot{position:fixed;pointer-events:none;z-index:9999;font-size:26px;transform:translate(-50%,-60%);transition:transform .15s ease;filter:drop-shadow(0 0 8px rgba(212,255,30,.6));}
-#mascot.big{transform:translate(-50%,-60%) scale(1.4) rotate(-12deg);}
+body{background:var(--bg);color:var(--tx);font-family:'Fira Code',monospace;min-height:100vh;overflow-x:hidden;}
 
 /* ── BG ORBS ── */
 .orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
@@ -374,14 +370,10 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
   .pc-grid,.who-grid,.modal-scores{grid-template-columns:1fr 1fr;}
   .stats-row{grid-template-columns:repeat(2,1fr);}
   .agent-panel{width:calc(100vw - 32px);right:0;}
-  #mascot{display:none;}body{cursor:auto;}
 }
 </style>
 </head>
 <body>
-
-<!-- MASCOT CURSOR (simple, no trail) -->
-<div id="mascot">🤖</div>
 
 <div class="orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
 
@@ -428,7 +420,6 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
     </div>
   </section>
 
-  <!-- TICKER -->
   <div class="ticker">
     <div class="tick-lbl">🔴 Live</div>
     <div class="tick-track"><div class="tick-inner">
@@ -451,7 +442,6 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
     </div></div>
   </div>
 
-  <!-- PH STRIP -->
   <div class="ph-strip">
     <div class="ph-inner">
       <div class="ph-lbl">🐱 Trending <div class="ph-live"></div></div>
@@ -460,7 +450,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
   </div>
 
   <div class="wrap">
-    <div class="cat-row" id="catRow">
+    <div class="cat-row">
       <div class="cat-btn active" data-cat="all" onclick="setCat(this,'all')">⚡ All<span class="cc" id="cnt-all">0</span></div>
       <div class="cat-btn" data-cat="voice" onclick="setCat(this,'voice')">🎙️ Voice<span class="cc" id="cnt-voice">0</span></div>
       <div class="cat-btn" data-cat="video" onclick="setCat(this,'video')">🎬 Video<span class="cc" id="cnt-video">0</span></div>
@@ -536,7 +526,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
       <div class="modal-scores" id="mScores"></div>
       <button class="modal-close" onclick="document.getElementById('overlay').classList.remove('open')">✕</button>
     </div>
-    <div class="modal-tabs" id="modalTabs">
+    <div class="modal-tabs">
       <button class="modal-tab active" onclick="switchTab(this,'pane-review')">📋 Review</button>
       <button class="modal-tab" onclick="switchTab(this,'pane-tests')">🧪 Tests</button>
       <button class="modal-tab" onclick="switchTab(this,'pane-install')">⚙️ How to Use</button>
@@ -544,7 +534,6 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
       <button class="modal-tab" onclick="switchTab(this,'pane-similar')">🔀 Alternatives</button>
     </div>
     <div class="modal-body">
-      <!-- REVIEW -->
       <div class="tab-pane active" id="pane-review">
         <div class="verdict-box"><div class="verdict-lbl">⚡ ToolVault Verdict</div><div class="verdict-txt" id="mVerdict"></div></div>
         <div class="sec"><div class="sec-title">What it does</div><div id="mWhat" style="font-size:13px;color:var(--txd);line-height:1.7;"></div></div>
@@ -552,7 +541,6 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
         <div class="who-grid" id="mWho"></div>
         <div class="sec" style="margin-top:14px;"><div class="sec-title">Rating breakdown</div><div id="mRatings"></div></div>
       </div>
-      <!-- TESTS -->
       <div class="tab-pane" id="pane-tests">
         <div class="sec"><div class="sec-title">Real test results</div><div id="mTests"></div></div>
         <div class="test-run-box">
@@ -562,9 +550,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
           <div class="test-run-result" id="testResult"></div>
         </div>
       </div>
-      <!-- INSTALL -->
       <div class="tab-pane" id="pane-install"><div id="mInstall"></div></div>
-      <!-- FEEDBACK -->
       <div class="tab-pane" id="pane-feedback">
         <div class="fb-form">
           <div class="fb-title">📝 Share your experience</div>
@@ -590,7 +576,6 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
         </div>
         <div id="reviewsList"><div class="no-reviews">No reviews yet — be the first!</div></div>
       </div>
-      <!-- SIMILAR -->
       <div class="tab-pane" id="pane-similar">
         <p style="font-size:12px;color:var(--txd);margin-bottom:12px;">Similar tools you might prefer:</p>
         <div class="similar-wrap" id="mSimilar"></div>
@@ -636,23 +621,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 </div>
 
 <script>
-/* ═══════════════════════════════════
-   MASCOT — simple, performant
-═══════════════════════════════════ */
-const mascot = document.getElementById('mascot');
-document.addEventListener('mousemove', e => {
-  mascot.style.left = e.clientX + 'px';
-  mascot.style.top  = e.clientY + 'px';
-});
-document.addEventListener('mouseover', e => {
-  if (e.target.closest('a,button,.card,.cat-btn,.hint,.qchip,.oss-card,.guide-card,.compare-card,.sim-chip,.fb-star'))
-    mascot.classList.add('big');
-  else mascot.classList.remove('big');
-});
-
-/* ═══════════════════════════════════
-   NAV / PAGES
-═══════════════════════════════════ */
+/* NAV */
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
@@ -664,9 +633,7 @@ function showPage(id) {
 document.getElementById('updNav').textContent =
   'Updated ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
 
-/* ═══════════════════════════════════
-   PRODUCT HUNT DATA
-═══════════════════════════════════ */
+/* PH DATA */
 const PH_FALLBACK = [
   {name:'ElevenLabs',votes:'2.1k',url:'https://elevenlabs.io'},
   {name:'Suno AI',votes:'1.8k',url:'https://suno.ai'},
@@ -679,7 +646,6 @@ const PH_FALLBACK = [
   {name:'Bolt.new',votes:'820',url:'https://bolt.new'},
 ];
 let phData = PH_FALLBACK;
-
 async function loadPH() {
   try {
     const r = await fetch('https://hn.algolia.com/api/v1/search?tags=story&query=AI+tools&hitsPerPage=8');
@@ -687,315 +653,65 @@ async function loadPH() {
     if (d.hits?.length) {
       const items = d.hits.filter(h => h.title && h.points > 5).slice(0,7).map(h => ({
         name: h.title.substring(0,24) + (h.title.length > 24 ? '…' : ''),
-        votes: h.points || '—',
-        url: h.url || '#'
+        votes: h.points || '—', url: h.url || '#'
       }));
       if (items.length) phData = [...items, ...PH_FALLBACK.slice(0,3)];
     }
   } catch(e) {}
   renderPH();
 }
-
 function renderPH() {
   document.getElementById('phItems').innerHTML = phData.slice(0,9).map(t =>
-    `<a class="ph-item" href="${t.url}" target="_blank">
-      <span class="ph-item-name">${t.name}</span>
-      <span class="ph-item-votes">▲ ${t.votes}</span>
-    </a>`
+    `<a class="ph-item" href="${t.url}" target="_blank"><span class="ph-item-name">${t.name}</span><span class="ph-item-votes">▲ ${t.votes}</span></a>`
   ).join('');
 }
 
-/* ═══════════════════════════════════
-   TOOL DATA
-═══════════════════════════════════ */
+/* TOOL DATA */
 const NOW = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
 const WEEK = new Date(Date.now()-7*864e5).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-
 const CAT_COLORS = {
-  voice:    {bar:'linear-gradient(90deg,#d4ff1e,#00edd4)', bg:'rgba(212,255,30,.06)'},
-  video:    {bar:'linear-gradient(90deg,#ff5c2a,#ff2d8a)', bg:'rgba(255,92,42,.06)'},
-  image:    {bar:'linear-gradient(90deg,#8b4dff,#2d8aff)', bg:'rgba(139,77,255,.06)'},
-  writing:  {bar:'linear-gradient(90deg,#2d8aff,#00edd4)', bg:'rgba(45,138,255,.06)'},
-  coding:   {bar:'linear-gradient(90deg,#d4ff1e,#8b4dff)', bg:'rgba(212,255,30,.05)'},
-  music:    {bar:'linear-gradient(90deg,#ff2d8a,#8b4dff)', bg:'rgba(255,45,138,.06)'},
-  design:   {bar:'linear-gradient(90deg,#ff5c2a,#8b4dff)', bg:'rgba(255,92,42,.05)'},
-  business: {bar:'linear-gradient(90deg,#00edd4,#2d8aff)', bg:'rgba(0,237,212,.05)'},
-  local:    {bar:'linear-gradient(90deg,#00edd4,#8b4dff)', bg:'rgba(0,237,212,.06)'},
+  voice:{bar:'linear-gradient(90deg,#d4ff1e,#00edd4)',bg:'rgba(212,255,30,.06)'},
+  video:{bar:'linear-gradient(90deg,#ff5c2a,#ff2d8a)',bg:'rgba(255,92,42,.06)'},
+  image:{bar:'linear-gradient(90deg,#8b4dff,#2d8aff)',bg:'rgba(139,77,255,.06)'},
+  writing:{bar:'linear-gradient(90deg,#2d8aff,#00edd4)',bg:'rgba(45,138,255,.06)'},
+  coding:{bar:'linear-gradient(90deg,#d4ff1e,#8b4dff)',bg:'rgba(212,255,30,.05)'},
+  music:{bar:'linear-gradient(90deg,#ff2d8a,#8b4dff)',bg:'rgba(255,45,138,.06)'},
+  design:{bar:'linear-gradient(90deg,#ff5c2a,#8b4dff)',bg:'rgba(255,92,42,.05)'},
+  business:{bar:'linear-gradient(90deg,#00edd4,#2d8aff)',bg:'rgba(0,237,212,.05)'},
+  local:{bar:'linear-gradient(90deg,#00edd4,#8b4dff)',bg:'rgba(0,237,212,.06)'},
 };
-
-// Tool data — each tool has a unique name used as its stable ID
 const TOOLS = [
-  {name:'ElevenLabs',icon:'🎙️',cat:'voice',tagline:'Industry-leading voice cloning and TTS in 29 languages',tags:['voice clone','TTS','multilingual'],pricing:'freemium',rating:4.9,hot:true,oss:false,url:'https://elevenlabs.io',updated:NOW,
-   verdict:'The best voice AI, full stop. Free tier is genuinely useful. If voice content is your thing, this is your tool. Credits run out fast though — budget for it.',
-   whatItDoes:'ElevenLabs clones your voice from a 1-minute sample and generates natural speech in 29 languages. Used by major podcasters, YouTubers, and developers worldwide.',
-   pros:['Best voice quality available','Clone your voice in under 5 minutes','Free tier: 10,000 chars/month','Strong emotion and pacing control','Excellent developer API'],
-   cons:['Free credits run out very fast','Short clips give inconsistent clones','No real-time voice changing','Expensive at scale'],
-   ratings:{Quality:9.5,Ease:9.0,Value:8.0,Speed:8.5},
-   whoFor:'Content creators, podcasters, YouTubers, app developers',whoNotFor:'People who need real-time live voice changing',
-   tests:[{input:'Clone voice from 1-min sample, say: Good morning, this is your AI assistant',output:'Indistinguishable from original in a blind test. Accent, cadence, and warmth all preserved.',stars:5,comment:'Best clone quality we tested'},{input:'500-word narration in formal British accent',output:'Smooth and professional. Very slight robotic artefact at the 2-min mark.',stars:4,comment:'Minor artefact, otherwise superb'}],
-   howToUse:[{title:'Sign up at elevenlabs.io — free',desc:'No credit card needed. 10,000 chars/month free.',cmd:null},{title:'Go to Voice Cloning → Add Voice',desc:'Click Instant Voice Cloning. Upload 1 minute of clean audio.',cmd:null},{title:'Generate speech',desc:'Speech Synthesis tab → select your voice → type text → Generate.',cmd:null},{title:'Use the API (optional)',desc:'Get your API key from profile settings.',cmd:'pip install elevenlabs'}],
-   alt:'On a budget? Fish Audio S2 is free and nearly as good. For real-time: try RVC.'},
-
-  {name:'Fish Audio S2',icon:'🐟',cat:'voice',tagline:'Open-source voice cloning — 10-second clone, run locally for free',tags:['open-source','voice clone','local','free'],pricing:'free',rating:4.7,hot:true,oss:true,url:'https://fish.audio',updated:NOW,
-   verdict:'Biggest open-source release in voice AI this year. Genuinely rivals ElevenLabs for most use cases and it is completely free. If you keep hitting ElevenLabs credit limits, switch here immediately.',
-   whatItDoes:'Fish Audio S2 is an open-source TTS and voice cloning model. Clones a voice from just 10 seconds of audio. Available as a free web app or run locally. Includes emotion control and multilingual support.',
-   pros:['Open source — run locally for free','10-second voice clone (fastest available)','Emotion control that actually works','Web app is free to use','Very actively developed'],
-   cons:['Slightly below ElevenLabs on accent accuracy','Local setup requires Python knowledge','Web app free tier has some limits'],
-   ratings:{Quality:8.8,Ease:8.5,Value:10.0,Speed:10.0},
-   whoFor:'Everyone — especially people hitting ElevenLabs limits',whoNotFor:'Enterprise where ElevenLabs-tier consistency is required',
-   tests:[{input:'Clone voice from 15-second sample, read a YouTube intro',output:'Clone ready in 11 seconds. ~87% similarity to original. Slight flatness on emotional peaks but excellent for free.',stars:4,comment:'Near-ElevenLabs quality, completely free'},{input:'Emotion control — same text in happy vs neutral',output:'Clear audible difference. Happy tone was noticeably brighter. This feature alone sets it apart.',stars:5,comment:'Emotion control is a genuine differentiator'}],
-   howToUse:[{title:'Option 1: Use the web app (easiest)',desc:'Go to fish.audio — no account needed for basic use.',cmd:null},{title:'Option 2: Run locally',desc:'Clone the repo and install dependencies',cmd:'git clone https://github.com/fishaudio/fish-speech\ncd fish-speech\npip install -e .[stable]'},{title:'Download the S2 model weights',desc:'',cmd:'huggingface-cli download fishaudio/fish-speech-1.5'},{title:'Run the Web UI locally',desc:'',cmd:'python tools/webui.py --llama-checkpoint-path checkpoints/fish-speech-1.5'}],
-   alt:'For absolute best quality: ElevenLabs. For real-time voice: RVC.'},
-
-  {name:'Murf AI',icon:'🎤',cat:'voice',tagline:'120+ AI voices for video and podcast voiceovers — no clone needed',tags:['voiceover','podcast','video'],pricing:'freemium',rating:4.7,hot:false,oss:false,url:'https://murf.ai',updated:WEEK,
-   verdict:'Great if you just want a professional AI voice for videos without the clone setup. The video timeline sync is genuinely useful.',
-   whatItDoes:'120+ AI voices available immediately. Built specifically for video creators — syncs voice with video timelines and slide presentations.',
-   pros:['120+ high quality voices','Video timeline sync','No audio sample needed'],
-   cons:['No voice cloning on free tier','Pricey paid plans','Less control than ElevenLabs'],
-   ratings:{Quality:8.8,Ease:9.5,Value:7.5,Speed:9.0},
-   whoFor:'Video creators who want professional voiceovers fast',whoNotFor:'Anyone who needs their own voice cloned',
-   tests:[{input:'200-word video intro in Formal British Male voice',output:'Clean, professional. Video sync worked first try.',stars:4,comment:'Great for video production'}],
-   howToUse:[{title:'Sign up at murf.ai',desc:'Free tier: 10 mins voice generation.',cmd:null},{title:'Pick a voice, type your script',desc:'Adjust speed and pitch as needed.',cmd:null}],
-   alt:'For cloning your voice: ElevenLabs or Fish Audio S2.'},
-
-  {name:'Runway',icon:'🎬',cat:'video',tagline:'Gen-3 Alpha — best AI video quality available right now',tags:['text-to-video','gen-3','editing'],pricing:'freemium',rating:4.8,hot:true,oss:false,url:'https://runwayml.com',updated:NOW,
-   verdict:'The best AI video generator right now and it is not particularly close. If you are serious about video quality, you need Runway. The free tier is very limited — plan for the Standard plan.',
-   whatItDoes:'Converts text and images into cinematic video clips using Gen-3 Alpha. Built-in editor with motion tracking, inpainting, and background removal. Used by Hollywood studios.',
-   pros:['Best video quality available','Built-in video editor is genuinely useful','Active development, improving fast','Handles motion naturally'],
-   cons:['Free tier: only 125 one-time credits','10-second clips on standard plans','Expensive for heavy use at $35+/month','Queue times at peak hours'],
-   ratings:{Quality:9.8,Ease:8.5,Value:7.0,Speed:7.5},
-   whoFor:'Professional creators, filmmakers, serious YouTube creators',whoNotFor:'Casual users — Pika Labs gives 80% quality for free',
-   tests:[{input:'Lone astronaut on a red planet at sunset, cinematic, slow motion',output:'Stunning. Motion was smooth, lighting cinematic, zero artefacts. Looks like a movie trailer.',stars:5,comment:'Best AI video quality we have seen'},{input:'Busy Tokyo street at night, neon lights on wet pavement',output:'Excellent atmosphere. Minor face flickering in background crowd.',stars:4,comment:'Near perfect'}],
-   howToUse:[{title:'Sign up at runwayml.com',desc:'125 one-time free credits. Standard plan is $15/month.',cmd:null},{title:'Choose Gen-3 Alpha → Image to Video',desc:'Image-to-Video gives more control.',cmd:null},{title:'Write a detailed prompt',desc:'Specify camera movement, lighting, mood. More detail = better.',cmd:null}],
-   alt:'For free video: Pika Labs. For long videos: Kling AI.'},
-
-  {name:'Pika Labs',icon:'⚡',cat:'video',tagline:'Best free AI video — great for Shorts and Reels',tags:['text-to-video','shorts','free'],pricing:'freemium',rating:4.6,hot:true,oss:false,url:'https://pika.art',updated:WEEK,
-   verdict:'Start here before paying for anything. Not Runway quality, but for social media content it is surprisingly good and free. Perfect for TikTok and Reels.',
-   whatItDoes:'Generates 3-5 second video clips from text or images. Optimised for short-form content. Simple interface, no learning curve.',
-   pros:['Genuinely useful free tier','Easy to use','Great for Shorts and Reels'],
-   cons:['Noticeably below Runway quality','3-5 second clips only on free','Motion can look artificial'],
-   ratings:{Quality:8.0,Ease:9.5,Value:9.0,Speed:8.5},
-   whoFor:'Social media creators, beginners, budget-conscious creators',whoNotFor:'Professional or longer narrative content',
-   tests:[{input:'Golden retriever running through autumn leaves, slow motion',output:'Lovely result. Dog looked natural, leaf movement realistic.',stars:4,comment:'Great for social clips'}],
-   howToUse:[{title:'Go to pika.art',desc:'Sign up for unlimited free tier.',cmd:null},{title:'Type a detailed prompt',desc:'Include subject, action, style, lighting.',cmd:null}],
-   alt:'For higher quality: Runway. For longer clips: Kling AI.'},
-
-  {name:'Midjourney',icon:'🎨',cat:'image',tagline:'The gold standard for AI art — nothing else matches its aesthetic',tags:['art','illustration','aesthetic'],pricing:'paid',rating:4.9,hot:true,oss:false,url:'https://midjourney.com',updated:WEEK,
-   verdict:'Worth every cent if you create visual content. Nothing else consistently produces this level of aesthetic quality. No free tier is a dealbreaker for some people — try Ideogram first if budget is tight.',
-   whatItDoes:'Generates images from text via Discord or web UI. V7 produces photorealistic and artistic images with the best aesthetic quality in AI.',
-   pros:['Best aesthetics bar none','Consistent quality','New web UI is much better'],
-   cons:['No free tier — from $10/month','Discord-only for some features','Conservative on some content types'],
-   ratings:{Quality:9.9,Ease:7.5,Value:8.5,Speed:7.0},
-   whoFor:'Artists, designers, marketers needing consistently beautiful images',whoNotFor:'Anyone who needs free generation — try Ideogram',
-   tests:[{input:'Jazz musician in 1950s New York, film noir lighting, 35mm',output:'Absolutely stunning. Lighting, mood, clothing — all perfect. Looked like a real photo.',stars:5,comment:'Best image quality from any AI tool'}],
-   howToUse:[{title:'Subscribe from $10/month at midjourney.com',desc:'Basic: 200 images/month.',cmd:null},{title:'Use the web UI at midjourney.com',desc:'No Discord needed now.',cmd:null}],
-   alt:'Free alternative: Ideogram. Unlimited free: Stable Diffusion locally.'},
-
-  {name:'Stable Diffusion',icon:'🌀',cat:'image',tagline:'Free, unlimited, open-source — run locally forever with zero restrictions',tags:['open-source','free','local','unlimited'],pricing:'free',rating:4.6,hot:false,oss:true,url:'https://stability.ai',updated:WEEK,
-   verdict:'Best for full control and zero costs. Setup takes 30 minutes but then you have unlimited free image generation forever. With community models from Civitai it can beat Midjourney for specific styles.',
-   whatItDoes:'Open-source AI image model you run on your own hardware. No subscriptions, no limits, no censorship. Community has created thousands of fine-tuned models.',
-   pros:['Free forever','Unlimited generations','Huge community model library','Full privacy'],
-   cons:['Setup requires technical knowledge','Needs decent GPU (8GB+ VRAM)','Quality depends on model choice'],
-   ratings:{Quality:8.5,Ease:4.5,Value:10.0,Speed:9.0},
-   whoFor:'Developers, technical users wanting unlimited free images',whoNotFor:'Non-technical users wanting instant results — use Ideogram',
-   tests:[{input:'With Realistic Vision model: portrait, realistic, cinematic lighting',output:'Stunning photorealistic result. Model choice is everything in Stable Diffusion.',stars:5,comment:'With right model, beats paid tools'}],
-   howToUse:[{title:'Install Python 3.10+',desc:'From python.org — check Add to PATH on Windows.',cmd:'python --version'},{title:'Clone AUTOMATIC1111',desc:'Most popular SD interface',cmd:'git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui'},{title:'Run the installer',desc:'Downloads everything automatically on first run',cmd:'./webui.sh    # Mac/Linux\nwebui-user.bat  # Windows'},{title:'Download a model from civitai.com',desc:'Put .safetensors file in models/Stable-diffusion/ folder',cmd:null},{title:'Open in browser',cmd:'localhost:7860'}],
-   alt:'No GPU? Try Google Colab to run SD free in the cloud.'},
-
-  {name:'Ideogram',icon:'💡',cat:'image',tagline:'Best AI for text inside images — logos and posters that actually work',tags:['text-in-image','logos','typography'],pricing:'freemium',rating:4.6,hot:true,oss:false,url:'https://ideogram.ai',updated:WEEK,
-   verdict:'If you need text in your AI images, this is your tool. DALL-E 3 and Midjourney both struggle with readable text. Ideogram gets it right almost every time. Free tier is generous.',
-   whatItDoes:'Specialises in generating images where text is readable and accurate. Perfect for YouTube thumbnails, logos, poster designs, and any image needing words.',
-   pros:['Best text rendering in any AI tool','Great for logos and thumbnails','10 free images/day','Fast generation'],
-   cons:['Less photorealistic than Flux','Slower than some competitors'],
-   ratings:{Quality:8.5,Ease:9.5,Value:9.8,Speed:8.0},
-   whoFor:'YouTubers making thumbnails, designers, marketers needing logos',whoNotFor:'Pure photography — use Flux',
-   tests:[{input:'YouTube thumbnail: bold text TOOLVAULT REVIEW, dark background, lime green, eye-catching',output:'Perfect text rendering. Zero typos. Clean design. Generated in 8 seconds.',stars:5,comment:'No other AI does text this well'}],
-   howToUse:[{title:'Go to ideogram.ai — free',desc:'10 free images per day, no credit card needed.',cmd:null}],
-   alt:'For better art: Midjourney. Unlimited free: Stable Diffusion. Photos: Flux.'},
-
-  {name:'Flux',icon:'⚡',cat:'image',tagline:'Black Forest Labs photorealistic model — state of the art in 2025',tags:['photorealistic','fast','open weights'],pricing:'freemium',rating:4.8,hot:true,oss:false,url:'https://flux1.ai',updated:NOW,
-   verdict:'The photorealism king. Flux 1.1 Pro Ultra is the current best model for realistic images. Faster than Midjourney, often cheaper. Open weights means you can run it locally.',
-   whatItDoes:'Generates photorealistic images from text. Available via API on multiple platforms or run the open weights locally. Exceptional detail and speed.',
-   pros:['Best photorealism available','Very fast','Open weights for local use'],
-   cons:['API-first, less beginner-friendly','No single great web UI'],
-   ratings:{Quality:9.7,Ease:7.5,Value:8.5,Speed:9.5},
-   whoFor:'Developers, photographers, product teams needing realistic images',whoNotFor:'Beginners — try DALL-E 3 or Ideogram instead',
-   tests:[{input:'Professional headshot, natural window lighting, business casual',output:'Photorealistic result indistinguishable from a real photo.',stars:5,comment:'Best photorealism we tested'}],
-   howToUse:[{title:'Access via fal.ai (has free tier)',desc:'fal.ai hosts Flux with a generous free tier.',cmd:null}],
-   alt:'For art: Midjourney. For text in images: Ideogram. Free unlimited: Stable Diffusion.'},
-
-  {name:'Claude',icon:'🧠',cat:'writing',tagline:'Anthropic\'s AI — best for long-form writing, analysis, and nuanced thinking',tags:['writing','analysis','reasoning','200K context'],pricing:'freemium',rating:4.9,hot:true,oss:false,url:'https://claude.ai',updated:NOW,
-   verdict:'The best AI for anything requiring real thinking and quality writing. Slower than ChatGPT but the quality gap on complex tasks is significant. 200K context window is genuinely transformative.',
-   whatItDoes:'Handles long-form writing, complex analysis, coding, and reasoning. 200,000 token context means it can read entire books or codebases in one conversation.',
-   pros:['Best writing quality and voice','200K context window','Excellent at complex instructions','Good free tier'],
-   cons:['Slower than ChatGPT','Occasionally over-cautious','No image generation','No real-time web on free tier'],
-   ratings:{Quality:9.8,Ease:9.5,Value:9.0,Speed:7.5},
-   whoFor:'Writers, researchers, developers needing quality thinking',whoNotFor:'Real-time web search or image generation',
-   tests:[{input:'Write a 1000-word blog post about AI tools, conversational, no jargon',output:'Excellent. Varied sentence lengths, personality, no robot voice. Needed zero editing.',stars:5,comment:'Best writing quality of all AI tools'}],
-   howToUse:[{title:'Sign up at claude.ai — free',desc:'Free tier gives generous daily usage. Pro is $20/month.',cmd:null},{title:'Use the API',desc:'Get API key at console.anthropic.com',cmd:'pip install anthropic'}],
-   alt:'For real-time web: Perplexity. For code: Cursor.'},
-
-  {name:'ChatGPT',icon:'💬',cat:'writing',tagline:'The most versatile AI — best ecosystem, fastest, most integrations',tags:['writing','coding','research','plugins'],pricing:'freemium',rating:4.8,hot:false,oss:false,url:'https://chatgpt.com',updated:WEEK,
-   verdict:'Still the best all-rounder. Not the best at any single thing but great at everything. The custom GPTs ecosystem is its biggest advantage. Best starting point for beginners.',
-   whatItDoes:'Handles writing, coding, research, image generation (Plus), web browsing, and more. 100M+ users, largest community of custom GPTs.',
-   pros:['Largest ecosystem','DALL-E 3 built in','Web browsing on Plus','Best for beginners'],
-   cons:['Can hallucinate confidently','Gets cut off on long outputs','Less nuanced than Claude'],
-   ratings:{Quality:9.2,Ease:9.8,Value:8.5,Speed:9.0},
-   whoFor:'Everyone — best starting point for AI newcomers',whoNotFor:'Long-form writing quality — use Claude',
-   tests:[{input:'Debug 50 lines of Python with a logic error',output:'Found the error immediately, explained why, offered 2 fixes.',stars:5,comment:'Excellent debugging'}],
-   howToUse:[{title:'Sign up at chatgpt.com — free',desc:'Plus is $20/month for GPT-4o and image gen.',cmd:null}],
-   alt:'For better writing: Claude. For code: Cursor. For research: Perplexity.'},
-
-  {name:'Perplexity AI',icon:'🔍',cat:'writing',tagline:'AI search with real-time citations — research without the guesswork',tags:['search','research','citations','real-time'],pricing:'freemium',rating:4.7,hot:false,oss:false,url:'https://perplexity.ai',updated:WEEK,
-   verdict:'Replaced Google for most research tasks. The citations mean you can verify everything it says. For fact-checking or current events, nothing beats it.',
-   whatItDoes:'Searches the web in real time and synthesises answers with citations to sources. Follow-up questions work well.',
-   pros:['Real-time web access','Cites every source','Great for research'],
-   cons:['Not for creative writing','Can misread sources'],
-   ratings:{Quality:9.0,Ease:9.5,Value:9.0,Speed:9.0},
-   whoFor:'Researchers, students, journalists, anyone fact-checking',whoNotFor:'Creative writing or coding',
-   tests:[{input:'What happened to SVB bank and what were the systemic causes?',output:'500-word answer with 8 citations from reputable sources. All facts verified.',stars:5,comment:'Replaced Google for research'}],
-   howToUse:[{title:'Go to perplexity.ai — free',desc:'Type your question and get a real cited answer.',cmd:null}],
-   alt:'For writing: Claude. For coding: Cursor.'},
-
-  {name:'Cursor',icon:'🖱️',cat:'coding',tagline:'AI-first code editor — writes, refactors, and understands your whole codebase',tags:['editor','AI coding','codebase','refactor'],pricing:'freemium',rating:4.9,hot:true,oss:false,url:'https://cursor.sh',updated:NOW,
-   verdict:'The most significant productivity upgrade for developers since Stack Overflow. Not an exaggeration. If you code professionally, you need to try this. The free tier is extremely generous.',
-   whatItDoes:'VS Code rebuilt around AI. Reads your entire codebase and writes, edits, explains and debugs with full context. Composer writes across multiple files simultaneously.',
-   pros:['Full codebase context','Writes across multiple files','Tab completion is eerily accurate','All VS Code extensions still work','Generous free tier'],
-   cons:['Can slow large repos','Heavy usage costs $20/month','AI can be confidently wrong — always review'],
-   ratings:{Quality:9.8,Ease:9.0,Value:9.5,Speed:8.5},
-   whoFor:'Every developer — beginner to senior',whoNotFor:'Strict data privacy requirements — use Codeium instead',
-   tests:[{input:'Add user auth to existing Express.js app (5 files)',output:'Read all 5 files, added JWT auth with register/login routes, updated middleware. All correct. Saved 2 hours.',stars:5,comment:'This is the future of coding'}],
-   howToUse:[{title:'Download at cursor.sh',desc:'Import all VS Code settings and extensions in one click.',cmd:null},{title:'Cmd+K for inline edits',desc:'Select code, press Cmd+K (Mac) or Ctrl+K (Windows), describe the change.',cmd:null},{title:'Cmd+Shift+I for Composer',desc:'Describe the feature — it writes across multiple files.',cmd:null}],
-   alt:'For privacy: Codeium (free). For terminal work: Claude Code.'},
-
-  {name:'Bolt.new',icon:'⚡',cat:'coding',tagline:'Build full-stack web apps in your browser from a text description',tags:['full-stack','browser','deploy','no install'],pricing:'freemium',rating:4.7,hot:true,oss:false,url:'https://bolt.new',updated:NOW,
-   verdict:'Magic for prototypes. Describe a full web app and it builds the frontend, backend, and database — then deploys it. Best tool for non-developers who want to build things.',
-   whatItDoes:'Browser-based environment that builds complete full-stack apps from text. Deploys directly to Netlify or Vercel.',
-   pros:['Full-stack from one sentence','Zero setup','Real code output','Instant deploy'],
-   cons:['Better for prototypes than production','Limited free compute'],
-   ratings:{Quality:8.5,Ease:10.0,Value:8.5,Speed:8.0},
-   whoFor:'Non-developers, rapid prototypers, founders validating ideas',whoNotFor:'Production-grade complex applications',
-   tests:[{input:'Build a todo app with auth and MongoDB',output:'Full React + Express + MongoDB app in 3 minutes. Working auth, CRUD, clean UI.',stars:5,comment:'Built a full app in 3 minutes'}],
-   howToUse:[{title:'Go to bolt.new',desc:'No account needed. Describe your app.',cmd:null},{title:'Be specific with your description',desc:'Include tech stack, features, and design preferences.',cmd:null}],
-   alt:'For existing codebases: Cursor. For backend-heavy: Replit.'},
-
-  {name:'Codeium',icon:'💎',cat:'coding',tagline:'Best completely free AI coding assistant — works in 70+ IDEs',tags:['free','autocomplete','multi-IDE'],pricing:'free',rating:4.5,hot:false,oss:false,url:'https://codeium.com',updated:WEEK,
-   verdict:'The best free Copilot alternative. Surprisingly good quality. If you cannot afford Cursor or Copilot, start here. No catch — genuinely free forever.',
-   whatItDoes:'Free AI coding assistant with autocomplete and chat. Works in VS Code, JetBrains, Vim, Emacs, and 60+ other IDEs.',
-   pros:['100% free forever','Works in 70+ IDEs','Good quality'],
-   cons:['Less smart than Cursor','No codebase-wide context'],
-   ratings:{Quality:8.0,Ease:9.5,Value:10.0,Speed:9.0},
-   whoFor:'Budget-conscious developers, students',whoNotFor:'Power users needing full codebase context — use Cursor',
-   tests:[{input:'React hook for data fetching with loading and error states',output:'Completed hook correctly from the first 2 setup lines. Clean code.',stars:4,comment:'85% of Copilot quality, completely free'}],
-   howToUse:[{title:'Search Codeium in VS Code extensions',desc:'Sign up for free. That is it.',cmd:null}],
-   alt:'For more power: Cursor free tier. For GitHub integration: Copilot.'},
-
-  {name:'Suno AI',icon:'🎵',cat:'music',tagline:'Generate complete songs with vocals and lyrics from a text prompt',tags:['full songs','vocals','any genre'],pricing:'freemium',rating:4.7,hot:true,oss:false,url:'https://suno.ai',updated:NOW,
-   verdict:'Genuinely remarkable. Full songs with real-sounding vocals from a sentence. Free tier gives 50 songs/day. Copyright ownership is unclear — do not use for commercial work without Pro.',
-   whatItDoes:'Generates complete 2-minute songs — music, vocals, and lyrics — from a text description. Any genre, any mood. You can provide your own lyrics.',
-   pros:['Full songs with real-sounding vocals','Any genre and style','50 credits/day free'],
-   cons:['Copyright ownership murky','Lyrics can be generic'],
-   ratings:{Quality:8.5,Ease:9.8,Value:9.0,Speed:9.5},
-   whoFor:'Content creators needing original music, hobbyists',whoNotFor:'Professional musicians or commercial use without Pro',
-   tests:[{input:'Upbeat lo-fi hip hop study music, no lyrics, piano and drums',output:'Excellent 2-minute lo-fi. Perfect YouTube background music.',stars:5,comment:'Nailed the vibe completely'}],
-   howToUse:[{title:'Go to suno.ai — free',desc:'50 songs/day free. Pro is $8/month for commercial use.',cmd:null},{title:'Custom lyrics mode',desc:'Toggle Custom Mode and paste your own lyrics.',cmd:null}],
-   alt:'For higher quality instrumentals: Udio. For YouTube-safe: Mubert.'},
-
-  {name:'Gamma App',icon:'📊',cat:'design',tagline:'AI presentations from bullet points in seconds — looks designer-made',tags:['presentations','slides','AI builder'],pricing:'freemium',rating:4.6,hot:true,oss:false,url:'https://gamma.app',updated:WEEK,
-   verdict:'Replaces PowerPoint for 90% of use cases. Type your bullet points and get a beautiful presentation. The free tier is generous enough for regular use.',
-   whatItDoes:'Generates beautiful presentations, documents, and web pages from text. Outline your content and it creates a fully designed result instantly.',
-   pros:['Looks amazing with zero design skill','Very fast','Good free tier'],
-   cons:['Gamma branding on free tier','Limited customisation vs PowerPoint'],
-   ratings:{Quality:9.0,Ease:9.8,Value:9.5,Speed:9.5},
-   whoFor:'Anyone who needs to present — students, professionals, founders',whoNotFor:'Full PowerPoint functionality',
-   tests:[{input:'5 reasons to use AI in your business — create a presentation',output:'10-slide presentation in 30 seconds. Beautiful design, good hierarchy.',stars:5,comment:'Saved 2 hours of PowerPoint work'}],
-   howToUse:[{title:'Go to gamma.app — free',desc:'Click New AI, choose presentation, enter your bullet points.',cmd:null}],
-   alt:'For traditional control: Google Slides. For documents: Notion AI.'},
-
-  {name:'Canva AI',icon:'🎀',cat:'design',tagline:'AI design for everyone — Magic Edit, background remove, text-to-image',tags:['design','templates','social media'],pricing:'freemium',rating:4.7,hot:false,oss:false,url:'https://canva.com',updated:WEEK,
-   verdict:'Most accessible design tool ever made. If you are not a designer and need social media graphics, you do not need anything else.',
-   whatItDoes:'Web-based design tool with AI: Magic Edit, Background Remover, AI image generation, Magic Resize, and AI copywriting.',
-   pros:['Zero learning curve','1000s of templates','Great AI tools','Mobile app is excellent'],
-   cons:['Best features need Pro','Cannot replace professional tools'],
-   ratings:{Quality:8.5,Ease:10.0,Value:9.0,Speed:9.5},
-   whoFor:'Small businesses, social media managers, non-designers',whoNotFor:'Professional designers — use Figma',
-   tests:[{input:'Instagram post for a coffee shop — warm aesthetic',output:'Used Magic Edit to place coffee on table. Instagram-ready in 3 minutes.',stars:5,comment:'Perfect for social media'}],
-   howToUse:[{title:'Go to canva.com — free account',desc:'Start with a template for your platform.',cmd:null}],
-   alt:'For professional design: Figma. For AI presentations: Gamma.'},
-
-  {name:'Otter.ai',icon:'🦦',cat:'business',tagline:'Real-time meeting transcription with auto-summaries for Zoom and Teams',tags:['transcription','meetings','notes'],pricing:'freemium',rating:4.5,hot:false,oss:false,url:'https://otter.ai',updated:WEEK,
-   verdict:'Transforms how you do meetings. Auto-summaries are good enough to share. Accuracy is solid for clear speakers.',
-   whatItDoes:'Joins Zoom, Teams, or Meet calls and transcribes in real time. Generates automatic summaries, action items, and searchable history.',
-   pros:['Real-time transcription','Auto summaries and action items','Zoom/Teams integration'],
-   cons:['Accuracy drops with accents','Free: 300 min/month'],
-   ratings:{Quality:8.5,Ease:9.5,Value:8.5,Speed:9.0},
-   whoFor:'Anyone who has lots of meetings and hates note-taking',whoNotFor:'Highly regulated industries (check privacy terms)',
-   tests:[{input:'30-minute meeting with 4 speakers',output:'95% accuracy on clear speakers. Summary captured all action items.',stars:4,comment:'Saves hours of note-taking'}],
-   howToUse:[{title:'Connect calendar at otter.ai',desc:'Otter joins meetings automatically.',cmd:null}],
-   alt:'For more features: Fireflies.ai.'},
-
-  {name:'Zapier AI',icon:'🔗',cat:'business',tagline:'Connect 5,000+ apps with AI automation — describe it, it builds it',tags:['automation','integrations','no-code'],pricing:'freemium',rating:4.6,hot:false,oss:false,url:'https://zapier.com',updated:WEEK,
-   verdict:'The glue of the internet. The AI Zap builder lets you describe automations in plain English. Gets expensive fast at scale but for small volume it is indispensable.',
-   whatItDoes:'Automates workflows between 5,000+ apps. Describe what to automate in English and it builds the Zap.',
-   pros:['5000+ integrations','AI workflow builder','Battle-tested and reliable'],
-   cons:['Gets expensive at scale','Complex logic needs paid plans'],
-   ratings:{Quality:9.0,Ease:8.5,Value:7.5,Speed:8.5},
-   whoFor:'Business owners, operators, anyone with repetitive inter-app tasks',whoNotFor:'Developers who prefer code — try n8n (open source)',
-   tests:[{input:'When email with invoice in subject arrives, save attachment to Google Drive',output:'Built in 2 minutes. Worked first try.',stars:5,comment:'Magic for non-developers'}],
-   howToUse:[{title:'Go to zapier.com — free tier',desc:'100 tasks/month free. Describe your automation.',cmd:null}],
-   alt:'For open source self-hosted: n8n. For complex logic: Make.'},
-
-  {name:'Ollama',icon:'🦙',cat:'local',tagline:'Run Llama 3, Mistral, Gemma locally — one command, zero costs',tags:['local LLM','privacy','free','offline'],pricing:'free',rating:4.8,hot:true,oss:true,url:'https://ollama.ai',updated:NOW,
-   verdict:'The easiest way to run AI locally. One command and you have a full LLM running with zero costs and total privacy. Works offline. Essential for privacy-conscious users.',
-   whatItDoes:'Makes running open-source LLMs (Llama 3, Mistral, Gemma, Phi-3) as simple as one command. Works on Mac, Windows, Linux. Has an OpenAI-compatible API for building apps.',
-   pros:['Incredibly easy to set up','Free forever','Works offline','OpenAI-compatible API','Huge model library'],
-   cons:['Needs 8GB+ RAM','Quality below GPT-4','Slower on CPU-only machines'],
-   ratings:{Quality:8.5,Ease:9.5,Value:10.0,Speed:8.0},
-   whoFor:'Privacy-conscious users, developers, anyone wanting free local AI',whoNotFor:'Non-technical users wanting best quality (use ChatGPT)',
-   tests:[{input:'Run Llama 3 8B: Explain quantum computing simply',output:'Clear, accurate explanation in 8 seconds on M2 Mac. Quality similar to GPT-3.5.',stars:4,comment:'Impressive quality for local model'}],
-   howToUse:[{title:'Download from ollama.ai',desc:'One installer for Mac, Windows, or Linux.',cmd:null},{title:'Pull Llama 3',cmd:'ollama pull llama3'},{title:'Start chatting',cmd:'ollama run llama3'},{title:'Add a web UI (optional)',desc:'ChatGPT-like interface for Ollama',cmd:'docker run -d -p 3000:8080 \\\n  --add-host=host.docker.internal:host-gateway \\\n  ghcr.io/open-webui/open-webui:main'}],
-   alt:'For a GUI: LM Studio. For image generation locally: Stable Diffusion.'},
-
-  {name:'LM Studio',icon:'🏠',cat:'local',tagline:'Run any AI model locally with a beautiful desktop GUI — no terminal needed',tags:['local LLM','desktop app','no-code','offline'],pricing:'free',rating:4.7,hot:false,oss:false,url:'https://lmstudio.ai',updated:WEEK,
-   verdict:'The most beginner-friendly way to run local AI. A proper desktop app — no terminal, no commands. Download a model, click load, start chatting.',
-   whatItDoes:'Desktop app for running AI models locally. Browse and download models from HuggingFace, load with a GUI, chat, and run a local server. Works offline.',
-   pros:['No terminal required','Beautiful UI','Browse models in-app','Works offline'],
-   cons:['Needs 8GB+ RAM','Lower quality than cloud AI'],
-   ratings:{Quality:8.5,Ease:10.0,Value:10.0,Speed:8.0},
-   whoFor:'Non-technical users who want local AI, anyone wanting a nice local AI GUI',whoNotFor:'Power users who prefer CLI — use Ollama',
-   tests:[{input:'Load Phi-3 Mini, ask: best AI tools for YouTube?',output:'Loaded in 45 seconds. Helpful, specific answer. Ran completely offline.',stars:4,comment:'Great for local offline AI'}],
-   howToUse:[{title:'Download from lmstudio.ai',desc:'Regular desktop installer.',cmd:null},{title:'Search and download a model',desc:'Start with Llama-3-8B-Instruct or Phi-3-mini.',cmd:null},{title:'Load the model and go to Chat tab',desc:'Click Load Model and start talking.',cmd:null}],
-   alt:'For CLI power users: Ollama. For image generation locally: Stable Diffusion.'},
+  {name:'ElevenLabs',icon:'🎙️',cat:'voice',tagline:'Industry-leading voice cloning and TTS in 29 languages',tags:['voice clone','TTS','multilingual'],pricing:'freemium',rating:4.9,hot:true,oss:false,url:'https://elevenlabs.io',updated:NOW,verdict:'The best voice AI, full stop. Free tier is genuinely useful. If voice content is your thing, this is your tool. Credits run out fast though — budget for it.',whatItDoes:'ElevenLabs clones your voice from a 1-minute sample and generates natural speech in 29 languages. Used by major podcasters, YouTubers, and developers worldwide.',pros:['Best voice quality available','Clone your voice in under 5 minutes','Free tier: 10,000 chars/month','Strong emotion and pacing control','Excellent developer API'],cons:['Free credits run out very fast','Short clips give inconsistent clones','No real-time voice changing','Expensive at scale'],ratings:{Quality:9.5,Ease:9.0,Value:8.0,Speed:8.5},whoFor:'Content creators, podcasters, YouTubers, app developers',whoNotFor:'People who need real-time live voice changing',tests:[{input:'Clone voice from 1-min sample, say: Good morning, this is your AI assistant',output:'Indistinguishable from original in a blind test. Accent, cadence, and warmth all preserved.',stars:5,comment:'Best clone quality we tested'},{input:'500-word narration in formal British accent',output:'Smooth and professional. Very slight robotic artefact at the 2-min mark.',stars:4,comment:'Minor artefact, otherwise superb'}],howToUse:[{title:'Sign up at elevenlabs.io — free',desc:'No credit card needed. 10,000 chars/month free.',cmd:null},{title:'Go to Voice Cloning → Add Voice',desc:'Click Instant Voice Cloning. Upload 1 minute of clean audio.',cmd:null},{title:'Generate speech',desc:'Speech Synthesis tab → select your voice → type text → Generate.',cmd:null},{title:'Use the API (optional)',desc:'Get your API key from profile settings.',cmd:'pip install elevenlabs'}],alt:'On a budget? Fish Audio S2 is free and nearly as good. For real-time: try RVC.'},
+  {name:'Fish Audio S2',icon:'🐟',cat:'voice',tagline:'Open-source voice cloning — 10-second clone, run locally for free',tags:['open-source','voice clone','local','free'],pricing:'free',rating:4.7,hot:true,oss:true,url:'https://fish.audio',updated:NOW,verdict:'Biggest open-source release in voice AI this year. Genuinely rivals ElevenLabs for most use cases and it is completely free. If you keep hitting ElevenLabs credit limits, switch here immediately.',whatItDoes:'Fish Audio S2 is an open-source TTS and voice cloning model. Clones a voice from just 10 seconds of audio. Available as a free web app or run locally. Includes emotion control and multilingual support.',pros:['Open source — run locally for free','10-second voice clone (fastest available)','Emotion control that actually works','Web app is free to use','Very actively developed'],cons:['Slightly below ElevenLabs on accent accuracy','Local setup requires Python knowledge','Web app free tier has some limits'],ratings:{Quality:8.8,Ease:8.5,Value:10.0,Speed:10.0},whoFor:'Everyone — especially people hitting ElevenLabs limits',whoNotFor:'Enterprise where ElevenLabs-tier consistency is required',tests:[{input:'Clone voice from 15-second sample, read a YouTube intro',output:'Clone ready in 11 seconds. ~87% similarity to original. Slight flatness on emotional peaks but excellent for free.',stars:4,comment:'Near-ElevenLabs quality, completely free'},{input:'Emotion control — same text in happy vs neutral',output:'Clear audible difference. Happy tone was noticeably brighter. This feature alone sets it apart.',stars:5,comment:'Emotion control is a genuine differentiator'}],howToUse:[{title:'Option 1: Use the web app (easiest)',desc:'Go to fish.audio — no account needed for basic use.',cmd:null},{title:'Option 2: Run locally',desc:'Clone the repo and install dependencies',cmd:'git clone https://github.com/fishaudio/fish-speech\ncd fish-speech\npip install -e .[stable]'},{title:'Download the S2 model weights',desc:'',cmd:'huggingface-cli download fishaudio/fish-speech-1.5'},{title:'Run the Web UI locally',desc:'',cmd:'python tools/webui.py --llama-checkpoint-path checkpoints/fish-speech-1.5'}],alt:'For absolute best quality: ElevenLabs. For real-time voice: RVC.'},
+  {name:'Murf AI',icon:'🎤',cat:'voice',tagline:'120+ AI voices for video and podcast voiceovers — no clone needed',tags:['voiceover','podcast','video'],pricing:'freemium',rating:4.7,hot:false,oss:false,url:'https://murf.ai',updated:WEEK,verdict:'Great if you just want a professional AI voice for videos without the clone setup. The video timeline sync is genuinely useful.',whatItDoes:'120+ AI voices available immediately. Built specifically for video creators — syncs voice with video timelines and slide presentations.',pros:['120+ high quality voices','Video timeline sync','No audio sample needed'],cons:['No voice cloning on free tier','Pricey paid plans','Less control than ElevenLabs'],ratings:{Quality:8.8,Ease:9.5,Value:7.5,Speed:9.0},whoFor:'Video creators who want professional voiceovers fast',whoNotFor:'Anyone who needs their own voice cloned',tests:[{input:'200-word video intro in Formal British Male voice',output:'Clean, professional. Video sync worked first try.',stars:4,comment:'Great for video production'}],howToUse:[{title:'Sign up at murf.ai',desc:'Free tier: 10 mins voice generation.',cmd:null},{title:'Pick a voice, type your script',desc:'Adjust speed and pitch as needed.',cmd:null}],alt:'For cloning your voice: ElevenLabs or Fish Audio S2.'},
+  {name:'Runway',icon:'🎬',cat:'video',tagline:'Gen-3 Alpha — best AI video quality available right now',tags:['text-to-video','gen-3','editing'],pricing:'freemium',rating:4.8,hot:true,oss:false,url:'https://runwayml.com',updated:NOW,verdict:'The best AI video generator right now and it is not particularly close. If you are serious about video quality, you need Runway. The free tier is very limited — plan for the Standard plan.',whatItDoes:'Converts text and images into cinematic video clips using Gen-3 Alpha. Built-in editor with motion tracking, inpainting, and background removal. Used by Hollywood studios.',pros:['Best video quality available','Built-in video editor is genuinely useful','Active development, improving fast','Handles motion naturally'],cons:['Free tier: only 125 one-time credits','10-second clips on standard plans','Expensive for heavy use at $35+/month','Queue times at peak hours'],ratings:{Quality:9.8,Ease:8.5,Value:7.0,Speed:7.5},whoFor:'Professional creators, filmmakers, serious YouTube creators',whoNotFor:'Casual users — Pika Labs gives 80% quality for free',tests:[{input:'Lone astronaut on a red planet at sunset, cinematic, slow motion',output:'Stunning. Motion was smooth, lighting cinematic, zero artefacts. Looks like a movie trailer.',stars:5,comment:'Best AI video quality we have seen'},{input:'Busy Tokyo street at night, neon lights on wet pavement',output:'Excellent atmosphere. Minor face flickering in background crowd.',stars:4,comment:'Near perfect'}],howToUse:[{title:'Sign up at runwayml.com',desc:'125 one-time free credits. Standard plan is $15/month.',cmd:null},{title:'Choose Gen-3 Alpha → Image to Video',desc:'Image-to-Video gives more control.',cmd:null},{title:'Write a detailed prompt',desc:'Specify camera movement, lighting, mood. More detail = better.',cmd:null}],alt:'For free video: Pika Labs. For long videos: Kling AI.'},
+  {name:'Pika Labs',icon:'⚡',cat:'video',tagline:'Best free AI video — great for Shorts and Reels',tags:['text-to-video','shorts','free'],pricing:'freemium',rating:4.6,hot:true,oss:false,url:'https://pika.art',updated:WEEK,verdict:'Start here before paying for anything. Not Runway quality, but for social media content it is surprisingly good and free. Perfect for TikTok and Reels.',whatItDoes:'Generates 3-5 second video clips from text or images. Optimised for short-form content. Simple interface, no learning curve.',pros:['Genuinely useful free tier','Easy to use','Great for Shorts and Reels'],cons:['Noticeably below Runway quality','3-5 second clips only on free','Motion can look artificial'],ratings:{Quality:8.0,Ease:9.5,Value:9.0,Speed:8.5},whoFor:'Social media creators, beginners, budget-conscious creators',whoNotFor:'Professional or longer narrative content',tests:[{input:'Golden retriever running through autumn leaves, slow motion',output:'Lovely result. Dog looked natural, leaf movement realistic.',stars:4,comment:'Great for social clips'}],howToUse:[{title:'Go to pika.art',desc:'Sign up for unlimited free tier.',cmd:null},{title:'Type a detailed prompt',desc:'Include subject, action, style, lighting.',cmd:null}],alt:'For higher quality: Runway. For longer clips: Kling AI.'},
+  {name:'Midjourney',icon:'🎨',cat:'image',tagline:'The gold standard for AI art — nothing else matches its aesthetic',tags:['art','illustration','aesthetic'],pricing:'paid',rating:4.9,hot:true,oss:false,url:'https://midjourney.com',updated:WEEK,verdict:'Worth every cent if you create visual content. Nothing else consistently produces this level of aesthetic quality. No free tier is a dealbreaker for some people — try Ideogram first if budget is tight.',whatItDoes:'Generates images from text via Discord or web UI. V7 produces photorealistic and artistic images with the best aesthetic quality in AI.',pros:['Best aesthetics bar none','Consistent quality','New web UI is much better'],cons:['No free tier — from $10/month','Discord-only for some features','Conservative on some content types'],ratings:{Quality:9.9,Ease:7.5,Value:8.5,Speed:7.0},whoFor:'Artists, designers, marketers needing consistently beautiful images',whoNotFor:'Anyone who needs free generation — try Ideogram',tests:[{input:'Jazz musician in 1950s New York, film noir lighting, 35mm',output:'Absolutely stunning. Lighting, mood, clothing — all perfect. Looked like a real photo.',stars:5,comment:'Best image quality from any AI tool'}],howToUse:[{title:'Subscribe from $10/month at midjourney.com',desc:'Basic: 200 images/month.',cmd:null},{title:'Use the web UI at midjourney.com',desc:'No Discord needed now.',cmd:null}],alt:'Free alternative: Ideogram. Unlimited free: Stable Diffusion locally.'},
+  {name:'Stable Diffusion',icon:'🌀',cat:'image',tagline:'Free, unlimited, open-source — run locally forever with zero restrictions',tags:['open-source','free','local','unlimited'],pricing:'free',rating:4.6,hot:false,oss:true,url:'https://stability.ai',updated:WEEK,verdict:'Best for full control and zero costs. Setup takes 30 minutes but then you have unlimited free image generation forever. With community models from Civitai it can beat Midjourney for specific styles.',whatItDoes:'Open-source AI image model you run on your own hardware. No subscriptions, no limits, no censorship. Community has created thousands of fine-tuned models.',pros:['Free forever','Unlimited generations','Huge community model library','Full privacy'],cons:['Setup requires technical knowledge','Needs decent GPU (8GB+ VRAM)','Quality depends on model choice'],ratings:{Quality:8.5,Ease:4.5,Value:10.0,Speed:9.0},whoFor:'Developers, technical users wanting unlimited free images',whoNotFor:'Non-technical users wanting instant results — use Ideogram',tests:[{input:'With Realistic Vision model: portrait, realistic, cinematic lighting',output:'Stunning photorealistic result. Model choice is everything in Stable Diffusion.',stars:5,comment:'With right model, beats paid tools'}],howToUse:[{title:'Install Python 3.10+',desc:'From python.org — check Add to PATH on Windows.',cmd:'python --version'},{title:'Clone AUTOMATIC1111',desc:'Most popular SD interface',cmd:'git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui'},{title:'Run the installer',desc:'Downloads everything automatically on first run',cmd:'./webui.sh    # Mac/Linux\nwebui-user.bat  # Windows'},{title:'Download a model from civitai.com',desc:'Put .safetensors file in models/Stable-diffusion/ folder',cmd:null},{title:'Open in browser',cmd:'localhost:7860'}],alt:'No GPU? Try Google Colab to run SD free in the cloud.'},
+  {name:'Ideogram',icon:'💡',cat:'image',tagline:'Best AI for text inside images — logos and posters that actually work',tags:['text-in-image','logos','typography'],pricing:'freemium',rating:4.6,hot:true,oss:false,url:'https://ideogram.ai',updated:WEEK,verdict:'If you need text in your AI images, this is your tool. DALL-E 3 and Midjourney both struggle with readable text. Ideogram gets it right almost every time. Free tier is generous.',whatItDoes:'Specialises in generating images where text is readable and accurate. Perfect for YouTube thumbnails, logos, poster designs, and any image needing words.',pros:['Best text rendering in any AI tool','Great for logos and thumbnails','10 free images/day','Fast generation'],cons:['Less photorealistic than Flux','Slower than some competitors'],ratings:{Quality:8.5,Ease:9.5,Value:9.8,Speed:8.0},whoFor:'YouTubers making thumbnails, designers, marketers needing logos',whoNotFor:'Pure photography — use Flux',tests:[{input:'YouTube thumbnail: bold text TOOLVAULT REVIEW, dark background, lime green, eye-catching',output:'Perfect text rendering. Zero typos. Clean design. Generated in 8 seconds.',stars:5,comment:'No other AI does text this well'}],howToUse:[{title:'Go to ideogram.ai — free',desc:'10 free images per day, no credit card needed.',cmd:null}],alt:'For better art: Midjourney. Unlimited free: Stable Diffusion. Photos: Flux.'},
+  {name:'Flux',icon:'⚡',cat:'image',tagline:'Black Forest Labs photorealistic model — state of the art in 2025',tags:['photorealistic','fast','open weights'],pricing:'freemium',rating:4.8,hot:true,oss:false,url:'https://flux1.ai',updated:NOW,verdict:'The photorealism king. Flux 1.1 Pro Ultra is the current best model for realistic images. Faster than Midjourney, often cheaper. Open weights means you can run it locally.',whatItDoes:'Generates photorealistic images from text. Available via API on multiple platforms or run the open weights locally. Exceptional detail and speed.',pros:['Best photorealism available','Very fast','Open weights for local use'],cons:['API-first, less beginner-friendly','No single great web UI'],ratings:{Quality:9.7,Ease:7.5,Value:8.5,Speed:9.5},whoFor:'Developers, photographers, product teams needing realistic images',whoNotFor:'Beginners — try DALL-E 3 or Ideogram instead',tests:[{input:'Professional headshot, natural window lighting, business casual',output:'Photorealistic result indistinguishable from a real photo.',stars:5,comment:'Best photorealism we tested'}],howToUse:[{title:'Access via fal.ai (has free tier)',desc:'fal.ai hosts Flux with a generous free tier.',cmd:null}],alt:'For art: Midjourney. For text in images: Ideogram. Free unlimited: Stable Diffusion.'},
+  {name:'Claude',icon:'🧠',cat:'writing',tagline:"Anthropic's AI — best for long-form writing, analysis, and nuanced thinking",tags:['writing','analysis','reasoning','200K context'],pricing:'freemium',rating:4.9,hot:true,oss:false,url:'https://claude.ai',updated:NOW,verdict:'The best AI for anything requiring real thinking and quality writing. Slower than ChatGPT but the quality gap on complex tasks is significant. 200K context window is genuinely transformative.',whatItDoes:'Handles long-form writing, complex analysis, coding, and reasoning. 200,000 token context means it can read entire books or codebases in one conversation.',pros:['Best writing quality and voice','200K context window','Excellent at complex instructions','Good free tier'],cons:['Slower than ChatGPT','Occasionally over-cautious','No image generation','No real-time web on free tier'],ratings:{Quality:9.8,Ease:9.5,Value:9.0,Speed:7.5},whoFor:'Writers, researchers, developers needing quality thinking',whoNotFor:'Real-time web search or image generation',tests:[{input:'Write a 1000-word blog post about AI tools, conversational, no jargon',output:'Excellent. Varied sentence lengths, personality, no robot voice. Needed zero editing.',stars:5,comment:'Best writing quality of all AI tools'}],howToUse:[{title:'Sign up at claude.ai — free',desc:'Free tier gives generous daily usage. Pro is $20/month.',cmd:null},{title:'Use the API',desc:'Get API key at console.anthropic.com',cmd:'pip install anthropic'}],alt:'For real-time web: Perplexity. For code: Cursor.'},
+  {name:'ChatGPT',icon:'💬',cat:'writing',tagline:'The most versatile AI — best ecosystem, fastest, most integrations',tags:['writing','coding','research','plugins'],pricing:'freemium',rating:4.8,hot:false,oss:false,url:'https://chatgpt.com',updated:WEEK,verdict:'Still the best all-rounder. Not the best at any single thing but great at everything. The custom GPTs ecosystem is its biggest advantage. Best starting point for beginners.',whatItDoes:'Handles writing, coding, research, image generation (Plus), web browsing, and more. 100M+ users, largest community of custom GPTs.',pros:['Largest ecosystem','DALL-E 3 built in','Web browsing on Plus','Best for beginners'],cons:['Can hallucinate confidently','Gets cut off on long outputs','Less nuanced than Claude'],ratings:{Quality:9.2,Ease:9.8,Value:8.5,Speed:9.0},whoFor:'Everyone — best starting point for AI newcomers',whoNotFor:'Long-form writing quality — use Claude',tests:[{input:'Debug 50 lines of Python with a logic error',output:'Found the error immediately, explained why, offered 2 fixes.',stars:5,comment:'Excellent debugging'}],howToUse:[{title:'Sign up at chatgpt.com — free',desc:'Plus is $20/month for GPT-4o and image gen.',cmd:null}],alt:'For better writing: Claude. For code: Cursor. For research: Perplexity.'},
+  {name:'Perplexity AI',icon:'🔍',cat:'writing',tagline:'AI search with real-time citations — research without the guesswork',tags:['search','research','citations','real-time'],pricing:'freemium',rating:4.7,hot:false,oss:false,url:'https://perplexity.ai',updated:WEEK,verdict:'Replaced Google for most research tasks. The citations mean you can verify everything it says. For fact-checking or current events, nothing beats it.',whatItDoes:'Searches the web in real time and synthesises answers with citations to sources. Follow-up questions work well.',pros:['Real-time web access','Cites every source','Great for research'],cons:['Not for creative writing','Can misread sources'],ratings:{Quality:9.0,Ease:9.5,Value:9.0,Speed:9.0},whoFor:'Researchers, students, journalists, anyone fact-checking',whoNotFor:'Creative writing or coding',tests:[{input:'What happened to SVB bank and what were the systemic causes?',output:'500-word answer with 8 citations from reputable sources. All facts verified.',stars:5,comment:'Replaced Google for research'}],howToUse:[{title:'Go to perplexity.ai — free',desc:'Type your question and get a real cited answer.',cmd:null}],alt:'For writing: Claude. For coding: Cursor.'},
+  {name:'Cursor',icon:'🖱️',cat:'coding',tagline:'AI-first code editor — writes, refactors, and understands your whole codebase',tags:['editor','AI coding','codebase','refactor'],pricing:'freemium',rating:4.9,hot:true,oss:false,url:'https://cursor.sh',updated:NOW,verdict:'The most significant productivity upgrade for developers since Stack Overflow. Not an exaggeration. If you code professionally, you need to try this. The free tier is extremely generous.',whatItDoes:'VS Code rebuilt around AI. Reads your entire codebase and writes, edits, explains and debugs with full context. Composer writes across multiple files simultaneously.',pros:['Full codebase context','Writes across multiple files','Tab completion is eerily accurate','All VS Code extensions still work','Generous free tier'],cons:['Can slow large repos','Heavy usage costs $20/month','AI can be confidently wrong — always review'],ratings:{Quality:9.8,Ease:9.0,Value:9.5,Speed:8.5},whoFor:'Every developer — beginner to senior',whoNotFor:'Strict data privacy requirements — use Codeium instead',tests:[{input:'Add user auth to existing Express.js app (5 files)',output:'Read all 5 files, added JWT auth with register/login routes, updated middleware. All correct. Saved 2 hours.',stars:5,comment:'This is the future of coding'}],howToUse:[{title:'Download at cursor.sh',desc:'Import all VS Code settings and extensions in one click.',cmd:null},{title:'Cmd+K for inline edits',desc:'Select code, press Cmd+K (Mac) or Ctrl+K (Windows), describe the change.',cmd:null},{title:'Cmd+Shift+I for Composer',desc:'Describe the feature — it writes across multiple files.',cmd:null}],alt:'For privacy: Codeium (free). For terminal work: Claude Code.'},
+  {name:'Bolt.new',icon:'⚡',cat:'coding',tagline:'Build full-stack web apps in your browser from a text description',tags:['full-stack','browser','deploy','no install'],pricing:'freemium',rating:4.7,hot:true,oss:false,url:'https://bolt.new',updated:NOW,verdict:'Magic for prototypes. Describe a full web app and it builds the frontend, backend, and database — then deploys it. Best tool for non-developers who want to build things.',whatItDoes:'Browser-based environment that builds complete full-stack apps from text. Deploys directly to Netlify or Vercel.',pros:['Full-stack from one sentence','Zero setup','Real code output','Instant deploy'],cons:['Better for prototypes than production','Limited free compute'],ratings:{Quality:8.5,Ease:10.0,Value:8.5,Speed:8.0},whoFor:'Non-developers, rapid prototypers, founders validating ideas',whoNotFor:'Production-grade complex applications',tests:[{input:'Build a todo app with auth and MongoDB',output:'Full React + Express + MongoDB app in 3 minutes. Working auth, CRUD, clean UI.',stars:5,comment:'Built a full app in 3 minutes'}],howToUse:[{title:'Go to bolt.new',desc:'No account needed. Describe your app.',cmd:null},{title:'Be specific with your description',desc:'Include tech stack, features, and design preferences.',cmd:null}],alt:'For existing codebases: Cursor. For backend-heavy: Replit.'},
+  {name:'Codeium',icon:'💎',cat:'coding',tagline:'Best completely free AI coding assistant — works in 70+ IDEs',tags:['free','autocomplete','multi-IDE'],pricing:'free',rating:4.5,hot:false,oss:false,url:'https://codeium.com',updated:WEEK,verdict:'The best free Copilot alternative. Surprisingly good quality. If you cannot afford Cursor or Copilot, start here. No catch — genuinely free forever.',whatItDoes:'Free AI coding assistant with autocomplete and chat. Works in VS Code, JetBrains, Vim, Emacs, and 60+ other IDEs.',pros:['100% free forever','Works in 70+ IDEs','Good quality'],cons:['Less smart than Cursor','No codebase-wide context'],ratings:{Quality:8.0,Ease:9.5,Value:10.0,Speed:9.0},whoFor:'Budget-conscious developers, students',whoNotFor:'Power users needing full codebase context — use Cursor',tests:[{input:'React hook for data fetching with loading and error states',output:'Completed hook correctly from the first 2 setup lines. Clean code.',stars:4,comment:'85% of Copilot quality, completely free'}],howToUse:[{title:'Search Codeium in VS Code extensions',desc:'Sign up for free. That is it.',cmd:null}],alt:'For more power: Cursor free tier. For GitHub integration: Copilot.'},
+  {name:'Suno AI',icon:'🎵',cat:'music',tagline:'Generate complete songs with vocals and lyrics from a text prompt',tags:['full songs','vocals','any genre'],pricing:'freemium',rating:4.7,hot:true,oss:false,url:'https://suno.ai',updated:NOW,verdict:'Genuinely remarkable. Full songs with real-sounding vocals from a sentence. Free tier gives 50 songs/day. Copyright ownership is unclear — do not use for commercial work without Pro.',whatItDoes:'Generates complete 2-minute songs — music, vocals, and lyrics — from a text description. Any genre, any mood. You can provide your own lyrics.',pros:['Full songs with real-sounding vocals','Any genre and style','50 credits/day free'],cons:['Copyright ownership murky','Lyrics can be generic'],ratings:{Quality:8.5,Ease:9.8,Value:9.0,Speed:9.5},whoFor:'Content creators needing original music, hobbyists',whoNotFor:'Professional musicians or commercial use without Pro',tests:[{input:'Upbeat lo-fi hip hop study music, no lyrics, piano and drums',output:'Excellent 2-minute lo-fi. Perfect YouTube background music.',stars:5,comment:'Nailed the vibe completely'}],howToUse:[{title:'Go to suno.ai — free',desc:'50 songs/day free. Pro is $8/month for commercial use.',cmd:null},{title:'Custom lyrics mode',desc:'Toggle Custom Mode and paste your own lyrics.',cmd:null}],alt:'For higher quality instrumentals: Udio. For YouTube-safe: Mubert.'},
+  {name:'Gamma App',icon:'📊',cat:'design',tagline:'AI presentations from bullet points in seconds — looks designer-made',tags:['presentations','slides','AI builder'],pricing:'freemium',rating:4.6,hot:true,oss:false,url:'https://gamma.app',updated:WEEK,verdict:'Replaces PowerPoint for 90% of use cases. Type your bullet points and get a beautiful presentation. The free tier is generous enough for regular use.',whatItDoes:'Generates beautiful presentations, documents, and web pages from text. Outline your content and it creates a fully designed result instantly.',pros:['Looks amazing with zero design skill','Very fast','Good free tier'],cons:['Gamma branding on free tier','Limited customisation vs PowerPoint'],ratings:{Quality:9.0,Ease:9.8,Value:9.5,Speed:9.5},whoFor:'Anyone who needs to present — students, professionals, founders',whoNotFor:'Full PowerPoint functionality',tests:[{input:'5 reasons to use AI in your business — create a presentation',output:'10-slide presentation in 30 seconds. Beautiful design, good hierarchy.',stars:5,comment:'Saved 2 hours of PowerPoint work'}],howToUse:[{title:'Go to gamma.app — free',desc:'Click New AI, choose presentation, enter your bullet points.',cmd:null}],alt:'For traditional control: Google Slides. For documents: Notion AI.'},
+  {name:'Canva AI',icon:'🎀',cat:'design',tagline:'AI design for everyone — Magic Edit, background remove, text-to-image',tags:['design','templates','social media'],pricing:'freemium',rating:4.7,hot:false,oss:false,url:'https://canva.com',updated:WEEK,verdict:'Most accessible design tool ever made. If you are not a designer and need social media graphics, you do not need anything else.',whatItDoes:'Web-based design tool with AI: Magic Edit, Background Remover, AI image generation, Magic Resize, and AI copywriting.',pros:['Zero learning curve','1000s of templates','Great AI tools','Mobile app is excellent'],cons:['Best features need Pro','Cannot replace professional tools'],ratings:{Quality:8.5,Ease:10.0,Value:9.0,Speed:9.5},whoFor:'Small businesses, social media managers, non-designers',whoNotFor:'Professional designers — use Figma',tests:[{input:'Instagram post for a coffee shop — warm aesthetic',output:'Used Magic Edit to place coffee on table. Instagram-ready in 3 minutes.',stars:5,comment:'Perfect for social media'}],howToUse:[{title:'Go to canva.com — free account',desc:'Start with a template for your platform.',cmd:null}],alt:'For professional design: Figma. For AI presentations: Gamma.'},
+  {name:'Otter.ai',icon:'🦦',cat:'business',tagline:'Real-time meeting transcription with auto-summaries for Zoom and Teams',tags:['transcription','meetings','notes'],pricing:'freemium',rating:4.5,hot:false,oss:false,url:'https://otter.ai',updated:WEEK,verdict:'Transforms how you do meetings. Auto-summaries are good enough to share. Accuracy is solid for clear speakers.',whatItDoes:'Joins Zoom, Teams, or Meet calls and transcribes in real time. Generates automatic summaries, action items, and searchable history.',pros:['Real-time transcription','Auto summaries and action items','Zoom/Teams integration'],cons:['Accuracy drops with accents','Free: 300 min/month'],ratings:{Quality:8.5,Ease:9.5,Value:8.5,Speed:9.0},whoFor:'Anyone who has lots of meetings and hates note-taking',whoNotFor:'Highly regulated industries (check privacy terms)',tests:[{input:'30-minute meeting with 4 speakers',output:'95% accuracy on clear speakers. Summary captured all action items.',stars:4,comment:'Saves hours of note-taking'}],howToUse:[{title:'Connect calendar at otter.ai',desc:'Otter joins meetings automatically.',cmd:null}],alt:'For more features: Fireflies.ai.'},
+  {name:'Zapier AI',icon:'🔗',cat:'business',tagline:'Connect 5,000+ apps with AI automation — describe it, it builds it',tags:['automation','integrations','no-code'],pricing:'freemium',rating:4.6,hot:false,oss:false,url:'https://zapier.com',updated:WEEK,verdict:'The glue of the internet. The AI Zap builder lets you describe automations in plain English. Gets expensive fast at scale but for small volume it is indispensable.',whatItDoes:'Automates workflows between 5,000+ apps. Describe what to automate in English and it builds the Zap.',pros:['5000+ integrations','AI workflow builder','Battle-tested and reliable'],cons:['Gets expensive at scale','Complex logic needs paid plans'],ratings:{Quality:9.0,Ease:8.5,Value:7.5,Speed:8.5},whoFor:'Business owners, operators, anyone with repetitive inter-app tasks',whoNotFor:'Developers who prefer code — try n8n (open source)',tests:[{input:'When email with invoice in subject arrives, save attachment to Google Drive',output:'Built in 2 minutes. Worked first try.',stars:5,comment:'Magic for non-developers'}],howToUse:[{title:'Go to zapier.com — free tier',desc:'100 tasks/month free. Describe your automation.',cmd:null}],alt:'For open source self-hosted: n8n. For complex logic: Make.'},
+  {name:'Ollama',icon:'🦙',cat:'local',tagline:'Run Llama 3, Mistral, Gemma locally — one command, zero costs',tags:['local LLM','privacy','free','offline'],pricing:'free',rating:4.8,hot:true,oss:true,url:'https://ollama.ai',updated:NOW,verdict:'The easiest way to run AI locally. One command and you have a full LLM running with zero costs and total privacy. Works offline. Essential for privacy-conscious users.',whatItDoes:'Makes running open-source LLMs (Llama 3, Mistral, Gemma, Phi-3) as simple as one command. Works on Mac, Windows, Linux. Has an OpenAI-compatible API for building apps.',pros:['Incredibly easy to set up','Free forever','Works offline','OpenAI-compatible API','Huge model library'],cons:['Needs 8GB+ RAM','Quality below GPT-4','Slower on CPU-only machines'],ratings:{Quality:8.5,Ease:9.5,Value:10.0,Speed:8.0},whoFor:'Privacy-conscious users, developers, anyone wanting free local AI',whoNotFor:'Non-technical users wanting best quality (use ChatGPT)',tests:[{input:'Run Llama 3 8B: Explain quantum computing simply',output:'Clear, accurate explanation in 8 seconds on M2 Mac. Quality similar to GPT-3.5.',stars:4,comment:'Impressive quality for local model'}],howToUse:[{title:'Download from ollama.ai',desc:'One installer for Mac, Windows, or Linux.',cmd:null},{title:'Pull Llama 3',cmd:'ollama pull llama3'},{title:'Start chatting',cmd:'ollama run llama3'},{title:'Add a web UI (optional)',desc:'ChatGPT-like interface for Ollama',cmd:'docker run -d -p 3000:8080 \\\n  --add-host=host.docker.internal:host-gateway \\\n  ghcr.io/open-webui/open-webui:main'}],alt:'For a GUI: LM Studio. For image generation locally: Stable Diffusion.'},
+  {name:'LM Studio',icon:'🏠',cat:'local',tagline:'Run any AI model locally with a beautiful desktop GUI — no terminal needed',tags:['local LLM','desktop app','no-code','offline'],pricing:'free',rating:4.7,hot:false,oss:false,url:'https://lmstudio.ai',updated:WEEK,verdict:'The most beginner-friendly way to run local AI. A proper desktop app — no terminal, no commands. Download a model, click load, start chatting.',whatItDoes:'Desktop app for running AI models locally. Browse and download models from HuggingFace, load with a GUI, chat, and run a local server. Works offline.',pros:['No terminal required','Beautiful UI','Browse models in-app','Works offline'],cons:['Needs 8GB+ RAM','Lower quality than cloud AI'],ratings:{Quality:8.5,Ease:10.0,Value:10.0,Speed:8.0},whoFor:'Non-technical users who want local AI, anyone wanting a nice local AI GUI',whoNotFor:'Power users who prefer CLI — use Ollama',tests:[{input:'Load Phi-3 Mini, ask: best AI tools for YouTube?',output:'Loaded in 45 seconds. Helpful, specific answer. Ran completely offline.',stars:4,comment:'Great for local offline AI'}],howToUse:[{title:'Download from lmstudio.ai',desc:'Regular desktop installer.',cmd:null},{title:'Search and download a model',desc:'Start with Llama-3-8B-Instruct or Phi-3-mini.',cmd:null},{title:'Load the model and go to Chat tab',desc:'Click Load Model and start talking.',cmd:null}],alt:'For CLI power users: Ollama. For image generation locally: Stable Diffusion.'},
 ];
 
-/* ═══════════════════════════════════
-   OSS DATA
-═══════════════════════════════════ */
 const OSS_DATA = [
-  {name:'Fish Audio S2',icon:'🐟',desc:'The newest open-source voice cloning model. 10-second clone, emotion control, multilingual — all free to run locally.',tags:['voice','NEW','open-source'],ram:'8GB',gpu:'Optional',os:'Mac, Win, Linux',
-   verdict:'<strong>Genuinely rivals ElevenLabs</strong> for most use cases and it is completely free. Biggest open-source voice AI release of 2025.',
-   steps:[{title:'Clone repo',cmd:'git clone https://github.com/fishaudio/fish-speech'},{title:'Install',cmd:'pip install -e .[stable]'},{title:'Download S2 weights',cmd:'huggingface-cli download fishaudio/fish-speech-1.5'},{title:'Run web UI',cmd:'python tools/webui.py'}],
-   usecases:['Free unlimited voice cloning','Build voice apps without API costs'],rating:4.7,stars:'★★★★★'},
-  {name:'Ollama',icon:'🦙',desc:'Run Llama 3, Mistral, Gemma and 100+ models locally with a single command. The simplest local AI setup available.',tags:['LLM','local','offline'],ram:'8GB+',gpu:'Optional',os:'Mac, Win, Linux',
-   verdict:'<strong>Easiest way to run AI locally.</strong> One command and you are chatting with Llama 3. Zero cost, total privacy.',
-   steps:[{title:'Install from ollama.ai',cmd:null},{title:'Pull Llama 3',cmd:'ollama pull llama3'},{title:'Start chatting',cmd:'ollama run llama3'},{title:'Add web UI (optional)',cmd:'docker run -d -p 3000:8080 ghcr.io/open-webui/open-webui:main'}],
-   usecases:['Private offline AI assistant','Build local AI apps without API costs'],rating:4.8,stars:'★★★★★'},
-  {name:'Stable Diffusion',icon:'🌀',desc:'Open-source image generation. Run locally for unlimited, unrestricted image generation. Thousands of community models.',tags:['image','unlimited','open-source'],ram:'8GB',gpu:'8GB VRAM recommended',os:'Mac, Win, Linux',
-   verdict:'<strong>Best for unlimited free image generation.</strong> 30 min to set up, free forever after.',
-   steps:[{title:'Install Python 3.10+',cmd:'python --version'},{title:'Clone AUTOMATIC1111',cmd:'git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui'},{title:'Run installer',cmd:'./webui.sh  # Mac/Linux\nwebui-user.bat  # Windows'},{title:'Open in browser',cmd:'localhost:7860'}],
-   usecases:['Unlimited free images','Fine-tuned community models'],rating:4.6,stars:'★★★★½'},
-  {name:'LM Studio',icon:'🏠',desc:'Most beginner-friendly local AI app. No terminal — browse, download, and chat with AI via a desktop GUI.',tags:['LLM','desktop app','no-code'],ram:'8GB+',gpu:'Helpful',os:'Mac, Win, Linux',
-   verdict:'<strong>Best for non-technical users</strong> who want local AI. Download, click, chat. No commands.',
-   steps:[{title:'Download from lmstudio.ai',cmd:null},{title:'Search for a model in-app',cmd:'# Recommended:\n# Llama-3-8B-Instruct\n# Phi-3-mini-4k-instruct'},{title:'Click Download then Load Model',cmd:null},{title:'Go to Chat tab',cmd:null}],
-   usecases:['Local AI without terminal','Offline AI assistant'],rating:4.7,stars:'★★★★★'},
-  {name:'Whisper',icon:'🎤',desc:'OpenAI open-source speech-to-text. Transcribes in 99 languages, more accurate than most paid services. Free forever.',tags:['transcription','99 languages','speech-to-text'],ram:'4GB+',gpu:'Helpful',os:'Mac, Win, Linux',
-   verdict:'<strong>More accurate than most paid transcription services</strong> and completely free. Essential for local transcription.',
-   steps:[{title:'Install Whisper',cmd:'pip install openai-whisper'},{title:'Install ffmpeg',cmd:'brew install ffmpeg  # Mac\n# Windows: ffmpeg.org'},{title:'Transcribe a file',cmd:'whisper audio.mp3 --language English'},{title:'Large model for best accuracy',cmd:'whisper audio.mp3 --model large'}],
-   usecases:['Transcribe meetings locally','Subtitle videos for free'],rating:4.7,stars:'★★★★★'},
-  {name:'Automatic1111',icon:'⚙️',desc:'Most popular web UI for Stable Diffusion. Full control over image generation with hundreds of extensions.',tags:['image','SD interface','extensions'],ram:'8GB',gpu:'8GB VRAM',os:'Mac, Win, Linux',
-   verdict:'<strong>Swiss Army knife of local image AI.</strong> Steep learning curve but unmatched control.',
-   steps:[{title:'Clone the repo',cmd:'git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui'},{title:'Run launcher',cmd:'./webui.sh     # Mac/Linux\nwebui-user.bat  # Windows'},{title:'Download a model from civitai.com',cmd:'# Put in models/Stable-diffusion/'},{title:'Open in browser',cmd:'localhost:7860'}],
-   usecases:['Advanced image control','Inpainting and outpainting'],rating:4.5,stars:'★★★★½'},
+  {name:'Fish Audio S2',icon:'🐟',desc:'The newest open-source voice cloning model. 10-second clone, emotion control, multilingual — all free to run locally.',tags:['voice','NEW','open-source'],ram:'8GB',gpu:'Optional',os:'Mac, Win, Linux',verdict:'<strong>Genuinely rivals ElevenLabs</strong> for most use cases and it is completely free. Biggest open-source voice AI release of 2025.',steps:[{title:'Clone repo',cmd:'git clone https://github.com/fishaudio/fish-speech'},{title:'Install',cmd:'pip install -e .[stable]'},{title:'Download S2 weights',cmd:'huggingface-cli download fishaudio/fish-speech-1.5'},{title:'Run web UI',cmd:'python tools/webui.py'}],usecases:['Free unlimited voice cloning','Build voice apps without API costs'],rating:4.7,stars:'★★★★★'},
+  {name:'Ollama',icon:'🦙',desc:'Run Llama 3, Mistral, Gemma and 100+ models locally with a single command. The simplest local AI setup available.',tags:['LLM','local','offline'],ram:'8GB+',gpu:'Optional',os:'Mac, Win, Linux',verdict:'<strong>Easiest way to run AI locally.</strong> One command and you are chatting with Llama 3. Zero cost, total privacy.',steps:[{title:'Install from ollama.ai',cmd:null},{title:'Pull Llama 3',cmd:'ollama pull llama3'},{title:'Start chatting',cmd:'ollama run llama3'},{title:'Add web UI (optional)',cmd:'docker run -d -p 3000:8080 ghcr.io/open-webui/open-webui:main'}],usecases:['Private offline AI assistant','Build local AI apps without API costs'],rating:4.8,stars:'★★★★★'},
+  {name:'Stable Diffusion',icon:'🌀',desc:'Open-source image generation. Run locally for unlimited, unrestricted image generation. Thousands of community models.',tags:['image','unlimited','open-source'],ram:'8GB',gpu:'8GB VRAM recommended',os:'Mac, Win, Linux',verdict:'<strong>Best for unlimited free image generation.</strong> 30 min to set up, free forever after.',steps:[{title:'Install Python 3.10+',cmd:'python --version'},{title:'Clone AUTOMATIC1111',cmd:'git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui'},{title:'Run installer',cmd:'./webui.sh  # Mac/Linux\nwebui-user.bat  # Windows'},{title:'Open in browser',cmd:'localhost:7860'}],usecases:['Unlimited free images','Fine-tuned community models'],rating:4.6,stars:'★★★★½'},
+  {name:'LM Studio',icon:'🏠',desc:'Most beginner-friendly local AI app. No terminal — browse, download, and chat with AI via a desktop GUI.',tags:['LLM','desktop app','no-code'],ram:'8GB+',gpu:'Helpful',os:'Mac, Win, Linux',verdict:'<strong>Best for non-technical users</strong> who want local AI. Download, click, chat. No commands.',steps:[{title:'Download from lmstudio.ai',cmd:null},{title:'Search for a model in-app',cmd:'# Recommended:\n# Llama-3-8B-Instruct\n# Phi-3-mini-4k-instruct'},{title:'Click Download then Load Model',cmd:null},{title:'Go to Chat tab',cmd:null}],usecases:['Local AI without terminal','Offline AI assistant'],rating:4.7,stars:'★★★★★'},
+  {name:'Whisper',icon:'🎤',desc:'OpenAI open-source speech-to-text. Transcribes in 99 languages, more accurate than most paid services. Free forever.',tags:['transcription','99 languages','speech-to-text'],ram:'4GB+',gpu:'Helpful',os:'Mac, Win, Linux',verdict:'<strong>More accurate than most paid transcription services</strong> and completely free. Essential for local transcription.',steps:[{title:'Install Whisper',cmd:'pip install openai-whisper'},{title:'Install ffmpeg',cmd:'brew install ffmpeg  # Mac\n# Windows: ffmpeg.org'},{title:'Transcribe a file',cmd:'whisper audio.mp3 --language English'},{title:'Large model for best accuracy',cmd:'whisper audio.mp3 --model large'}],usecases:['Transcribe meetings locally','Subtitle videos for free'],rating:4.7,stars:'★★★★★'},
+  {name:'Automatic1111',icon:'⚙️',desc:'Most popular web UI for Stable Diffusion. Full control over image generation with hundreds of extensions.',tags:['image','SD interface','extensions'],ram:'8GB',gpu:'8GB VRAM',os:'Mac, Win, Linux',verdict:'<strong>Swiss Army knife of local image AI.</strong> Steep learning curve but unmatched control.',steps:[{title:'Clone the repo',cmd:'git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui'},{title:'Run launcher',cmd:'./webui.sh     # Mac/Linux\nwebui-user.bat  # Windows'},{title:'Download a model from civitai.com',cmd:'# Put in models/Stable-diffusion/'},{title:'Open in browser',cmd:'localhost:7860'}],usecases:['Advanced image control','Inpainting and outpainting'],rating:4.5,stars:'★★★★½'},
 ];
 
 const GUIDES_DATA = [
@@ -1006,7 +722,7 @@ const GUIDES_DATA = [
   {emoji:'🔒',title:'Privacy-first AI tools that respect your data',desc:'Every tool here runs locally or has a strict no-retention policy.',time:'8 min',level:'intermediate'},
   {emoji:'🎙️',title:'Complete guide to AI voice cloning 2025',desc:'ElevenLabs, Fish Audio S2, and running RVC locally. Everything you need.',time:'14 min',level:'intermediate'},
   {emoji:'💻',title:'AI coding tools ranked — 2 weeks of real testing',desc:'Cursor, Copilot, Claude Code, Codeium, Bolt.new. Here is the honest truth.',time:'11 min',level:'intermediate'},
-  {emoji:'🧠',title:'What is local AI? A beginner\'s guide',desc:'What it means, why you would want it, and how to start in 10 minutes.',time:'6 min',level:'beginner'},
+  {emoji:'🧠',title:"What is local AI? A beginner's guide",desc:'What it means, why you would want it, and how to start in 10 minutes.',time:'6 min',level:'beginner'},
   {emoji:'🤫',title:'Underrated AI tools nobody talks about',desc:'Not Midjourney. Not ChatGPT. These tools do things nobody else does — mostly free.',time:'7 min',level:'beginner'},
 ];
 
@@ -1019,137 +735,68 @@ const COMPARE_DATA = [
   {a:'Suno AI',b:'Udio',cat:'AI Music',desc:'Same prompts in both. Which makes better music? Results were surprisingly close.',tags:['music','comparison']},
 ];
 
-/* ═══════════════════════════════════
-   STATE
-═══════════════════════════════════ */
-let activeCat = 'all';
-let sortMode  = 'hot';
-let searchQ   = '';
-let searchTimer = null;
-let currentTool = null; // stores the tool object, not an index
-let agentOpen = false;
-let chatHistory = [];
-let fbRating = 4;
-let fbUsed = 'yes';
-let reviews = {};
-const userApiKey = localStorage.getItem('tv_mistral_key') || '';
+/* STATE */
+let activeCat='all',sortMode='hot',searchQ='',searchTimer=null;
+let currentTool=null,agentOpen=false,chatHistory=[];
+let fbRating=4,fbUsed='yes',reviews={};
+const userApiKey=localStorage.getItem('tv_mistral_key')||'';
 
-/* ═══════════════════════════════════
-   INIT
-═══════════════════════════════════ */
-window.addEventListener('DOMContentLoaded', () => {
-  reviews = JSON.parse(localStorage.getItem('tv_reviews') || '{}');
-  updateCounts();
-  renderTools();
-  renderOSS();
-  renderGuides();
-  renderCompare();
-  loadPH();
-  updateRevCount();
+/* INIT */
+window.addEventListener('DOMContentLoaded',()=>{
+  reviews=JSON.parse(localStorage.getItem('tv_reviews')||'{}');
+  updateCounts();renderTools();renderOSS();renderGuides();renderCompare();loadPH();updateRevCount();
 });
 
-function updateCounts() {
-  const cats = ['voice','video','image','writing','coding','music','design','business','local'];
-  cats.forEach(c => {
-    const el = document.getElementById('cnt-' + c);
-    if (el) el.textContent = TOOLS.filter(t => t.cat === c || (c==='local' && t.oss)).length;
+function updateCounts(){
+  ['voice','video','image','writing','coding','music','design','business','local'].forEach(c=>{
+    const el=document.getElementById('cnt-'+c);
+    if(el)el.textContent=TOOLS.filter(t=>t.cat===c||(c==='local'&&t.oss)).length;
   });
-  document.getElementById('cnt-all').textContent = TOOLS.length;
-  document.getElementById('statTotal').textContent = TOOLS.length;
+  document.getElementById('cnt-all').textContent=TOOLS.length;
+  document.getElementById('statTotal').textContent=TOOLS.length;
+}
+function updateRevCount(){
+  document.getElementById('statRevs').textContent=Object.values(reviews).reduce((s,a)=>s+a.length,0);
 }
 
-function updateRevCount() {
-  const total = Object.values(reviews).reduce((s, a) => s + a.length, 0);
-  document.getElementById('statRevs').textContent = total;
-}
+/* FILTER/SORT/RENDER */
+function onSearch(){clearTimeout(searchTimer);searchTimer=setTimeout(()=>{searchQ=document.getElementById('searchInput').value;renderTools();},220);}
+function setSearch(q){document.getElementById('searchInput').value=q;searchQ=q;activeCat='all';document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));document.querySelector('[data-cat="all"]').classList.add('active');renderTools();}
+function setCat(el,cat){document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');activeCat=cat;const T={all:'All AI Tools',voice:'Voice Cloning & TTS',video:'Video Generation',image:'Image Generation',writing:'AI Writing',coding:'AI Coding',music:'Music Generation',design:'Design & Creative',business:'Business & Productivity',local:'Local & Open Source AI'};document.getElementById('gridTitle').textContent=T[cat]||'AI Tools';renderTools();}
+function setSort(m){sortMode=m;renderTools();}
+function getSorted(arr){const a=[...arr];if(sortMode==='rating')return a.sort((x,y)=>y.rating-x.rating);if(sortMode==='name')return a.sort((x,y)=>x.name.localeCompare(y.name));if(sortMode==='free')return a.sort((x,y)=>({free:0,freemium:1,paid:2}[x.pricing])-({free:0,freemium:1,paid:2}[y.pricing]));return a.sort((x,y)=>{if(x.hot&&!y.hot)return -1;if(!x.hot&&y.hot)return 1;return y.rating-x.rating;});}
 
-/* ═══════════════════════════════════
-   FILTER / SORT / RENDER
-═══════════════════════════════════ */
-function onSearch() {
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => {
-    searchQ = document.getElementById('searchInput').value;
-    renderTools();
-  }, 220);
-}
-
-function setSearch(q) {
-  document.getElementById('searchInput').value = q;
-  searchQ = q;
-  activeCat = 'all';
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('[data-cat="all"]').classList.add('active');
-  renderTools();
-}
-
-function setCat(el, cat) {
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  activeCat = cat;
-  const TITLES = {all:'All AI Tools',voice:'Voice Cloning & TTS',video:'Video Generation',image:'Image Generation',writing:'AI Writing',coding:'AI Coding',music:'Music Generation',design:'Design & Creative',business:'Business & Productivity',local:'Local & Open Source AI'};
-  document.getElementById('gridTitle').textContent = TITLES[cat] || 'AI Tools';
-  renderTools();
-}
-
-function setSort(m) { sortMode = m; renderTools(); }
-
-function getSorted(arr) {
-  const a = [...arr];
-  if (sortMode === 'rating') return a.sort((x,y) => y.rating - x.rating);
-  if (sortMode === 'name')   return a.sort((x,y) => x.name.localeCompare(y.name));
-  if (sortMode === 'free')   return a.sort((x,y) => ({free:0,freemium:1,paid:2}[x.pricing]) - ({free:0,freemium:1,paid:2}[y.pricing]));
-  return a.sort((x,y) => { if (x.hot && !y.hot) return -1; if (!x.hot && y.hot) return 1; return y.rating - x.rating; });
-}
-
-function renderTools() {
-  const q = searchQ.toLowerCase();
-  let filtered = TOOLS.filter(t => {
-    const catOk = activeCat === 'all' || t.cat === activeCat || (activeCat === 'local' && t.oss);
-    const qOk   = !q || t.name.toLowerCase().includes(q) || t.tagline.toLowerCase().includes(q)
-                     || t.tags.some(x => x.toLowerCase().includes(q))
-                     || t.pricing === q || (q === 'local' && t.oss);
-    return catOk && qOk;
+function renderTools(){
+  const q=searchQ.toLowerCase();
+  let filtered=TOOLS.filter(t=>{
+    const catOk=activeCat==='all'||t.cat===activeCat||(activeCat==='local'&&t.oss);
+    const qOk=!q||t.name.toLowerCase().includes(q)||t.tagline.toLowerCase().includes(q)||t.tags.some(x=>x.toLowerCase().includes(q))||t.pricing===q||(q==='local'&&t.oss);
+    return catOk&&qOk;
   });
-  filtered = getSorted(filtered);
-
-  document.getElementById('gridCount').textContent = `${filtered.length} tool${filtered.length !== 1 ? 's' : ''}`;
-  const grid  = document.getElementById('toolGrid');
-  const empty = document.getElementById('emptyState');
-
-  if (!filtered.length) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
-  empty.style.display = 'none';
-
-  grid.innerHTML = filtered.map((t, i) => {
-    const cc    = CAT_COLORS[t.cat] || CAT_COLORS.writing;
-    const stars = '★'.repeat(Math.round(t.rating)) + '☆'.repeat(5 - Math.round(t.rating));
-    const rCount = (reviews[t.name] || []).length;
-    // Use JSON.stringify to safely pass the tool name as a string
-    const safeName = JSON.stringify(t.name);
-    return `
-    <div class="card" style="animation-delay:${(i%9)*.05}s;background:linear-gradient(150deg,var(--sf),${cc.bg})"
-      onclick="openReview(${safeName})">
+  filtered=getSorted(filtered);
+  document.getElementById('gridCount').textContent=`${filtered.length} tool${filtered.length!==1?'s':''}`;
+  const grid=document.getElementById('toolGrid'),empty=document.getElementById('emptyState');
+  if(!filtered.length){grid.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  grid.innerHTML=filtered.map((t,i)=>{
+    const cc=CAT_COLORS[t.cat]||CAT_COLORS.writing;
+    const stars='★'.repeat(Math.round(t.rating))+'☆'.repeat(5-Math.round(t.rating));
+    const rCount=(reviews[t.name]||[]).length;
+    const safeName=JSON.stringify(t.name);
+    return `<div class="card" style="animation-delay:${(i%9)*.05}s;background:linear-gradient(150deg,var(--sf),${cc.bg})" onclick="openReview(${safeName})">
       <div class="card-bar" style="background:${cc.bar}"></div>
-      ${t.oss ? '<div class="oss-tag">OPEN SOURCE</div>' : ''}
+      ${t.oss?'<div class="oss-tag">OPEN SOURCE</div>':''}
       <div class="card-top">
         <div class="card-icon" style="background:${cc.bg}">${t.icon}</div>
-        <div class="badges">
-          ${t.hot ? '<span class="badge b-hot">🔥 HOT</span>' : ''}
-          ${t.oss  ? '<span class="badge b-oss">⚙️ OSS</span>' : ''}
-          <span class="badge b-${t.pricing}">${t.pricing.toUpperCase()}</span>
-        </div>
+        <div class="badges">${t.hot?'<span class="badge b-hot">🔥 HOT</span>':''}${t.oss?'<span class="badge b-oss">⚙️ OSS</span>':''}<span class="badge b-${t.pricing}">${t.pricing.toUpperCase()}</span></div>
       </div>
       <div class="card-name">${t.name}</div>
       <div class="card-cat">${t.cat.toUpperCase()}</div>
       <div class="card-desc">${t.tagline}</div>
       <div class="card-verdict"><strong>Verdict:</strong> ${t.verdict.substring(0,90)}…</div>
-      <div class="card-tags">${t.tags.slice(0,3).map(x => `<span class="tag">${x}</span>`).join('')}</div>
+      <div class="card-tags">${t.tags.slice(0,3).map(x=>`<span class="tag">${x}</span>`).join('')}</div>
       <div class="card-footer">
-        <div class="card-rating">
-          <span class="stars">${stars}</span>
-          <span class="rating-num">${t.rating}</span>
-          ${rCount ? `<span class="rev-count">· ${rCount} review${rCount>1?'s':''}</span>` : ''}
-        </div>
+        <div class="card-rating"><span class="stars">${stars}</span><span class="rating-num">${t.rating}</span>${rCount?`<span class="rev-count">· ${rCount} review${rCount>1?'s':''}</span>`:''}</div>
         <div class="card-btns">
           <span class="btn-review" onclick="event.stopPropagation();openReview(${safeName})">📋 Review</span>
           <a class="btn-visit" href="${t.url}" target="_blank" onclick="event.stopPropagation()">Visit ↗</a>
@@ -1160,349 +807,136 @@ function renderTools() {
   }).join('');
 }
 
-/* ═══════════════════════════════════
-   REVIEW MODAL — uses tool NAME as key
-═══════════════════════════════════ */
-function openReview(toolName) {
-  // Find tool by name — works regardless of sort/filter order
-  const t = TOOLS.find(x => x.name === toolName);
-  if (!t) { console.warn('Tool not found:', toolName); return; }
-  currentTool = t;
-
-  const cc = CAT_COLORS[t.cat] || CAT_COLORS.writing;
-  document.getElementById('mIcon').textContent    = t.icon;
-  document.getElementById('mIcon').style.background = cc.bg;
-  document.getElementById('mName').textContent    = t.name;
-  document.getElementById('mTagline').textContent = t.tagline;
-  document.getElementById('mVisitBtn').href       = t.url;
-
-  // Badges + updated
-  document.getElementById('mBadges').innerHTML =
-    `${t.hot ? '<span class="badge b-hot">🔥 HOT</span>' : ''}
-     ${t.oss  ? '<span class="badge b-oss">⚙️ OPEN SOURCE</span>' : ''}
-     <span class="badge b-${t.pricing}">${t.pricing.toUpperCase()}</span>
-     <span class="modal-updated">🕐 ${t.updated}</span>`;
-
-  // PH row
-  const phMatch = phData.find(p => p.name.toLowerCase().includes(t.name.toLowerCase().split(' ')[0]));
-  document.getElementById('mPhRow').innerHTML = phMatch
-    ? `<div class="ph-row"><span>🐱</span><span class="ph-row-text">Product Hunt: <strong>▲ ${phMatch.votes} upvotes</strong></span><a class="ph-row-link" href="${phMatch.url}" target="_blank">View →</a></div>`
-    : '';
-
-  // Scores
-  const sc = t.ratings || {Quality:8,Ease:8,Value:8,Speed:8};
-  document.getElementById('mScores').innerHTML =
-    Object.entries(sc).map(([k,v]) =>
-      `<div class="modal-score"><div class="modal-score-n">${v}/10</div><div class="modal-score-l">${k}</div></div>`
-    ).join('');
-
-  // Review tab
-  document.getElementById('mVerdict').textContent   = t.verdict;
-  document.getElementById('mWhat').textContent       = t.whatItDoes || t.tagline;
-  document.getElementById('mPros').innerHTML         = (t.pros||[]).map(p=>`<li>${p}</li>`).join('');
-  document.getElementById('mCons').innerHTML         = (t.cons||[]).map(c=>`<li>${c}</li>`).join('');
-  document.getElementById('mRatings').innerHTML      = Object.entries(sc).map(([k,v])=>
-    `<div class="rating-row"><div class="rating-row-lbl">${k}</div><div class="bar-wrap"><div class="bar" style="width:${v*10}%"></div></div><div class="bar-val">${v}</div></div>`
-  ).join('');
-  document.getElementById('mWho').innerHTML =
-    `<div class="who-card"><div class="who-lbl">✓ Best for</div><div class="who-val">${t.whoFor||'Content creators'}</div></div>
-     <div class="who-card"><div class="who-lbl">✗ Not ideal for</div><div class="who-val">${t.whoNotFor||'Other use cases'}</div></div>`;
-
-  // Tests tab
-  document.getElementById('mTests').innerHTML = (t.tests||[]).map(tc =>
-    `<div class="test-case">
-      <div class="test-in"><div class="test-in-lbl">📥 Input</div><div class="test-in-val">"${tc.input}"</div></div>
-      <div class="test-out"><div class="test-out-lbl">📤 Result</div><div class="test-out-val">${tc.output}</div>
-        <div class="test-vrow"><span class="test-stars">${'★'.repeat(tc.stars)}${'☆'.repeat(5-tc.stars)}</span><span class="test-comment">${tc.comment}</span></div>
-      </div>
-    </div>`
-  ).join('');
-  document.getElementById('testInput').value = '';
-  document.getElementById('testResult').style.display = 'none';
-
-  // Install tab
-  document.getElementById('mInstall').innerHTML = (t.howToUse||[]).map((s,i) =>
-    `<div class="install-step">
-      <div class="step-circle">${i+1}</div>
-      <div class="step-body">
-        <div class="step-title">${s.title}</div>
-        ${s.desc ? `<div class="step-desc">${s.desc}</div>` : ''}
-        ${s.cmd  ? `<div class="code-block">${s.cmd.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : ''}
-      </div>
-    </div>`
-  ).join('');
-
-  // Similar tab
-  document.getElementById('mSimilar').innerHTML = TOOLS
-    .filter(x => x.cat === t.cat && x.name !== t.name)
-    .slice(0,8)
-    .map(s => `<div class="sim-chip" onclick="openReview(${JSON.stringify(s.name)})">${s.icon} ${s.name}</div>`)
-    .join('');
-  document.getElementById('mAlt').textContent        = t.alt || '';
-  document.getElementById('mFooterAlt').textContent  = t.alt || '';
-
-  // Feedback tab — reset form
-  fbRating = 4; fbUsed = 'yes';
-  document.querySelectorAll('.fb-used-btn').forEach(b => b.classList.remove('on'));
+/* MODAL — key by name, never by index */
+function openReview(toolName){
+  const t=TOOLS.find(x=>x.name===toolName);
+  if(!t){console.warn('Tool not found:',toolName);return;}
+  currentTool=t;
+  const cc=CAT_COLORS[t.cat]||CAT_COLORS.writing;
+  document.getElementById('mIcon').textContent=t.icon;
+  document.getElementById('mIcon').style.background=cc.bg;
+  document.getElementById('mName').textContent=t.name;
+  document.getElementById('mTagline').textContent=t.tagline;
+  document.getElementById('mVisitBtn').href=t.url;
+  document.getElementById('mBadges').innerHTML=`${t.hot?'<span class="badge b-hot">🔥 HOT</span>':''}${t.oss?'<span class="badge b-oss">⚙️ OPEN SOURCE</span>':''}<span class="badge b-${t.pricing}">${t.pricing.toUpperCase()}</span><span class="modal-updated">🕐 ${t.updated}</span>`;
+  const phMatch=phData.find(p=>p.name.toLowerCase().includes(t.name.toLowerCase().split(' ')[0]));
+  document.getElementById('mPhRow').innerHTML=phMatch?`<div class="ph-row"><span>🐱</span><span class="ph-row-text">Product Hunt: <strong>▲ ${phMatch.votes} upvotes</strong></span><a class="ph-row-link" href="${phMatch.url}" target="_blank">View →</a></div>`:'';
+  const sc=t.ratings||{Quality:8,Ease:8,Value:8,Speed:8};
+  document.getElementById('mScores').innerHTML=Object.entries(sc).map(([k,v])=>`<div class="modal-score"><div class="modal-score-n">${v}/10</div><div class="modal-score-l">${k}</div></div>`).join('');
+  document.getElementById('mVerdict').textContent=t.verdict;
+  document.getElementById('mWhat').textContent=t.whatItDoes||t.tagline;
+  document.getElementById('mPros').innerHTML=(t.pros||[]).map(p=>`<li>${p}</li>`).join('');
+  document.getElementById('mCons').innerHTML=(t.cons||[]).map(c=>`<li>${c}</li>`).join('');
+  document.getElementById('mRatings').innerHTML=Object.entries(sc).map(([k,v])=>`<div class="rating-row"><div class="rating-row-lbl">${k}</div><div class="bar-wrap"><div class="bar" style="width:${v*10}%"></div></div><div class="bar-val">${v}</div></div>`).join('');
+  document.getElementById('mWho').innerHTML=`<div class="who-card"><div class="who-lbl">✓ Best for</div><div class="who-val">${t.whoFor||'Content creators'}</div></div><div class="who-card"><div class="who-lbl">✗ Not ideal for</div><div class="who-val">${t.whoNotFor||'Other use cases'}</div></div>`;
+  document.getElementById('mTests').innerHTML=(t.tests||[]).map(tc=>`<div class="test-case"><div class="test-in"><div class="test-in-lbl">📥 Input</div><div class="test-in-val">"${tc.input}"</div></div><div class="test-out"><div class="test-out-lbl">📤 Result</div><div class="test-out-val">${tc.output}</div><div class="test-vrow"><span class="test-stars">${'★'.repeat(tc.stars)}${'☆'.repeat(5-tc.stars)}</span><span class="test-comment">${tc.comment}</span></div></div></div>`).join('');
+  document.getElementById('testInput').value='';
+  document.getElementById('testResult').style.display='none';
+  document.getElementById('mInstall').innerHTML=(t.howToUse||[]).map((s,i)=>`<div class="install-step"><div class="step-circle">${i+1}</div><div class="step-body"><div class="step-title">${s.title}</div>${s.desc?`<div class="step-desc">${s.desc}</div>`:''}${s.cmd?`<div class="code-block">${s.cmd.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`:''}</div></div>`).join('');
+  document.getElementById('mSimilar').innerHTML=TOOLS.filter(x=>x.cat===t.cat&&x.name!==t.name).slice(0,8).map(s=>`<div class="sim-chip" onclick="openReview(${JSON.stringify(s.name)})">${s.icon} ${s.name}</div>`).join('');
+  document.getElementById('mAlt').textContent=t.alt||'';
+  document.getElementById('mFooterAlt').textContent=t.alt||'';
+  fbRating=4;fbUsed='yes';
+  document.querySelectorAll('.fb-used-btn').forEach(b=>b.classList.remove('on'));
   document.getElementById('fbBtnYes').classList.add('on');
   updateStars();
-  document.getElementById('fbText').value = '';
-  document.getElementById('fbName').value = '';
+  document.getElementById('fbText').value='';
+  document.getElementById('fbName').value='';
   loadReviews(t.name);
-
-  // Reset tabs to first
-  document.querySelectorAll('.modal-tab').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.modal-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.modal-tab')[0].classList.add('active');
   document.getElementById('pane-review').classList.add('active');
-
   document.getElementById('overlay').classList.add('open');
 }
+function closeOverlay(e){if(e.target===document.getElementById('overlay'))document.getElementById('overlay').classList.remove('open');}
+function switchTab(btn,paneId){document.querySelectorAll('.modal-tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));btn.classList.add('active');document.getElementById(paneId).classList.add('active');}
 
-function closeOverlay(e) {
-  if (e.target === document.getElementById('overlay'))
-    document.getElementById('overlay').classList.remove('open');
+async function runTest(){
+  if(!currentTool)return;
+  const input=document.getElementById('testInput').value.trim();if(!input)return;
+  const res=document.getElementById('testResult');res.style.display='block';res.innerHTML='<span style="color:var(--txm)">Getting guidance…</span>';
+  const reply=await callAI(`User wants to test ${currentTool.name} (${currentTool.cat}, ${currentTool.pricing}) with: "${input}"\nGive specific steps, exact prompts, expected result, one expert tip. Under 180 words. Use **bold** for key terms.`,true);
+  res.innerHTML=reply.replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--lime)">$1</strong>').replace(/\n/g,'<br>');
 }
 
-function switchTab(btn, paneId) {
-  document.querySelectorAll('.modal-tab').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById(paneId).classList.add('active');
-}
-
-async function runTest() {
-  if (!currentTool) return;
-  const input = document.getElementById('testInput').value.trim();
-  if (!input) return;
-  const res = document.getElementById('testResult');
-  res.style.display = 'block';
-  res.innerHTML = '<span style="color:var(--txm)">Getting guidance…</span>';
-  const prompt = `User wants to test ${currentTool.name} (${currentTool.cat}, ${currentTool.pricing}) with: "${input}"\nGive specific steps, exact prompts, expected result, one expert tip. Under 180 words. Use **bold** for key terms.`;
-  const reply = await callAI(prompt, true);
-  res.innerHTML = reply.replace(/\*\*(.*?)\*\*/g, '<strong style="color:var(--lime)">$1</strong>').replace(/\n/g, '<br>');
-}
-
-/* ═══════════════════════════════════
-   FEEDBACK SYSTEM
-═══════════════════════════════════ */
-function setUsed(v, btn) {
-  fbUsed = v;
-  document.querySelectorAll('.fb-used-btn').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-}
-
-function setRating(v) {
-  fbRating = v;
-  updateStars();
-}
-
-function updateStars() {
-  document.querySelectorAll('.fb-star').forEach((s, i) => {
-    s.classList.toggle('on', i < fbRating);
-  });
-}
-
-function submitFeedback() {
-  if (!currentTool) return;
-  const text = document.getElementById('fbText').value.trim();
-  const name = document.getElementById('fbName').value.trim() || 'Anonymous';
-  if (!text || text.length < 20) { alert('Please write at least 20 characters — keep it helpful!'); return; }
-  if (text.length > 600) { alert('Please keep it under 600 characters.'); return; }
-  const spam = ['buy now','click here','http://','www.','casino','free money'];
-  if (spam.some(w => text.toLowerCase().includes(w))) { alert('This looks like spam. Please write a genuine review.'); return; }
-  const rev = {name, text, rating: fbRating, used: fbUsed, date: new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}), id: Date.now()};
-  if (!reviews[currentTool.name]) reviews[currentTool.name] = [];
+/* FEEDBACK */
+function setUsed(v,btn){fbUsed=v;document.querySelectorAll('.fb-used-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}
+function setRating(v){fbRating=v;updateStars();}
+function updateStars(){document.querySelectorAll('.fb-star').forEach((s,i)=>s.classList.toggle('on',i<fbRating));}
+function submitFeedback(){
+  if(!currentTool)return;
+  const text=document.getElementById('fbText').value.trim();
+  const name=document.getElementById('fbName').value.trim()||'Anonymous';
+  if(!text||text.length<20){alert('Please write at least 20 characters — keep it helpful!');return;}
+  if(text.length>600){alert('Please keep it under 600 characters.');return;}
+  if(['buy now','click here','http://','www.','casino','free money'].some(w=>text.toLowerCase().includes(w))){alert('This looks like spam. Please write a genuine review.');return;}
+  const rev={name,text,rating:fbRating,used:fbUsed,date:new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}),id:Date.now()};
+  if(!reviews[currentTool.name])reviews[currentTool.name]=[];
   reviews[currentTool.name].unshift(rev);
-  localStorage.setItem('tv_reviews', JSON.stringify(reviews));
-  document.getElementById('fbText').value = '';
-  document.getElementById('fbName').value = '';
-  loadReviews(currentTool.name);
-  updateRevCount();
-  renderTools();
+  localStorage.setItem('tv_reviews',JSON.stringify(reviews));
+  document.getElementById('fbText').value='';document.getElementById('fbName').value='';
+  loadReviews(currentTool.name);updateRevCount();renderTools();
   alert('✅ Review submitted! Thanks for keeping it real.');
 }
-
-function loadReviews(toolName) {
-  const list = reviews[toolName] || [];
-  const el = document.getElementById('reviewsList');
-  if (!list.length) { el.innerHTML = '<div class="no-reviews">No reviews yet — be the first!</div>'; return; }
-  el.innerHTML = '<div class="reviews-list">' + list.map(r =>
-    `<div class="review-item">
-      <div class="review-hd">
-        <div class="review-av">${r.name.charAt(0).toUpperCase()}</div>
-        <div class="review-name">${r.name}</div>
-        <span class="review-used">${r.used==='yes'?'✅ Uses it':r.used==='tried'?'🔍 Tried it':'👀 Researching'}</span>
-        <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
-      </div>
-      <div class="review-text">${r.text}</div>
-      <div class="review-date">${r.date}</div>
-    </div>`
-  ).join('') + '</div>';
+function loadReviews(toolName){
+  const list=reviews[toolName]||[];
+  const el=document.getElementById('reviewsList');
+  if(!list.length){el.innerHTML='<div class="no-reviews">No reviews yet — be the first!</div>';return;}
+  el.innerHTML='<div class="reviews-list">'+list.map(r=>`<div class="review-item"><div class="review-hd"><div class="review-av">${r.name.charAt(0).toUpperCase()}</div><div class="review-name">${r.name}</div><span class="review-used">${r.used==='yes'?'✅ Uses it':r.used==='tried'?'🔍 Tried it':'👀 Researching'}</span><div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div></div><div class="review-text">${r.text}</div><div class="review-date">${r.date}</div></div>`).join('')+'</div>';
 }
 
-/* ═══════════════════════════════════
-   OSS / GUIDES / COMPARE RENDER
-═══════════════════════════════════ */
-function renderOSS() {
-  document.getElementById('ossGrid').innerHTML = OSS_DATA.map(t =>
-    `<div class="oss-card">
-      <div class="oss-head">
-        <div class="oss-icon">${t.icon}</div>
-        <div><div class="oss-name">${t.name}</div><div class="oss-badges">${t.tags.map(x=>`<span class="badge b-oss">${x}</span>`).join('')}</div></div>
-      </div>
-      <div class="oss-desc">${t.desc}</div>
-      <div class="oss-verdict">⚡ <strong>Verdict:</strong> ${t.verdict}</div>
-      <div class="oss-reqs">
-        <div class="oss-req"><div class="oss-req-val">${t.ram}</div><div class="oss-req-lbl">RAM</div></div>
-        <div class="oss-req"><div class="oss-req-val" style="font-size:11px">${t.gpu}</div><div class="oss-req-lbl">GPU</div></div>
-        <div class="oss-req"><div class="oss-req-val" style="font-size:10px">${t.os}</div><div class="oss-req-lbl">Works on</div></div>
-      </div>
-      <div class="oss-steps"><div class="oss-steps-title">📥 Quick Install</div>
-        ${t.steps.slice(0,4).map((s,i) =>
-          `<div class="oss-step"><div class="oss-step-num">${i+1}</div>
-           <div class="oss-step-text">${s.cmd ? `<span class="cmd">${s.cmd.split('\n')[0]}</span>` : s.title}</div></div>`
-        ).join('')}
-      </div>
-      <div class="oss-footer">
-        <div class="oss-meta">${t.stars} ${t.rating}/5 · Free forever</div>
-        <button class="btn-oss" onclick="openReview(${JSON.stringify(t.name)})">Full Review →</button>
-      </div>
-    </div>`
-  ).join('');
+/* OSS / GUIDES / COMPARE */
+function renderOSS(){
+  document.getElementById('ossGrid').innerHTML=OSS_DATA.map(t=>`<div class="oss-card"><div class="oss-head"><div class="oss-icon">${t.icon}</div><div><div class="oss-name">${t.name}</div><div class="oss-badges">${t.tags.map(x=>`<span class="badge b-oss">${x}</span>`).join('')}</div></div></div><div class="oss-desc">${t.desc}</div><div class="oss-verdict">⚡ <strong>Verdict:</strong> ${t.verdict}</div><div class="oss-reqs"><div class="oss-req"><div class="oss-req-val">${t.ram}</div><div class="oss-req-lbl">RAM</div></div><div class="oss-req"><div class="oss-req-val" style="font-size:11px">${t.gpu}</div><div class="oss-req-lbl">GPU</div></div><div class="oss-req"><div class="oss-req-val" style="font-size:10px">${t.os}</div><div class="oss-req-lbl">Works on</div></div></div><div class="oss-steps"><div class="oss-steps-title">📥 Quick Install</div>${t.steps.slice(0,4).map((s,i)=>`<div class="oss-step"><div class="oss-step-num">${i+1}</div><div class="oss-step-text">${s.cmd?`<span class="cmd">${s.cmd.split('\n')[0]}</span>`:s.title}</div></div>`).join('')}</div><div class="oss-footer"><div class="oss-meta">${t.stars} ${t.rating}/5 · Free forever</div><button class="btn-oss" onclick="openReview(${JSON.stringify(t.name)})">Full Review →</button></div></div>`).join('');
+}
+function renderGuides(){
+  document.getElementById('guidesGrid').innerHTML=GUIDES_DATA.map(g=>`<div class="guide-card" style="border-top:2px solid var(--lime);"><div class="guide-emoji">${g.emoji}</div><div class="guide-title">${g.title}</div><div class="guide-desc">${g.desc}</div><div class="guide-meta"><span class="guide-time">⏱ ${g.time} read</span><span class="lv-${g.level==='beginner'?'b':'i'}">${g.level}</span></div></div>`).join('');
+}
+function renderCompare(){
+  document.getElementById('compareGrid').innerHTML=COMPARE_DATA.map(c=>`<div class="compare-card"><div class="cc-title">${c.a}<span class="cc-vs">vs</span>${c.b}</div><div class="cc-desc">${c.desc}</div><div class="cc-tags">${c.tags.map(t=>`<span class="cc-tag">${t}</span>`).join('')}</div></div>`).join('');
 }
 
-function renderGuides() {
-  document.getElementById('guidesGrid').innerHTML = GUIDES_DATA.map(g =>
-    `<div class="guide-card" style="border-top:2px solid var(--lime);">
-      <div class="guide-emoji">${g.emoji}</div>
-      <div class="guide-title">${g.title}</div>
-      <div class="guide-desc">${g.desc}</div>
-      <div class="guide-meta"><span class="guide-time">⏱ ${g.time} read</span><span class="lv-${g.level==='beginner'?'b':'i'}">${g.level}</span></div>
-    </div>`
-  ).join('');
-}
+/* AGENT */
+function toggleAgent(){agentOpen?closeAgent():openAgent();}
+function closeAgent(){agentOpen=false;document.getElementById('agentPanel').classList.remove('open');}
+function openAgent(p){agentOpen=true;document.getElementById('agentPanel').classList.add('open');if(p&&typeof p==='string'&&p.length>2){document.getElementById('agentInput').value=p;setTimeout(sendMsg,150);}else document.getElementById('agentInput').focus();}
+function handleEnter(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
+function appendMsg(role,html){const box=document.getElementById('msgs');const d=document.createElement('div');d.className=`msg ${role}`;d.innerHTML=`<div class="m-avi">${role==='ai'?'🤖':'👤'}</div><div class="bubble">${html}</div>`;box.appendChild(d);box.scrollTop=box.scrollHeight;}
+function showTyping(){const box=document.getElementById('msgs');const d=document.createElement('div');d.className='msg ai';d.id='typEl';d.innerHTML=`<div class="m-avi">🤖</div><div class="bubble"><div class="tdots"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>`;box.appendChild(d);box.scrollTop=box.scrollHeight;}
+function removeTyping(){const e=document.getElementById('typEl');if(e)e.remove();}
 
-function renderCompare() {
-  document.getElementById('compareGrid').innerHTML = COMPARE_DATA.map(c =>
-    `<div class="compare-card">
-      <div class="cc-title">${c.a}<span class="cc-vs">vs</span>${c.b}</div>
-      <div class="cc-desc">${c.desc}</div>
-      <div class="cc-tags">${c.tags.map(t=>`<span class="cc-tag">${t}</span>`).join('')}</div>
-    </div>`
-  ).join('');
-}
+const TOOL_LIST=TOOLS.map(t=>`- ${t.name} (${t.cat}, ${t.pricing}${t.oss?' OSS':''}, ${t.rating}★): ${t.tagline}`).join('\n');
 
-/* ═══════════════════════════════════
-   AI AGENT
-═══════════════════════════════════ */
-function toggleAgent()  { agentOpen ? closeAgent() : openAgent(); }
-function closeAgent()   { agentOpen = false; document.getElementById('agentPanel').classList.remove('open'); }
-function openAgent(p)   {
-  agentOpen = true;
-  document.getElementById('agentPanel').classList.add('open');
-  if (p && typeof p === 'string' && p.length > 2) {
-    document.getElementById('agentInput').value = p;
-    setTimeout(sendMsg, 150);
-  } else {
-    document.getElementById('agentInput').focus();
-  }
-}
-function handleEnter(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); } }
-function autoH(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
-
-function appendMsg(role, html) {
-  const box = document.getElementById('msgs');
-  const d = document.createElement('div');
-  d.className = `msg ${role}`;
-  d.innerHTML = `<div class="m-avi">${role === 'ai' ? '🤖' : '👤'}</div><div class="bubble">${html}</div>`;
-  box.appendChild(d);
-  box.scrollTop = box.scrollHeight;
-}
-function showTyping() {
-  const box = document.getElementById('msgs');
-  const d = document.createElement('div');
-  d.className = 'msg ai'; d.id = 'typEl';
-  d.innerHTML = `<div class="m-avi">🤖</div><div class="bubble"><div class="tdots"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div></div>`;
-  box.appendChild(d); box.scrollTop = box.scrollHeight;
-}
-function removeTyping() { const e = document.getElementById('typEl'); if (e) e.remove(); }
-
-const TOOL_LIST = TOOLS.map(t => `- ${t.name} (${t.cat}, ${t.pricing}${t.oss?' OSS':''}, ${t.rating}★): ${t.tagline}`).join('\n');
-
-async function callAI(msg, isDemo = false) {
-  const sys = isDemo
-    ? `You are a practical AI tools expert. Give specific, actionable step-by-step guidance. Use **bold** for key terms. Be honest about limitations.`
-    : `You are ToolVault's honest AI guide. Give real, honest recommendations including cons.\n\nTOOLS:\n${TOOL_LIST}\n\nRULES:\n- Be honest — mention pros AND cons\n- Bold tool names: **ToolName**\n- Recommend 2-4 tools with reasons\n- Mention free/freemium/paid and open-source options\n- Under 200 words`;
-
-  const messages = [...chatHistory, {role:'user', content:msg}];
-
-  if (userApiKey) {
-    try {
-      const r = await fetch('https://api.mistral.ai/v1/chat/completions', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json','Authorization':`Bearer ${userApiKey}`},
-        body: JSON.stringify({model:'mistral-small-latest', messages:[{role:'system',content:sys},...messages], max_tokens:500})
-      });
-      const d = await r.json();
-      if (d.choices?.[0]?.message?.content) return d.choices[0].message.content;
-    } catch(e) {}
-  }
-
-  try {
-    const fp = sys + '\n\n' + messages.map(m => `${m.role==='user'?'User':'Assistant'}: ${m.content}`).join('\n') + '\nAssistant:';
-    const r = await fetch('https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({inputs:fp, parameters:{max_new_tokens:380, temperature:.7, return_full_text:false}})
-    });
-    const d = await r.json();
-    if (Array.isArray(d) && d[0]?.generated_text) return d[0].generated_text.split('User:')[0].trim();
-    if (d.error?.includes('loading')) return '⏳ Free AI warming up (~30s). Please try again!';
-  } catch(e) {}
-
+async function callAI(msg,isDemo=false){
+  const sys=isDemo?`You are a practical AI tools expert. Give specific, actionable step-by-step guidance. Use **bold** for key terms. Be honest about limitations.`:`You are ToolVault's honest AI guide. Give real, honest recommendations including cons.\n\nTOOLS:\n${TOOL_LIST}\n\nRULES:\n- Be honest — mention pros AND cons\n- Bold tool names: **ToolName**\n- Recommend 2-4 tools with reasons\n- Mention free/freemium/paid and open-source options\n- Under 200 words`;
+  const messages=[...chatHistory,{role:'user',content:msg}];
+  if(userApiKey){try{const r=await fetch('https://api.mistral.ai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${userApiKey}`},body:JSON.stringify({model:'mistral-small-latest',messages:[{role:'system',content:sys},...messages],max_tokens:500})});const d=await r.json();if(d.choices?.[0]?.message?.content)return d.choices[0].message.content;}catch(e){}}
+  try{const fp=sys+'\n\n'+messages.map(m=>`${m.role==='user'?'User':'Assistant'}: ${m.content}`).join('\n')+'\nAssistant:';const r=await fetch('https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({inputs:fp,parameters:{max_new_tokens:380,temperature:.7,return_full_text:false}})});const d=await r.json();if(Array.isArray(d)&&d[0]?.generated_text)return d[0].generated_text.split('User:')[0].trim();if(d.error?.includes('loading'))return '⏳ Free AI warming up (~30s). Please try again!';}catch(e){}
   return smartFallback(msg);
 }
 
-function smartFallback(m) {
-  const q = m.toLowerCase();
-  if (q.includes('fish') || q.includes('s2'))
-    return `**Fish Audio S2** is now open source — huge deal.\n\nVs ElevenLabs:\n🐟 **Fish Audio S2** (free/OSS) — 10-second clone, emotion control, run locally\n🎙️ **ElevenLabs** (freemium) — slightly better quality and accent accuracy\n\nHonest take: Fish Audio S2 is good enough for most use cases and it is free. ElevenLabs wins on consistency and reliability.`;
-  if (q.includes('local') || q.includes('offline') || q.includes('privacy'))
-    return `Best tools to **run locally** (all free):\n\n🦙 **Ollama** — easiest local LLMs (Llama 3, Mistral)\n🏠 **LM Studio** — local AI with no terminal needed\n🌀 **Stable Diffusion** — unlimited local image generation\n🐟 **Fish Audio S2** — free local voice cloning\n🎤 **Whisper** — free local transcription\n\nCheck the Open Source page for full install guides!`;
-  if (q.includes('free'))
-    return `Best **completely free** AI tools:\n\n🌀 **Stable Diffusion** — unlimited images locally\n🦙 **Ollama** — free local LLMs\n💎 **Codeium** — free AI coding\n🎤 **Whisper** — free transcription\n🐟 **Fish Audio S2** — free voice cloning (OSS)\n\nFor free cloud tiers: **ElevenLabs**, **Runway**, **Suno AI**, **Ideogram**, **ChatGPT**`;
-  if (q.includes('voice'))
-    return `Top voice tools:\n\n🎙️ **ElevenLabs** (freemium) — best quality, 29 languages\n🐟 **Fish Audio S2** (free/OSS) — 10-second clone, run locally\n🎤 **Murf AI** (freemium) — great for video voiceovers\n\nHonest: Fish Audio S2 is now competitive with ElevenLabs and it is free. Try it first.`;
-  if (q.includes('video'))
-    return `Best AI video:\n\n🎬 **Runway** (freemium) — best quality, limited free tier\n⚡ **Pika Labs** (freemium) — best free tier for Shorts\n👤 **HeyGen** (freemium) — AI avatar + 175 language translation\n\nStart with Pika for free, upgrade to Runway when quality matters.`;
-  if (q.includes('cod') || q.includes('program'))
-    return `Best AI coding:\n\n🖱️ **Cursor** (freemium) — best overall, generous free tier\n⚡ **Bolt.new** (freemium) — full apps in your browser\n💎 **Codeium** (free) — best free Copilot alternative\n\nHonest: Cursor is the best. Start there.`;
+function smartFallback(m){
+  const q=m.toLowerCase();
+  if(q.includes('fish')||q.includes('s2'))return `**Fish Audio S2** is now open source — huge deal.\n\nVs ElevenLabs:\n🐟 **Fish Audio S2** (free/OSS) — 10-second clone, emotion control, run locally\n🎙️ **ElevenLabs** (freemium) — slightly better quality and accent accuracy\n\nHonest take: Fish Audio S2 is good enough for most use cases and it is free. ElevenLabs wins on consistency and reliability.`;
+  if(q.includes('local')||q.includes('offline')||q.includes('privacy'))return `Best tools to **run locally** (all free):\n\n🦙 **Ollama** — easiest local LLMs (Llama 3, Mistral)\n🏠 **LM Studio** — local AI with no terminal needed\n🌀 **Stable Diffusion** — unlimited local image generation\n🐟 **Fish Audio S2** — free local voice cloning\n🎤 **Whisper** — free local transcription\n\nCheck the Open Source page for full install guides!`;
+  if(q.includes('free'))return `Best **completely free** AI tools:\n\n🌀 **Stable Diffusion** — unlimited images locally\n🦙 **Ollama** — free local LLMs\n💎 **Codeium** — free AI coding\n🎤 **Whisper** — free transcription\n🐟 **Fish Audio S2** — free voice cloning (OSS)\n\nFor free cloud tiers: **ElevenLabs**, **Runway**, **Suno AI**, **Ideogram**, **ChatGPT**`;
+  if(q.includes('voice'))return `Top voice tools:\n\n🎙️ **ElevenLabs** (freemium) — best quality, 29 languages\n🐟 **Fish Audio S2** (free/OSS) — 10-second clone, run locally\n🎤 **Murf AI** (freemium) — great for video voiceovers\n\nHonest: Fish Audio S2 is now competitive with ElevenLabs and it is free. Try it first.`;
+  if(q.includes('video'))return `Best AI video:\n\n🎬 **Runway** (freemium) — best quality, limited free tier\n⚡ **Pika Labs** (freemium) — best free tier for Shorts\n👤 **HeyGen** (freemium) — AI avatar + 175 language translation\n\nStart with Pika for free, upgrade to Runway when quality matters.`;
+  if(q.includes('cod')||q.includes('program'))return `Best AI coding:\n\n🖱️ **Cursor** (freemium) — best overall, generous free tier\n⚡ **Bolt.new** (freemium) — full apps in your browser\n💎 **Codeium** (free) — best free Copilot alternative\n\nHonest: Cursor is the best. Start there.`;
   return `Tell me what you want to build and I will give you honest recommendations — including what to avoid.\n\n• "Best free voice cloning alternatives"\n• "How do I run AI locally?"\n• "Is Fish Audio S2 better than ElevenLabs?"\n• "Best AI tools for YouTube"`;
 }
 
-async function sendMsg() {
-  const inp  = document.getElementById('agentInput');
-  const text = inp.value.trim();
-  if (!text) return;
-  inp.value = ''; inp.style.height = 'auto';
-  document.getElementById('sendBtn').disabled = true;
-  appendMsg('user', text);
-  chatHistory.push({role:'user', content:text});
-  showTyping();
-  try {
-    const reply = await callAI(text);
-    removeTyping();
-    chatHistory.push({role:'assistant', content:reply});
-    appendMsg('ai', reply.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>'));
-  } catch(e) {
-    removeTyping();
-    appendMsg('ai', 'Something went wrong — please try again!');
-  }
-  document.getElementById('sendBtn').disabled = false;
+async function sendMsg(){
+  const inp=document.getElementById('agentInput');const text=inp.value.trim();if(!text)return;
+  inp.value='';inp.style.height='auto';document.getElementById('sendBtn').disabled=true;
+  appendMsg('user',text);chatHistory.push({role:'user',content:text});showTyping();
+  try{const reply=await callAI(text);removeTyping();chatHistory.push({role:'assistant',content:reply});appendMsg('ai',reply.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>'));}
+  catch(e){removeTyping();appendMsg('ai','Something went wrong — please try again!');}
+  document.getElementById('sendBtn').disabled=false;
 }
-
-function sendQ(q) { document.getElementById('agentInput').value = q; sendMsg(); }
+function sendQ(q){document.getElementById('agentInput').value=q;sendMsg();}
 </script>
 </body>
 </html>
